@@ -1,3 +1,18 @@
+# Node
+
+node_modules
+package-lock.json
+package.json.md5
+
+/build/bin
+
+/frontend/dist
+/frontend/wailsjs
+.DS_Store
+# dist
+dist-ssr
+*.local
+
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #

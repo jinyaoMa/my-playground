@@ -1,0 +1,18 @@
+{
+  "name": "my-services",
+  "description": "A collection of services",
+  "scripts": {
+    "wails:build": "$bin\\wails build --clean --platform windows/amd64",
+    "bin:wails": "set \"GOBIN=%cd%\\$bin\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinyaoMa/my-services.git"
+  },
+  "author": "jinyaoMa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jinyaoMa/my-services/issues"
+  },
+  "homepage": "https://github.com/jinyaoMa/my-services#readme"
+}
