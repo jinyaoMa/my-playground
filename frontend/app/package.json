@@ -1,10 +1,8 @@
 {
   "name": "@frontend/app",
-  "version": "0.0.0",
-  "main": "src/main.js",
   "dependencies": {
-    "@frontend/ui-kit": "0.0.0",
-    "vue": "^3.2.31",
+    "@frontend/ui-kit": "*",
+    "vue": "^3.2.37",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.12"
   },

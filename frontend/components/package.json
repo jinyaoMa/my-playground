@@ -1,12 +1,10 @@
 {
   "name": "@frontend/components",
-  "version": "0.0.0",
   "main": "index.js",
   "dependencies": {
-    "@frontend/utils": "0.0.0"
+    "@frontend/utils": "*"
   },
   "peerDependencies": {
-    "vite": "^2.9.2",
-    "vue": "^3.2.31"
+    "vue": "^3.2.37"
   }
 }

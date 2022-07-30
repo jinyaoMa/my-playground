@@ -19,4 +19,6 @@ $
 | UPX             | 3.96            | https://upx.github.io/                                         |
 | Wails           | v2.0.0-beta.40+ | https://wails.io/                                              |
 | Lerna           | 5.3+            | https://lerna.js.org/                                          |
+| Vite            | 2.9+            | https://vitejs.dev/                                            |
+| VitePress       | 1.0.0-alpha.4+  | https://vitepress.vuejs.org/                                   |
 | Vue             | 3.2+            | https://vuejs.org/                                             |

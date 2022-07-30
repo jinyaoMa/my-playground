@@ -5,9 +5,7 @@ import UIKit from "@frontend/ui-kit";
 import router from "@/router";
 import messages from "@intlify/vite-plugin-vue-i18n/messages";
 
-const app = createApp(App);
-
-app
+createApp(App)
   .use(UIKit)
   .use(router)
   .use(
