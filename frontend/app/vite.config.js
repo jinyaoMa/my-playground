@@ -2,8 +2,10 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-import pkg from "../wails.json";
+import pkg from "../../wails.json";
 import { createHtmlPlugin } from "vite-plugin-html";
+import { vueI18n } from "@intlify/vite-plugin-vue-i18n";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -18,10 +20,15 @@ export default defineConfig({
         },
       },
     }),
+    vueI18n({
+      include: path.resolve(__dirname, "src/locales/**"),
+      compositionOnly: true,
+    }),
   ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+      "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-bundler.js",
     },
   },
   build: {

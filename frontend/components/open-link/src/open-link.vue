@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "OpenLink",
+  name: "MsOpenLink",
   props: {
     href: String,
   },

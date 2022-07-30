@@ -1,6 +1,6 @@
-module wails-vue
+module my-services
 
-go 1.17
+go 1.18
 
 require github.com/wailsapp/wails/v2 v2.0.0-beta.42
 
@@ -28,5 +28,3 @@ require (
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/text v0.3.7 // indirect
 )
-
-// replace github.com/wailsapp/wails/v2 v2.0.0-beta.42 => C:\Users\jinya\go\pkg\mod\github.com\wailsapp\wails\v2@v2.0.0-beta.42

@@ -1,0 +1,9 @@
+{
+  "name": "@frontend/utils",
+  "version": "0.0.0",
+  "main": "index.js",
+  "peerDependencies": {
+    "vite": "^2.9.2",
+    "vue": "^3.2.31"
+  }
+}

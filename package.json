@@ -2,8 +2,11 @@
   "name": "my-services",
   "description": "A collection of services",
   "scripts": {
-    "wails:build": "$bin\\wails build --clean --platform windows/amd64",
-    "bin:wails": "set \"GOBIN=%cd%\\$bin\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest"
+    "wails:dev": "$tools\\wails dev",
+    "wails:build": "$tools\\wails build --clean --platform windows/amd64",
+    "wails:doctor": "$tools\\wails doctor",
+    "frontend:install": "cd frontend && npm install && npx lerna bootstrap",
+    "bin:wails": "set \"GOBIN=%cd%\\$tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest"
   },
   "repository": {
     "type": "git",

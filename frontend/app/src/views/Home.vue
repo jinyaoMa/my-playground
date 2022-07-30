@@ -6,16 +6,11 @@
     <!-- Bottom button -->
     <!-- 底部按钮 -->
     <div class="link">
-      <OpenLink
-        href="https://wails.io/docs/gettingstarted/installation"
-        class="btn start"
-        >{{ t("homepage.getting-started") }}</OpenLink
-      >
-      <OpenLink
-        href="https://github.com/misitebao/wails-template-vue"
-        class="btn star"
-        >{{ t("homepage.star-me") }}</OpenLink
-      >
+      <MsOpenLink href="https://wails.io/docs/gettingstarted/installation" class="btn start">{{
+          t("homepage.getting-started")
+      }}</MsOpenLink>
+      <MsOpenLink href="https://github.com/misitebao/wails-template-vue" class="btn star">{{ t("homepage.star-me") }}
+      </MsOpenLink>
     </div>
   </div>
 </template>
@@ -45,6 +40,7 @@ export default {
     height: 280px;
     margin: 10px auto 10px;
   }
+
   .link {
     display: flex;
     flex-direction: row;
@@ -52,6 +48,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 18px auto;
+
     .btn {
       display: block;
       width: 150px;
@@ -66,16 +63,20 @@ export default {
       white-space: nowrap;
       text-decoration: none;
       cursor: pointer;
+
       &.start {
         background-color: #fd0404;
         color: #ffffff;
+
         &:hover {
           background-color: #ec2e2e;
         }
       }
+
       &.star {
         background-color: #ffffff;
         color: #fd0404;
+
         &:hover {
           background-color: #f3f3f3;
         }

@@ -11,23 +11,19 @@
       <ul class="info">
         <li class="info-item">
           <div class="name">{{ t("aboutpage.project-repository") }}</div>
-          <OpenLink
-            class="link"
-            href="https://github.com/misitebao/wails-template-vue"
-            >https://github.com/misitebao/wails-template-vue</OpenLink
-          >
+          <MsOpenLink class="link" href="https://github.com/misitebao/wails-template-vue">
+            https://github.com/misitebao/wails-template-vue</MsOpenLink>
         </li>
         <li class="info-item">
           <div class="name">{{ t("aboutpage.wails-repository") }}</div>
-          <OpenLink class="link" href="https://github.com/wailsapp/wails"
-            >https://github.com/wailsapp/wails</OpenLink
-          >
+          <MsOpenLink class="link" href="https://github.com/wailsapp/wails">https://github.com/wailsapp/wails
+          </MsOpenLink>
         </li>
         <li class="info-item">
           <div class="name">{{ t("aboutpage.author") }}</div>
-          <OpenLink class="link" href="https://github.com/misitebao">{{
-            t("aboutpage.misitebao")
-          }}</OpenLink>
+          <MsOpenLink class="link" href="https://github.com/misitebao">{{
+              t("aboutpage.misitebao")
+          }}</MsOpenLink>
         </li>
       </ul>
     </div>
@@ -59,30 +55,37 @@ export default {
     color: #a150b5;
     text-align: center;
   }
+
   .content {
     position: relative;
     margin: 36px 20px;
+
     .comeon {
       position: absolute;
       left: 26px;
       top: 38px;
       max-width: 66%;
+
       img {
         width: 220px;
         height: 180px;
       }
     }
+
     .info {
       margin: 0 0 0 33%;
       font-size: 24px;
       text-align: left;
+
       .info-item {
         margin-bottom: 10px;
+
         .name {
           line-height: 40px;
           font-size: 28px;
           color: #6d6363;
         }
+
         .link {
           line-height: 30px;
           font-size: 20px;

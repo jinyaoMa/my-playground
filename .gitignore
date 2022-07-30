@@ -6,7 +6,7 @@ package.json.md5
 
 /build/bin
 
-/frontend/dist
+/frontend/app/dist
 /frontend/wailsjs
 .DS_Store
 # dist
