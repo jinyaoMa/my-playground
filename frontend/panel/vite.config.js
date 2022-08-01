@@ -8,6 +8,9 @@ import { vueI18n } from "@intlify/vite-plugin-vue-i18n";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 10001,
+  },
   plugins: [
     vue(),
     createHtmlPlugin({
@@ -21,13 +24,14 @@ export default defineConfig({
       },
     }),
     vueI18n({
-      include: path.resolve(__dirname, "src/locales/**"),
+      include: path.resolve(__dirname, "src/i18n/locales/**"),
       compositionOnly: true,
     }),
   ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+      "@runtime": path.resolve(__dirname, "wailsjs/runtime"),
       "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-bundler.js",
     },
   },

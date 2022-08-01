@@ -1,24 +1,24 @@
 {
-  "name": "my-services",
+  "name": "my-playground",
   "description": "A collection of services",
   "scripts": {
-    "wails:dev": "$tools\\wails dev",
-    "wails:build": "$tools\\wails build --clean --platform windows/amd64",
-    "wails:doctor": "$tools\\wails doctor",
-    "frontend:docs:dev": "cd frontend && npx vitepress dev docs",
-    "frontend:docs:build": "cd frontend && npx vitepress build docs",
-    "frontend:docs:serve": "cd frontend && npx vitepress serve docs",
-    "frontend:install": "cd frontend && npm install && npx lerna bootstrap",
-    "bin:wails": "set \"GOBIN=%cd%\\$tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest"
+    "wails:dev": ".tools\\wails dev",
+    "wails:build": ".tools\\wails build --clean --platform windows/amd64 && npm run upx:compress",
+    "docs:dev": "cd frontend && npx vitepress dev docs",
+    "docs:build": "cd frontend && npx vitepress build docs",
+    "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
+    "prepare:frontend": "cd frontend && npm install && npx lerna bootstrap",
+    "prepare:backend": "go mod tidy",
+    "update:wails": "set \"GOBIN=%cd%\\.tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jinyaoMa/my-services.git"
+    "url": "git+https://github.com/jinyaoMa/my-playground.git"
   },
   "author": "jinyaoMa",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jinyaoMa/my-services/issues"
+    "url": "https://github.com/jinyaoMa/my-playground/issues"
   },
-  "homepage": "https://github.com/jinyaoMa/my-services#readme"
+  "homepage": "https://github.com/jinyaoMa/my-playground#readme"
 }

@@ -6,8 +6,11 @@ package.json.md5
 
 /build/bin
 
-/frontend/app/dist
-/frontend/wailsjs
+/frontend/panel/dist
+/frontend/panel/wailsjs
+
+**/.vitepress/dist
+
 .DS_Store
 # dist
 dist-ssr

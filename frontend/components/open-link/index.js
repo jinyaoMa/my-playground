@@ -1,4 +1,4 @@
-import { withInstall } from "@frontend/utils";
+import { withInstall } from "@my-playground/utils";
 
 import OpenLink from "./src/open-link.vue";
 

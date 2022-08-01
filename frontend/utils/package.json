@@ -1,7 +1,5 @@
 {
-  "name": "@frontend/utils",
-  "main": "index.js",
-  "peerDependencies": {
-    "vue": "^3.2.37"
-  }
+  "name": "@my-playground/utils",
+  "version": "1.0.0",
+  "main": "index.js"
 }

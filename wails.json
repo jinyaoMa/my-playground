@@ -1,15 +1,12 @@
 {
-  "name": "My Services",
-  "outputfilename": "my-services",
-  "assetdir": "frontend/app/dist",
+  "name": "My Playground",
+  "outputfilename": "my-playground",
+  "assetdir": "frontend/panel/dist",
   "frontend:install": "npm install && npx lerna bootstrap",
-  "frontend:build": "npx lerna --scope @frontend/app exec -- vite build --emptyOutDir",
-  "frontend:dev:watcher": "npx lerna --scope @frontend/app exec -- vite",
-  "frontend:dev:serverUrl": "http://localhost:3000",
-  "wailsjsdir": "frontend",
+  "frontend:build": "npx lerna --scope @my-playground/panel exec -- vite build --emptyOutDir",
+  "frontend:dev:watcher": "npx lerna --scope @my-playground/panel exec -- vite",
+  "frontend:dev:serverUrl": "auto",
+  "wailsjsdir": "frontend/panel",
   "debounceMS": 1000,
-  "author": {
-    "name": "jinyaoMa",
-    "email": "jinyao.ma@outlook.com"
-  }
+  "devServer": "localhost:10000"
 }

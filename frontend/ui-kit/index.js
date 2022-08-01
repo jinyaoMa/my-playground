@@ -1,4 +1,4 @@
-import { MsOpenLink } from "@frontend/components/open-link";
+import { MsOpenLink } from "@my-playground/components/open-link";
 
 const components = [MsOpenLink];
 

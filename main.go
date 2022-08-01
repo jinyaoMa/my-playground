@@ -2,12 +2,12 @@ package main
 
 import (
 	"embed"
-	"my-services/backend/window"
+	"my-playground/backend/panel"
 )
 
-//go:embed frontend/app/dist
-var frontend embed.FS
+//go:embed frontend/panel/dist
+var FnPanel embed.FS
 
 func main() {
-	window.Run(frontend)
+	panel.Run(FnPanel)
 }

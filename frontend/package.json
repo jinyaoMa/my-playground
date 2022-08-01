@@ -1,12 +1,13 @@
 {
-  "workspaces": {
-    "packages": [
-      "{app,ui-kit,components,utils}/**",
-      "wailsjs/runtime/**"
-    ]
-  },
+  "workspaces": [
+    "utils",
+    "components",
+    "ui-kit",
+    "panel"
+  ],
   "devDependencies": {
     "lerna": "^5.3.0",
+    "lerna-update-wizard": "^1.1.2",
     "vitepress": "^1.0.0-alpha.4",
     "vue": "^3.2.37"
   }

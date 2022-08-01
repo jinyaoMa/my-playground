@@ -1,14 +1,16 @@
 # my-services
- A collection of services
 
-## Commands
+A collection of services
 
-``` bash
-#
-$
-```
+## Ports Used in Development
 
-## Environment (Windows 11 ONLY)
+* `/backend/panel/` : `10000`
+* `/frontend/panel/` : `10001`
+* `/frontend/docs/` : `10002`
+
+## Environment, Tools and Dependencies
+
+> I am using Windows 10/11.
 
 | Name            | Version         | Link                                                           |
 | :-------------- | :-------------- | :------------------------------------------------------------- |
