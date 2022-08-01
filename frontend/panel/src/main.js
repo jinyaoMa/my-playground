@@ -5,7 +5,7 @@ import router from "@/router";
 
 const app = createApp(App).use(i18n).use(router);
 
-import { MsOpenLink } from "@my-playground/components";
-app.use(MsOpenLink);
+import { MpOpenLink } from "@my-playground/components";
+app.use(MpOpenLink);
 
 app.mount("#app");

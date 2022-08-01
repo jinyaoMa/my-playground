@@ -6,11 +6,11 @@
     <!-- Bottom button -->
     <!-- 底部按钮 -->
     <div class="link">
-      <MsOpenLink href="https://wails.io/docs/gettingstarted/installation" class="btn start">{{
+      <MpOpenLink href="https://wails.io/docs/gettingstarted/installation" class="btn start">{{
           t("homepage.getting-started")
-      }}</MsOpenLink>
-      <MsOpenLink href="https://github.com/misitebao/wails-template-vue" class="btn star">{{ t("homepage.star-me") }}
-      </MsOpenLink>
+      }}</MpOpenLink>
+      <MpOpenLink href="https://github.com/misitebao/wails-template-vue" class="btn star">{{ t("homepage.star-me") }}
+      </MpOpenLink>
     </div>
   </div>
 </template>

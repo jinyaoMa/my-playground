@@ -1,6 +1,6 @@
-import { MsOpenLink } from "@my-playground/components/open-link";
+import { MpOpenLink } from "@my-playground/components/open-link";
 
-const components = [MsOpenLink];
+const components = [MpOpenLink];
 
 export const INSTALLED_KEY = Symbol("INSTALLED_KEY");
 export default {

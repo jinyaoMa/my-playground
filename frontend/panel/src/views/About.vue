@@ -11,19 +11,19 @@
       <ul class="info">
         <li class="info-item">
           <div class="name">{{ t("aboutpage.project-repository") }}</div>
-          <MsOpenLink class="link" href="https://github.com/misitebao/wails-template-vue">
-            https://github.com/misitebao/wails-template-vue</MsOpenLink>
+          <MpOpenLink class="link" href="https://github.com/misitebao/wails-template-vue">
+            https://github.com/misitebao/wails-template-vue</MpOpenLink>
         </li>
         <li class="info-item">
           <div class="name">{{ t("aboutpage.wails-repository") }}</div>
-          <MsOpenLink class="link" href="https://github.com/wailsapp/wails">https://github.com/wailsapp/wails
-          </MsOpenLink>
+          <MpOpenLink class="link" href="https://github.com/wailsapp/wails">https://github.com/wailsapp/wails
+          </MpOpenLink>
         </li>
         <li class="info-item">
           <div class="name">{{ t("aboutpage.author") }}</div>
-          <MsOpenLink class="link" href="https://github.com/misitebao">{{
+          <MpOpenLink class="link" href="https://github.com/misitebao">{{
               t("aboutpage.misitebao")
-          }}</MsOpenLink>
+          }}</MpOpenLink>
         </li>
       </ul>
     </div>
