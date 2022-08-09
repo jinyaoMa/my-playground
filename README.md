@@ -27,3 +27,6 @@ A collection of services
 | Systray         | 1.2.1+          | https://github.com/getlantern/systray                          |
 | Gorm            | 1.23.8+         | https://gorm.io/                                               |
 | SQLite Driver   | 1.3.6+          | https://gorm.io/                                               |
+| Gin             | 1.8.1+          | https://gin-gonic.com/                                         |
+| Swaggo          | 1.8.4+          | https://github.com/swaggo/swag                                 |
+| Gin Swagger     | 1.5.2+          | https://github.com/swaggo/gin-swagger                          |

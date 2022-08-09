@@ -7,7 +7,7 @@ package.json.md5
 .tools
 build/bin
 
-backend/server/swagger
+backend/web/swagger
 
 frontend/panel/dist
 frontend/panel/wailsjs
