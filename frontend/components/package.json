@@ -1,9 +1,9 @@
 {
-  "name": "@my-playground/components",
+  "name": "@jinyaoma/my-playground-components",
   "version": "0.0.1",
   "main": "index.js",
   "dependencies": {
-    "@my-playground/utils": "1.0.0"
+    "@jinyaoma/my-playground-utils": "1.0.0"
   },
   "peerDependencies": {
     "vue": "^3.2.37"

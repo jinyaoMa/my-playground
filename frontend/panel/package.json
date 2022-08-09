@@ -1,8 +1,8 @@
 {
-  "name": "@my-playground/panel",
+  "name": "@jinyaoma/my-playground-panel",
   "version": "0.0.1",
   "dependencies": {
-    "@my-playground/components": "0.0.1",
+    "@jinyaoma/my-playground-components": "0.0.1",
     "vue": "^3.2.37",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.12"

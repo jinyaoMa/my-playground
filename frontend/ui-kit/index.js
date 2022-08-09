@@ -1,4 +1,4 @@
-import { MpOpenLink } from "@my-playground/components/open-link";
+import { MpOpenLink } from "@jinyaoma/my-playground-components/open-link";
 
 const components = [MpOpenLink];
 
