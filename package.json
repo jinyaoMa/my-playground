@@ -1,5 +1,5 @@
 {
-  "name": "my-playground",
+  "name": "@jinyaoma/my-playground",
   "description": "A collection of services",
   "scripts": {
     "wails:dev": ".tools\\wails dev",
