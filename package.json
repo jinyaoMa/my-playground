@@ -8,7 +8,7 @@
     "docs:build": "cd frontend && npx vitepress build docs",
     "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
     "prepare:frontend": "cd frontend && npm install && npx lerna bootstrap",
-    "prepare:backend": "go mod tidy",
+    "prepare:backend": "go mod tidy && go mod vendor",
     "update:wails": "set \"GOBIN=%cd%\\.tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest"
   },
   "repository": {

@@ -24,3 +24,4 @@ A collection of services
 | Vite            | 2.9+            | https://vitejs.dev/                                            |
 | VitePress       | 1.0.0-alpha.4+  | https://vitepress.vuejs.org/                                   |
 | Vue             | 3.2+            | https://vuejs.org/                                             |
+| Systray         | 1.2.1+          | https://github.com/getlantern/systray                          |
