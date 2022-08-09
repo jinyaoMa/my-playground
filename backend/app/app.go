@@ -8,7 +8,7 @@ import (
 // App struct
 type App struct {
 	ctx  context.Context
-	tray *tray.Tray
+	Tray tray.Tray
 }
 
 // startup is called at application startup

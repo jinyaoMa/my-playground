@@ -10,6 +10,6 @@ func Lication() *App {
 	}
 
 	return &App{
-		tray: &tray.Tray{},
+		Tray: tray.New(),
 	}
 }
