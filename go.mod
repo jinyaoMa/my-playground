@@ -2,7 +2,10 @@ module my-playground
 
 go 1.18
 
-require github.com/wailsapp/wails/v2 v2.0.0-beta.42
+require (
+	github.com/getlantern/systray v1.2.1
+	github.com/wailsapp/wails/v2 v2.0.0-beta.42
+)
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
@@ -12,7 +15,6 @@ require (
 	github.com/getlantern/hex v0.0.0-20220104173244-ad7e4b9194dc // indirect
 	github.com/getlantern/hidden v0.0.0-20220104173330-f221c5a24770 // indirect
 	github.com/getlantern/ops v0.0.0-20220713155959-1315d978fff7 // indirect
-	github.com/getlantern/systray v1.2.1 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
