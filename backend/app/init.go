@@ -3,17 +3,19 @@ package app
 import (
 	"my-playground/backend/database"
 	"my-playground/backend/tray"
+	"sync"
 )
 
+var once sync.Once
 var app *App
 
 func Lication() *App {
-	if app != nil {
-		return app
-	}
+	once.Do(func() {
+		app = &App{
+			Tray: tray.New(),
+			DB:   database.New(),
+		}
+	})
 
-	return &App{
-		Tray: tray.New(),
-		DB:   database.New(),
-	}
+	return app
 }
