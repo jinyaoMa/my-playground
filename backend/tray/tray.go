@@ -1,6 +1,13 @@
 package tray
 
-import "github.com/getlantern/systray"
+import (
+	_ "embed"
+
+	"github.com/getlantern/systray"
+)
+
+//go:embed icons/icon.ico
+var icon []byte
 
 type Tray struct {
 }
@@ -10,6 +17,7 @@ func (t *Tray) Quit() {
 }
 
 func (t *Tray) onReady() {
+	systray.SetIcon(icon)
 
 }
 

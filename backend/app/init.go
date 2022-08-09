@@ -1,6 +1,9 @@
 package app
 
-import "my-playground/backend/tray"
+import (
+	"my-playground/backend/database"
+	"my-playground/backend/tray"
+)
 
 var app *App
 
@@ -11,5 +14,6 @@ func Lication() *App {
 
 	return &App{
 		Tray: tray.New(),
+		DB:   database.New(),
 	}
 }

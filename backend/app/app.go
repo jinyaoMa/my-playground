@@ -3,12 +3,15 @@ package app
 import (
 	"context"
 	"my-playground/backend/tray"
+
+	"gorm.io/gorm"
 )
 
 // App struct
 type App struct {
 	ctx  context.Context
-	Tray tray.Tray
+	Tray *tray.Tray
+	DB   *gorm.DB
 }
 
 // startup is called at application startup

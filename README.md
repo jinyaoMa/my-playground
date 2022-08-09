@@ -25,3 +25,5 @@ A collection of services
 | VitePress       | 1.0.0-alpha.4+  | https://vitepress.vuejs.org/                                   |
 | Vue             | 3.2+            | https://vuejs.org/                                             |
 | Systray         | 1.2.1+          | https://github.com/getlantern/systray                          |
+| Gorm            | 1.23.8+         | https://gorm.io/                                               |
+| SQLite Driver   | 1.3.6+          | https://gorm.io/                                               |
