@@ -1,4 +1,4 @@
-package server
+package web
 
 import (
 	"net/http"
@@ -6,31 +6,33 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Server struct {
+type Web struct {
 	isRunning bool
 	http      *http.Server // redirecter
 	https     *http.Server // server (tls)
 }
 
-func (s *Server) Start(swag bool, loop bool) (ok bool) {
+func (s *Web) Start() {
 	if s.isRunning {
-		return false
+		return
 	}
 
 	s.isRunning = true
+
+	router := gin.Default()
+
+	Setup(router)
+
 	s.https = &http.Server{
 		Addr:    ":10003",
-		Handler: gin.Default(),
+		Handler: router,
 	}
-
-	return true
 }
 
-func (s *Server) Stop() (ok bool) {
+func (s *Web) Stop() {
 	if !s.isRunning {
-		return false
+		return
 	}
 
 	s.isRunning = false
-	return true
 }
