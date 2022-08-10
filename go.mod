@@ -8,7 +8,7 @@ require (
 	github.com/swaggo/files v0.0.0-20220728132757-551d4a08d97a
 	github.com/swaggo/gin-swagger v1.5.2
 	github.com/swaggo/swag v1.8.4
-	github.com/wailsapp/wails/v2 v2.0.0-beta.42
+	github.com/wailsapp/wails/v2 v2.0.0-beta.43
 	gorm.io/driver/sqlite v1.3.6
 	gorm.io/gorm v1.23.8
 )

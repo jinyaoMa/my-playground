@@ -6,7 +6,7 @@
     "wails:build": ".tools\\wails build --clean --platform windows/amd64 && npm run upx:compress",
     "docs:dev": "cd frontend && npx vitepress dev docs",
     "docs:build": "cd frontend && npx vitepress build docs",
-    "swag:update": ".tools\\swag init -g backend/web/router.go -o backend/web/swagger",
+    "swag:update": ".tools\\swag init -g backend/server/router.go -o backend/server/swagger",
     "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
     "prepare:frontend": "cd frontend && npm install && npx lerna bootstrap",
     "prepare:backend": "go mod tidy && go mod vendor",

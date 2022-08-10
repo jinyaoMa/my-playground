@@ -1,12 +1,12 @@
-# my-services
+# my-playground
 
 A collection of services
 
 ## Ports Used in Development
 
-* `/backend/panel/` : `10000`
-* `/frontend/panel/` : `10001`
-* `/frontend/docs/` : `10002`
+* `10000` for `/backend/panel/`
+* `10001` for `/frontend/panel/`
+* `10002` for `/frontend/docs/`
 
 ## Environment, Tools and Dependencies
 

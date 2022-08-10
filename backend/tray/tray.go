@@ -2,6 +2,7 @@ package tray
 
 import (
 	_ "embed"
+	"sync"
 
 	"github.com/getlantern/systray"
 )
@@ -9,7 +10,20 @@ import (
 //go:embed icons/icon.ico
 var icon []byte
 
+var (
+	once sync.Once
+	tray *Tray
+)
+
 type Tray struct {
+}
+
+func Register() *Tray {
+	once.Do(func() {
+		tray = &Tray{}
+		systray.Register(tray.onReady, tray.onExit)
+	})
+	return tray
 }
 
 func (t *Tray) Quit() {
