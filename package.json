@@ -2,7 +2,7 @@
   "name": "@jinyaoma/my-playground",
   "description": "A collection of services",
   "scripts": {
-    "wails:dev": ".tools\\wails dev",
+    "wails:dev": ".tools\\wails dev -s true",
     "wails:build": ".tools\\wails build --clean --platform windows/amd64 && npm run upx:compress",
     "docs:dev": "cd frontend && npx vitepress dev docs",
     "docs:build": "cd frontend && npx vitepress build docs",

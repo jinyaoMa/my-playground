@@ -19,12 +19,12 @@ func Run(frontend embed.FS) {
 	// 使用选项创建应用
 	err := wails.Run(&options.App{
 		Title:              "",
-		Width:              1024,
+		Width:              800,
 		Height:             600,
 		DisableResize:      false,
 		Fullscreen:         false,
 		Frameless:          true,
-		MinWidth:           1024,
+		MinWidth:           800,
 		MinHeight:          600,
 		MaxWidth:           -1,
 		MaxHeight:          -1,
