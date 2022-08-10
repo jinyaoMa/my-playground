@@ -6,6 +6,7 @@ package.json.md5
 
 .tools
 build/bin
+build/air
 *.db
 
 backend/server/swagger

@@ -31,3 +31,4 @@ A collection of services
 | Gin             | 1.8.1+                | https://gin-gonic.com/                                         |
 | Swaggo          | 1.8.4+                | https://github.com/swaggo/swag                                 |
 | Gin Swagger     | 1.5.2+                | https://github.com/swaggo/gin-swagger                          |
+| Air             | 1.40.4+               | https://github.com/cosmtrek/air                                |

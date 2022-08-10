@@ -41,3 +41,13 @@ func (s *Server) Start() {
 func (s *Server) Stop() {
 
 }
+
+// run on air
+func Main() {
+	main()
+}
+
+// run on air
+func main() {
+	Load()
+}
