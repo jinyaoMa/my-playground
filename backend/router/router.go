@@ -1,15 +1,15 @@
-package server
+package router
 
 import (
 	"github.com/gin-gonic/gin"
 
-	swaggerdocs "my-playground/backend/server/swagger"
+	swaggerdocs "my-playground/backend/router/swagger"
 
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title my-playground (backend/server)
+// @title my-playground (backend/router)
 // @version 0.0.1
 // @description "My Playground API"
 //
@@ -17,10 +17,10 @@ import (
 // @in header
 // @name Authorization
 //
-func setup(router *gin.Engine) {
+func Setup(handler *gin.Engine) {
 	swaggerdocs.SwaggerInfo.BasePath = "/my-playground-api"
 
-	router.GET(
+	handler.GET(
 		"/swagger/*any",
 		ginSwagger.WrapHandler(
 			swaggerfiles.Handler,

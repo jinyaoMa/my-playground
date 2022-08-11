@@ -2,19 +2,17 @@
   "name": "@jinyaoma/my-playground",
   "description": "A collection of services",
   "scripts": {
-    "wails:dev": ".tools\\wails dev -s true",
+    "wails:dev": ".tools\\wails dev",
     "wails:build": ".tools\\wails build --clean --platform windows/amd64 && npm run upx:compress",
     "docs:dev": "cd frontend && npx vitepress dev docs",
     "docs:build": "cd frontend && npx vitepress build docs",
-    "air:dev": ".tools\\air -c .air.toml",
-    "swag:update": ".tools\\swag init -g backend/server/router.go -o backend/server/swagger",
+    "swag:update": ".tools\\swag init -g backend/router/router.go -o backend/router/swagger",
     "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
-    "prepare:frontend": "cd frontend && npm install && npx lerna bootstrap",
-    "prepare:backend": "go mod tidy && go mod vendor",
+    "prepare:frontend": "cd frontend && npm install && npx lerna bootstrap && npx lerna --scope @jinyaoma/my-playground-app exec -- vite build --emptyOutDir",
+    "prepare:backend": "go mod tidy && go mod vendor && npm run swag:update",
     "install:wails": "set \"GOBIN=%cd%\\.tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest",
     "install:upx": "curl -L https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip > upx.zip && unzip -p upx.zip '*/upx.exe' > .tools/upx.exe && rm upx.zip",
-    "install:swag": "set \"GOBIN=%cd%\\.tools\" && go install github.com/swaggo/swag/cmd/swag@latest && npm run swag:update",
-    "install:air": "set \"GOBIN=%cd%\\.tools\" && go install github.com/cosmtrek/air@latest"
+    "install:swag": "set \"GOBIN=%cd%\\.tools\" && go install github.com/swaggo/swag/cmd/swag@latest"
   },
   "repository": {
     "type": "git",

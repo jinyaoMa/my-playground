@@ -1,11 +1,8 @@
 package app
 
 import (
-	"my-playground/backend/server"
-	"my-playground/backend/tray"
+	"context"
 	"sync"
-
-	"gorm.io/gorm"
 )
 
 var (
@@ -13,23 +10,28 @@ var (
 	app  *App
 )
 
+// App struct
 type App struct {
-	DB     *gorm.DB
-	Tray   *tray.Tray
-	Server *server.Server
+	ctx      context.Context // bind wails backend
+	database *Database
+	tray     *Tray
+	server   *Server
 }
 
-func Lication() *App {
+func Lication(ctx ...context.Context) *App {
 	once.Do(func() {
-		db := connectDB()
-		t := tray.Register()
-		s := server.Load()
-
 		app = &App{
-			DB:     db,
-			Tray:   t,
-			Server: s,
+			database: NewDatabase(),
+			tray:     NewTray(),
+			server:   NewServer(),
 		}
 	})
+	if len(ctx) > 0 {
+		app.ctx = ctx[0]
+	}
 	return app
+}
+
+func (a *App) QuitTray() {
+	a.tray.quit.Trigger()
 }

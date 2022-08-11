@@ -6,13 +6,14 @@ package.json.md5
 
 .tools
 build/bin
-build/air
 *.db
+*.log
+*.ini
 
-backend/server/swagger
+backend/.assets
+backend/router/swagger
 
-frontend/panel/dist
-frontend/panel/wailsjs
+frontend/app/wailsjs
 
 **/.vitepress/dist
 

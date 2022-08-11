@@ -1,5 +1,5 @@
 {
-  "name": "@jinyaoma/my-playground-panel",
+  "name": "@jinyaoma/my-playground-app",
   "version": "0.0.1",
   "dependencies": {
     "@jinyaoma/my-playground-components": "0.0.1",
