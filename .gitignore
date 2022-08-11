@@ -8,7 +8,6 @@ package.json.md5
 build/bin
 *.db
 *.log
-*.ini
 
 backend/.assets
 backend/router/swagger

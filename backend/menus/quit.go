@@ -18,16 +18,16 @@ type Quit struct {
 	chanQuit chan struct{}
 }
 
-func NewQuit(locale QuitLocale) *Quit {
+func NewQuit() *Quit {
 	return &Quit{
-		item:     systray.AddMenuItem(locale.Title, locale.Tooltip),
+		item:     systray.AddMenuItem("", ""),
 		chanQuit: make(chan struct{}, 1),
 	}
 }
 
-func (q *Quit) UpdateLocale(locale QuitLocale) *Quit {
-	q.item.SetTitle(locale.Title)
-	q.item.SetTooltip(locale.Tooltip)
+func (q *Quit) SetLocale(locale map[string]string) *Quit {
+	q.item.SetTitle(locale["quit"])
+	q.item.SetTooltip(locale["quit"])
 	return q
 }
 
