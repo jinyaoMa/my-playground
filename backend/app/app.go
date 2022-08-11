@@ -1,7 +1,6 @@
 package app
 
 import (
-	"my-playground/backend/database"
 	"my-playground/backend/server"
 	"my-playground/backend/tray"
 	"sync"
@@ -22,7 +21,7 @@ type App struct {
 
 func Lication() *App {
 	once.Do(func() {
-		db := database.Connect()
+		db := connectDB()
 		t := tray.Register()
 		s := server.Load()
 
