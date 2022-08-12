@@ -11,7 +11,7 @@
   "devServer": "localhost:10000",
   "info": {
     "companyName": "Jinyao's Individual Project",
-    "productName": "My Playground",
+    "productName": "My Playground - A collection of services.",
     "productVersion": "0.0.1",
     "copyright": "Copyright © 2022 jinyaoMa",
     "comments": "A collection of services. Built using Wails (https://wails.app)"

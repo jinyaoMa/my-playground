@@ -1,6 +1,6 @@
 # my-playground
 
-A collection of services
+A collection of services.
 
 ## Ports Used in Development
 

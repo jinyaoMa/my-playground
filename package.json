@@ -1,6 +1,6 @@
 {
   "name": "@jinyaoma/my-playground",
-  "description": "A collection of services",
+  "description": "A collection of services.",
   "scripts": {
     "wails:dev": ".tools\\wails dev",
     "wails:build": ".tools\\wails build --clean --platform windows/amd64 && npm run upx:compress",
