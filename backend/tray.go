@@ -38,6 +38,7 @@ func (t *Tray) onReady() {
 
 	t.openWindow = menus.
 		NewOpenWindow().
+		SetIcon(favicon).
 		SetLocale(locale).
 		Watch(menus.OpenWindowListener{
 			OnOpenWindow: func() {

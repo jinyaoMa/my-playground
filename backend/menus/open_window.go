@@ -20,6 +20,11 @@ func NewOpenWindow() *OpenWindow {
 	}
 }
 
+func (ow *OpenWindow) SetIcon(icon []byte) *OpenWindow {
+	ow.item.SetIcon(icon)
+	return ow
+}
+
 func (ow *OpenWindow) SetLocale(locale map[string]string) *OpenWindow {
 	ow.item.SetTitle(locale["open_window"])
 	ow.item.SetTooltip(locale["open_window"])
