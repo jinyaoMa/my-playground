@@ -8,5 +8,12 @@
   "frontend:dev:serverUrl": "auto",
   "wailsjsdir": "frontend/app",
   "debounceMS": 1000,
-  "devServer": "localhost:10000"
+  "devServer": "localhost:10000",
+  "info": {
+    "companyName": "Individual Project",
+    "productName": "My Playground",
+    "productVersion": "0.0.1",
+    "copyright": "Copyright © 2022 jinyaoMa",
+    "comments": "A collection of services. Built using Wails (https://wails.app)"
+  }
 }
