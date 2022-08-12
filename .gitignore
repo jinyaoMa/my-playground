@@ -10,7 +10,7 @@ build/bin
 *.log
 
 backend/.assets
-backend/router/swagger
+backend/server/swagger
 
 frontend/app/wailsjs
 

@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"my-playground/backend/tray"
 )
 
 // App struct
@@ -15,9 +16,6 @@ func (a *App) startup(ctx context.Context) {
 	// Perform your setup here
 	// 在这里执行初始化设置
 	a.ctx = ctx
-	setupDatabase()
-	setupTray()
-	setupServer()
 }
 
 // domReady is called after the front-end dom has been loaded
@@ -25,6 +23,7 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
+	tray.Setup(ctx)
 }
 
 // beforeClose is called when the application is about to quit,
@@ -56,3 +55,7 @@ func (a *App) resume() {
 }
 
 /* Public methods binded to wails frontend */
+
+func (a *App) ChangeLanguage(filename string) {
+	tray.ChangeLanguage(filename)
+}

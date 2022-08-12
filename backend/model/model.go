@@ -1,4 +1,4 @@
-package backend
+package model
 
 import (
 	"my-playground/backend/utils"
@@ -10,7 +10,7 @@ import (
 
 var db *gorm.DB
 
-func setupDatabase() {
+func init() {
 	path, err := utils.GetExecutablePath()
 	if err != nil {
 		panic("failed to get executable path")
@@ -23,4 +23,6 @@ func setupDatabase() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	db.AutoMigrate(&MpConfig{})
 }

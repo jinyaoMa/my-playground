@@ -10,14 +10,18 @@ type QuitListener struct {
 
 type Quit struct {
 	item     *systray.MenuItem
-	chanQuit chan struct{}
+	chanStop chan struct{}
 }
 
 func NewQuit() *Quit {
 	return &Quit{
-		item:     systray.AddMenuItem("", ""),
-		chanQuit: make(chan struct{}, 1),
+		item: systray.AddMenuItem("", ""),
 	}
+}
+
+func (q *Quit) SetIcon(icon []byte) *Quit {
+	q.item.SetIcon(icon)
+	return q
 }
 
 func (q *Quit) SetLocale(locale map[string]string) *Quit {
@@ -27,12 +31,13 @@ func (q *Quit) SetLocale(locale map[string]string) *Quit {
 }
 
 func (q *Quit) Watch(listener QuitListener) *Quit {
+	q.chanStop = make(chan struct{}, 1)
 	go func() {
 		for {
 			select {
 			case <-q.item.ClickedCh:
 				listener.OnQuit()
-			case <-q.chanQuit:
+			case <-q.chanStop:
 				return
 			}
 		}
@@ -41,11 +46,11 @@ func (q *Quit) Watch(listener QuitListener) *Quit {
 }
 
 func (q *Quit) StopWatch() *Quit {
-	close(q.chanQuit)
+	close(q.chanStop)
 	return q
 }
 
-func (q *Quit) Trigger() *Quit {
+func (q *Quit) Click() *Quit {
 	q.item.ClickedCh <- struct{}{}
 	return q
 }

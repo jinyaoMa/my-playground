@@ -1,7 +1,6 @@
-package backend
+package server
 
 import (
-	"my-playground/backend/router"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,18 +11,14 @@ var (
 	server     *http.Server // server (tls)
 )
 
-func setupServer() {
+func Setup() {
 	handler := gin.Default()
 
-	router.Setup(handler)
+	setup(handler)
 
 	redirector = &http.Server{}
 	server = &http.Server{
 		Addr:    ":10003",
 		Handler: handler,
 	}
-}
-
-func Quit() {
-
 }

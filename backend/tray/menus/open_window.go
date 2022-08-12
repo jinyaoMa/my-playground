@@ -9,14 +9,13 @@ type OpenWindowListener struct {
 }
 
 type OpenWindow struct {
-	item           *systray.MenuItem
-	chanOpenWindow chan struct{}
+	item     *systray.MenuItem
+	chanStop chan struct{}
 }
 
 func NewOpenWindow() *OpenWindow {
 	return &OpenWindow{
-		item:           systray.AddMenuItem("", ""),
-		chanOpenWindow: make(chan struct{}, 1),
+		item: systray.AddMenuItem("", ""),
 	}
 }
 
@@ -32,12 +31,13 @@ func (ow *OpenWindow) SetLocale(locale map[string]string) *OpenWindow {
 }
 
 func (ow *OpenWindow) Watch(listener OpenWindowListener) *OpenWindow {
+	ow.chanStop = make(chan struct{}, 1)
 	go func() {
 		for {
 			select {
 			case <-ow.item.ClickedCh:
 				listener.OnOpenWindow()
-			case <-ow.chanOpenWindow:
+			case <-ow.chanStop:
 				return
 			}
 		}
@@ -46,11 +46,11 @@ func (ow *OpenWindow) Watch(listener OpenWindowListener) *OpenWindow {
 }
 
 func (ow *OpenWindow) StopWatch() *OpenWindow {
-	close(ow.chanOpenWindow)
+	close(ow.chanStop)
 	return ow
 }
 
-func (ow *OpenWindow) Trigger() *OpenWindow {
+func (ow *OpenWindow) Click() *OpenWindow {
 	ow.item.ClickedCh <- struct{}{}
 	return ow
 }

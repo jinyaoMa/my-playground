@@ -34,6 +34,8 @@
 
 <script>
 import { useI18n } from "vue-i18n";
+import { EventsOn, WindowMinimise, Hide } from "@runtime";
+import { ChangeLanguage } from "@backend";
 
 export default {
   setup() {
@@ -45,15 +47,26 @@ export default {
 
     // Click to switch language
     // 点击切换语言
-    const onclickLanguageHandle = (item) => {
-      item !== locale.value ? (locale.value = item) : false;
+    const onclickLanguageHandle = (lang) => {
+      lang !== locale.value ? ChangeLanguage(lang) : false;
     };
 
+    EventsOn("onLanguageChanged", (filename) => {
+      console.log(filename)
+      for (const key in languages) {
+        const lang = languages[key];
+        if (filename.includes(lang)) {
+          locale.value = lang;
+          break;
+        }
+      }
+    })
+
     const onclickMinimise = () => {
-      window.runtime.WindowMinimise();
+      WindowMinimise();
     };
     const onclickQuit = () => {
-      window.runtime.Hide();
+      Hide();
     };
 
     return {

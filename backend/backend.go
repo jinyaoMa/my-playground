@@ -13,10 +13,8 @@ import (
 //go:embed .assets
 var assets embed.FS
 
-var app *App
-
 func Run() {
-	app = &App{}
+	app := &App{}
 
 	// Create application with options
 	// 使用选项创建应用
