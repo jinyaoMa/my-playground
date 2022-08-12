@@ -8,11 +8,6 @@ type QuitListener struct {
 	OnQuit func()
 }
 
-type QuitLocale struct {
-	Title   string
-	Tooltip string
-}
-
 type Quit struct {
 	item     *systray.MenuItem
 	chanQuit chan struct{}

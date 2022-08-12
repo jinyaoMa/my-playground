@@ -19,7 +19,8 @@ var locales embed.FS
 var tray *Tray
 
 type Tray struct {
-	quit *menus.Quit
+	openWindow *menus.OpenWindow
+	quit       *menus.Quit
 }
 
 func setupTray() {
@@ -35,6 +36,17 @@ func (t *Tray) onReady() {
 
 	systray.SetTooltip(locale["appname"])
 
+	t.openWindow = menus.
+		NewOpenWindow().
+		SetLocale(locale).
+		Watch(menus.OpenWindowListener{
+			OnOpenWindow: func() {
+				runtime.WindowShow(app.ctx)
+			},
+		})
+
+	systray.AddSeparator()
+
 	t.quit = menus.
 		NewQuit().
 		SetLocale(locale).
@@ -46,6 +58,7 @@ func (t *Tray) onReady() {
 }
 
 func (t *Tray) onExit() {
+	t.openWindow.StopWatch()
 	t.quit.StopWatch()
 	runtime.Quit(app.ctx)
 }

@@ -12,13 +12,8 @@
     <!-- 菜单 -->
     <div class="menu" data-wails-no-drag>
       <div class="language">
-        <div
-          v-for="item in languages"
-          :key="item"
-          :class="{ active: item === locale }"
-          @click="onclickLanguageHandle(item)"
-          class="lang-item"
-        >
+        <div v-for="item in languages" :key="item" :class="{ active: item === locale }"
+          @click="onclickLanguageHandle(item)" class="lang-item">
           {{ t("languages." + item) }}
         </div>
       </div>
@@ -58,7 +53,7 @@ export default {
       window.runtime.WindowMinimise();
     };
     const onclickQuit = () => {
-      window.runtime.Quit();
+      window.runtime.Hide();
     };
 
     return {
@@ -81,6 +76,7 @@ html {
   width: 100%;
   height: 100%;
 }
+
 body {
   width: 100%;
   height: 100%;
@@ -98,6 +94,7 @@ body {
   background-color: rgba(219, 188, 239, 0.9);
   overflow: hidden;
 }
+
 .header {
   display: flex;
   flex-direction: row;
@@ -107,6 +104,7 @@ body {
   height: 50px;
   padding: 0 10px;
   background-color: rgba(171, 126, 220, 0.9);
+
   .nav {
     a {
       display: inline-block;
@@ -122,6 +120,7 @@ body {
       color: #000000;
       font-size: 14px;
       white-space: nowrap;
+
       &:hover,
       &.router-link-exact-active {
         background-color: #d7a8d8;
@@ -129,17 +128,20 @@ body {
       }
     }
   }
+
   .menu {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
+
     .language {
       margin-right: 20px;
       border-radius: 2px;
       background-color: #c3c3c3;
       overflow: hidden;
+
       .lang-item {
         display: inline-block;
         min-width: 50px;
@@ -151,10 +153,12 @@ body {
         text-decoration: none;
         color: #000000;
         font-size: 14px;
+
         &:hover {
           background-color: #ff050542;
           cursor: pointer;
         }
+
         &.active {
           background-color: #ff050542;
           color: #ffffff;
@@ -162,6 +166,7 @@ body {
         }
       }
     }
+
     .bar {
       display: flex;
       flex-direction: row;
@@ -169,6 +174,7 @@ body {
       align-items: center;
       justify-content: flex-end;
       min-width: 150px;
+
       .bar-btn {
         display: inline-block;
         min-width: 80px;
@@ -182,6 +188,7 @@ body {
         text-decoration: none;
         color: #000000;
         font-size: 14px;
+
         &:hover {
           background-color: #d7a8d8;
           color: #ffffff;

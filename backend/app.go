@@ -2,10 +2,7 @@ package backend
 
 import (
 	"context"
-	"fmt"
 )
-
-var app *App
 
 // App struct
 type App struct {
@@ -19,11 +16,8 @@ func (a *App) startup(ctx context.Context) {
 	// 在这里执行初始化设置
 	a.ctx = ctx
 	setupDatabase()
-	fmt.Println("==========================Database Setup================================")
 	setupTray()
-	fmt.Println("==========================Tray Setup================================")
 	setupServer()
-	fmt.Println("==========================Server Setup================================")
 }
 
 // domReady is called after the front-end dom has been loaded

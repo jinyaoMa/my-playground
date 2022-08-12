@@ -13,6 +13,8 @@ import (
 //go:embed .assets
 var assets embed.FS
 
+var app *App
+
 func Run() {
 	app = &App{}
 
@@ -29,8 +31,8 @@ func Run() {
 		MinHeight:          600,
 		MaxWidth:           -1,
 		MaxHeight:          -1,
-		StartHidden:        false,
-		HideWindowOnClose:  false,
+		StartHidden:        true,
+		HideWindowOnClose:  true,
 		AlwaysOnTop:        false,
 		BackgroundColour:   &options.RGBA{R: 255, G: 255, B: 255, A: 0},
 		Assets:             assets,
