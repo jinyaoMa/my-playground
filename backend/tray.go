@@ -52,7 +52,17 @@ func (t *Tray) onReady() {
 		SetLocale(locale).
 		Watch(menus.QuitListener{
 			OnQuit: func() {
-				systray.Quit()
+				dialog, _ := runtime.MessageDialog(app.ctx, runtime.MessageDialogOptions{
+					Type:          runtime.QuestionDialog,
+					Title:         "Quit?",
+					Message:       "Are you sure you want to quit?",
+					Buttons:       []string{},
+					DefaultButton: "Yes",
+					CancelButton:  "No",
+				})
+				if dialog == "Yes" {
+					systray.Quit()
+				}
 			},
 		})
 }
