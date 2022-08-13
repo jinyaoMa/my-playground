@@ -43,7 +43,8 @@ func Setup(ctx context.Context) {
 	tray = &Tray{
 		ctx: ctx,
 	}
-	systray.Run(tray.onReady, tray.onQuit)
+	server.Setup()
+	go systray.Run(tray.onReady, tray.onQuit)
 }
 
 func ChangeLanguage(lang string) {

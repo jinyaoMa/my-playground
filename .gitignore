@@ -10,6 +10,7 @@ build/bin
 *.log
 
 backend/.assets
+backend/server/certs
 backend/server/swagger
 
 frontend/app/wailsjs

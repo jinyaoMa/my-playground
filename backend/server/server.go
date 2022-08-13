@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"crypto/tls"
+	"embed"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -14,17 +15,19 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+//go:embed certs
+var certs embed.FS
+
 var server *Server
 
 type Server struct {
-	http         *http.Server // redirector
-	https        *http.Server // server (tls)
-	errGroup     errgroup.Group
-	httpPort     string
-	httpsPort    string
-	tlsConfig    *tls.Config
-	httpHandler  http.Handler
-	httpsHandler *gin.Engine
+	http        *http.Server // redirector
+	https       *http.Server // server (tls)
+	errGroup    errgroup.Group
+	httpPort    string
+	httpsPort   string
+	certManager *autocert.Manager
+	tlsConfig   *tls.Config
 }
 
 func Setup() {
@@ -32,33 +35,32 @@ func Setup() {
 	portTls := ":10443"
 	manager := &autocert.Manager{
 		Prompt: autocert.AcceptTOS,
-		Cache:  autocert.DirCache("D:\\GitHub\\my-playground\\build\\bin"),
+		Cache:  nil,
 	}
 	tlsConfig := manager.TLSConfig()
 	tlsConfig.GetCertificate = server.getSelfSignedOrLetsEncryptCert(manager)
 
 	server = &Server{
-		httpPort:  port,
-		httpsPort: portTls,
-		tlsConfig: tlsConfig,
-		httpHandler: manager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			target := "https://" + strings.Replace(r.Host, port, portTls, 1) + r.RequestURI
-			http.Redirect(w, r, target, http.StatusMovedPermanently)
-		})),
-		httpsHandler: setup(gin.Default()),
+		httpPort:    port,
+		httpsPort:   portTls,
+		certManager: manager,
+		tlsConfig:   tlsConfig,
 	}
 }
 
 func StartServer() (ok bool) {
 	server.http = &http.Server{
-		Addr:     server.httpPort,
-		Handler:  server.httpHandler,
+		Addr: server.httpPort,
+		Handler: server.certManager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			target := "https://" + strings.Replace(r.Host, server.httpPort, server.httpsPort, 1) + r.RequestURI
+			http.Redirect(w, r, target, http.StatusMovedPermanently)
+		})),
 		ErrorLog: nil,
 	}
 	server.https = &http.Server{
 		Addr:      server.httpsPort,
 		TLSConfig: server.tlsConfig,
-		Handler:   server.httpsHandler,
+		Handler:   setup(gin.Default()),
 		ErrorLog:  nil,
 	}
 
@@ -76,21 +78,30 @@ func StopServer() (ok bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	err := server.http.Shutdown(ctx)
-	err = server.https.Shutdown(ctx)
-	return err == nil || err == http.ErrServerClosed
+	if err := server.http.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+		log.Printf("Server (HTTP) shutdown error: %+v\n", err)
+	}
+	if err := server.https.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+		log.Printf("Server (HTTP/S) shutdown error: %+v\n", err)
+	}
+
+	return true
 }
 
 func (s *Server) getSelfSignedOrLetsEncryptCert(certManager *autocert.Manager) func(hello *tls.ClientHelloInfo) (*tls.Certificate, error) {
 	return func(hello *tls.ClientHelloInfo) (*tls.Certificate, error) {
+		var certificate tls.Certificate
+		var err error
 		dirCache, ok := certManager.Cache.(autocert.DirCache)
-		if !ok {
-			dirCache = "certs"
+		if ok {
+			keyFile := filepath.Join(string(dirCache), hello.ServerName+".key")
+			crtFile := filepath.Join(string(dirCache), hello.ServerName+".crt")
+			certificate, err = tls.LoadX509KeyPair(crtFile, keyFile)
+		} else {
+			key, _ := certs.ReadFile("certs/localhost.key")
+			crt, _ := certs.ReadFile("certs/localhost.crt")
+			certificate, err = tls.X509KeyPair(crt, key)
 		}
-
-		keyFile := filepath.Join(string(dirCache), hello.ServerName+".key")
-		crtFile := filepath.Join(string(dirCache), hello.ServerName+".crt")
-		certificate, err := tls.LoadX509KeyPair(crtFile, keyFile)
 		if err != nil {
 			log.Printf("%s\nFalling back to Letsencrypt\n", err)
 			return certManager.GetCertificate(hello)
