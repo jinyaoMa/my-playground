@@ -51,15 +51,9 @@ export default {
       lang !== locale.value ? ChangeLanguage(lang) : false;
     };
 
-    EventsOn("onLanguageChanged", (filename) => {
-      console.log(filename)
-      for (const key in languages) {
-        const lang = languages[key];
-        if (filename.includes(lang)) {
-          locale.value = lang;
-          break;
-        }
-      }
+    EventsOn("onLanguageChanged", (lang) => {
+      console.log(lang)
+      locale.value = lang;
     })
 
     const onclickMinimise = () => {

@@ -23,6 +23,8 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
+
+	// Tray MUST be the last to setup to join native loop
 	tray.Setup(ctx)
 }
 
@@ -56,6 +58,6 @@ func (a *App) resume() {
 
 /* Public methods binded to wails frontend */
 
-func (a *App) ChangeLanguage(filename string) {
-	tray.ChangeLanguage(filename)
+func (a *App) ChangeLanguage(lang string) {
+	tray.ChangeLanguage(lang)
 }

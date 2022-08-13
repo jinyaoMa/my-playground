@@ -17,9 +17,10 @@ type Language struct {
 
 func NewLanguage() *Language {
 	return &Language{
-		item:    systray.AddMenuItem("", ""),
-		chinese: systray.AddMenuItem("", ""),
-		english: systray.AddMenuItem("", ""),
+		item:     systray.AddMenuItem("", ""),
+		chinese:  systray.AddMenuItem("", ""),
+		english:  systray.AddMenuItem("", ""),
+		chanStop: make(chan struct{}, 1),
 	}
 }
 
@@ -28,9 +29,19 @@ func (l *Language) SetIcon(icon []byte) *Language {
 	return l
 }
 
+func (l *Language) SetIconChinese(icon []byte) *Language {
+	l.chinese.SetIcon(icon)
+	return l
+}
+
+func (l *Language) SetIconEnglish(icon []byte) *Language {
+	l.english.SetIcon(icon)
+	return l
+}
+
 func (l *Language) SetLocale(locale map[string]string) *Language {
-	l.item.SetTitle(locale["language"])
-	l.item.SetTooltip(locale["language"])
+	l.item.SetTitle(locale["displayLanguage"])
+	l.item.SetTooltip(locale["displayLanguage"])
 	l.item.Disable()
 	l.chinese.SetTitle(locale["chinese"])
 	l.chinese.SetTooltip(locale["chinese"])
@@ -40,7 +51,6 @@ func (l *Language) SetLocale(locale map[string]string) *Language {
 }
 
 func (l *Language) Watch(listener LanguageListener) *Language {
-	l.chanStop = make(chan struct{}, 1)
 	go func() {
 		for {
 			select {

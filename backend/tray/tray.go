@@ -17,6 +17,12 @@ var icon []byte
 //go:embed icons/open-window.icon.ico
 var iconOpenWindow []byte
 
+//go:embed icons/api-start.icon.ico
+var iconApiStart []byte
+
+//go:embed icons/api-stop.icon.ico
+var iconApiStop []byte
+
 //go:embed locales/en.json
 //go:embed locales/zh.json
 var locales embed.FS
@@ -25,7 +31,9 @@ var tray *Tray
 
 type Tray struct {
 	ctx        context.Context
+	locale     map[string]string
 	openWindow *menus.OpenWindow
+	apiService *menus.ApiService
 	language   *menus.Language
 	quit       *menus.Quit
 }
@@ -34,14 +42,14 @@ func Setup(ctx context.Context) {
 	tray = &Tray{
 		ctx: ctx,
 	}
-	go systray.Run(tray.onReady, tray.onExit)
+	systray.Run(tray.onReady, tray.onExit)
 }
 
-func ChangeLanguage(filename string) {
+func ChangeLanguage(lang string) {
 	switch {
 	default:
 		tray.language.ClickChinese()
-	case strings.Contains(filename, "en"):
+	case lang == "en":
 		tray.language.ClickEnglish()
 	}
 }
@@ -60,11 +68,26 @@ func (t *Tray) onReady() {
 
 	systray.AddSeparator()
 
+	t.apiService = menus.
+		NewApiService().
+		SetIconStart(iconApiStop).
+		SetIconStop(iconApiStart).
+		Watch(menus.ApiServiceListener{
+			OnStart: func() bool {
+				return true
+			},
+			OnStop: func() bool {
+				return true
+			},
+		})
+
+	systray.AddSeparator()
+
 	t.language = menus.
 		NewLanguage().
 		Watch(menus.LanguageListener{
 			OnLanguageChanged: func(filename string) bool {
-				runtime.EventsEmit(t.ctx, "onLanguageChanged", filename)
+				runtime.EventsEmit(t.ctx, "onLanguageChanged", t.locale2Lang(filename))
 				t.updateLocales(filename)
 				return true
 			},
@@ -78,19 +101,20 @@ func (t *Tray) onReady() {
 			OnQuit: func() {
 				dialog, _ := runtime.MessageDialog(t.ctx, runtime.MessageDialogOptions{
 					Type:          runtime.QuestionDialog,
-					Title:         "Quit?",
-					Message:       "Are you sure you want to quit?",
+					Title:         t.locale["quitDialog.title"],
+					Message:       t.locale["quitDialog.message"],
 					Buttons:       []string{},
-					DefaultButton: "Yes",
-					CancelButton:  "No",
+					DefaultButton: t.locale["quitDialog.defaultButtun"],
+					CancelButton:  t.locale["quitDialog.cancelButton"],
 				})
-				if dialog == "Yes" {
+				if dialog == "Yes" { // when default button => "Yes" is clicked
 					systray.Quit()
 				}
 			},
 		})
 
 	t.language.ClickChinese()
+	t.apiService.ClickStop()
 }
 
 func (t *Tray) onExit() {
@@ -101,12 +125,17 @@ func (t *Tray) onExit() {
 
 func (t *Tray) updateLocales(filename string) {
 	rawJson, _ := locales.ReadFile(filename)
-	locale := utils.GetLocaleFromJSON(rawJson)
+	t.locale = utils.GetLocaleFromJSON(rawJson)
 
-	runtime.WindowSetTitle(tray.ctx, locale["appname"])
-	systray.SetTitle(locale["appname"])
-	systray.SetTooltip(locale["appname"])
-	t.openWindow.SetLocale(locale)
-	t.language.SetLocale(locale)
-	t.quit.SetLocale(locale)
+	runtime.WindowSetTitle(t.ctx, t.locale["appname"])
+	systray.SetTitle(t.locale["appname"])
+	systray.SetTooltip(t.locale["appname"])
+	t.openWindow.SetLocale(t.locale)
+	t.apiService.SetLocale(t.locale)
+	t.language.SetLocale(t.locale)
+	t.quit.SetLocale(t.locale)
+}
+
+func (t *Tray) locale2Lang(filename string) string {
+	return strings.Replace(strings.Replace(filename, "locales/", "", 1), ".json", "", 1)
 }

@@ -1,8 +1,14 @@
 {
   "appname": "My Playground",
   "quit": "Quit",
-  "open_window": "Playground",
-  "language": "Languages",
+  "openWindow": "Playground",
+  "displayLanguage": "Languages",
   "chinese": "中文",
-  "english": "English"
+  "english": "English",
+  "apiService.start": "Enable APIs",
+  "apiService.stop": "Disable APIs",
+  "quitDialog.title": "My Playground",
+  "quitDialog.message": "Are you sure to quit?",
+  "quitDialog.defaultButtun": "Quit",
+  "quitDialog.cancelButton": "Cancel"
 }

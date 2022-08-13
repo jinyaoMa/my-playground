@@ -15,7 +15,8 @@ type Quit struct {
 
 func NewQuit() *Quit {
 	return &Quit{
-		item: systray.AddMenuItem("", ""),
+		item:     systray.AddMenuItem("", ""),
+		chanStop: make(chan struct{}, 1),
 	}
 }
 
@@ -31,7 +32,6 @@ func (q *Quit) SetLocale(locale map[string]string) *Quit {
 }
 
 func (q *Quit) Watch(listener QuitListener) *Quit {
-	q.chanStop = make(chan struct{}, 1)
 	go func() {
 		for {
 			select {

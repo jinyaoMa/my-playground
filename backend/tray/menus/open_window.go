@@ -15,7 +15,8 @@ type OpenWindow struct {
 
 func NewOpenWindow() *OpenWindow {
 	return &OpenWindow{
-		item: systray.AddMenuItem("", ""),
+		item:     systray.AddMenuItem("", ""),
+		chanStop: make(chan struct{}, 1),
 	}
 }
 
@@ -25,13 +26,12 @@ func (ow *OpenWindow) SetIcon(icon []byte) *OpenWindow {
 }
 
 func (ow *OpenWindow) SetLocale(locale map[string]string) *OpenWindow {
-	ow.item.SetTitle(locale["open_window"])
-	ow.item.SetTooltip(locale["open_window"])
+	ow.item.SetTitle(locale["openWindow"])
+	ow.item.SetTooltip(locale["openWindow"])
 	return ow
 }
 
 func (ow *OpenWindow) Watch(listener OpenWindowListener) *OpenWindow {
-	ow.chanStop = make(chan struct{}, 1)
 	go func() {
 		for {
 			select {
