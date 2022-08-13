@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"my-playground/backend/server"
 	"my-playground/backend/tray"
 )
 
@@ -24,6 +25,7 @@ func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
 
+	server.Setup()
 	// Tray MUST be the last to setup to join native loop
 	tray.Setup(ctx)
 }

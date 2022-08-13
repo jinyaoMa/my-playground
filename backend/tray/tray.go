@@ -3,6 +3,7 @@ package tray
 import (
 	"context"
 	"embed"
+	"my-playground/backend/server"
 	"my-playground/backend/tray/menus"
 	"my-playground/backend/utils"
 	"strings"
@@ -30,7 +31,7 @@ var locales embed.FS
 var tray *Tray
 
 type Tray struct {
-	ctx        context.Context
+	ctx        context.Context // bind wails context
 	locale     map[string]string
 	openWindow *menus.OpenWindow
 	apiService *menus.ApiService
@@ -42,7 +43,7 @@ func Setup(ctx context.Context) {
 	tray = &Tray{
 		ctx: ctx,
 	}
-	systray.Run(tray.onReady, tray.onExit)
+	systray.Run(tray.onReady, tray.onQuit)
 }
 
 func ChangeLanguage(lang string) {
@@ -74,10 +75,10 @@ func (t *Tray) onReady() {
 		SetIconStop(iconApiStart).
 		Watch(menus.ApiServiceListener{
 			OnStart: func() bool {
-				return true
+				return server.StartServer()
 			},
 			OnStop: func() bool {
-				return true
+				return server.StopServer()
 			},
 		})
 
@@ -114,12 +115,13 @@ func (t *Tray) onReady() {
 		})
 
 	t.language.ClickChinese()
-	t.apiService.ClickStop()
+	t.apiService.ClickStart()
 }
 
-func (t *Tray) onExit() {
+func (t *Tray) onQuit() {
 	t.openWindow.StopWatch()
 	t.quit.StopWatch()
+	server.StopServer()
 	runtime.Quit(t.ctx)
 }
 

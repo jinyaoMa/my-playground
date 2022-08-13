@@ -17,7 +17,7 @@ import (
 // @in header
 // @name Authorization
 //
-func setup(handler *gin.Engine) {
+func setup(handler *gin.Engine) *gin.Engine {
 	swaggerdocs.SwaggerInfo.BasePath = "/my-playground-api"
 
 	handler.GET(
@@ -27,4 +27,6 @@ func setup(handler *gin.Engine) {
 			ginSwagger.PersistAuthorization(true),
 		),
 	)
+
+	return handler
 }
