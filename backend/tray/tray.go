@@ -11,8 +11,11 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
-//go:embed icons/icon.ico
-var favicon []byte
+//go:embed icons/tray.icon.ico
+var icon []byte
+
+//go:embed icons/open-window.icon.ico
+var iconOpenWindow []byte
 
 //go:embed locales/en.json
 //go:embed locales/zh.json
@@ -44,11 +47,11 @@ func ChangeLanguage(filename string) {
 }
 
 func (t *Tray) onReady() {
-	systray.SetIcon(favicon)
+	systray.SetIcon(icon)
 
 	t.openWindow = menus.
 		NewOpenWindow().
-		SetIcon(favicon).
+		SetIcon(iconOpenWindow).
 		Watch(menus.OpenWindowListener{
 			OnOpenWindow: func() {
 				runtime.WindowShow(t.ctx)
@@ -100,6 +103,7 @@ func (t *Tray) updateLocales(filename string) {
 	rawJson, _ := locales.ReadFile(filename)
 	locale := utils.GetLocaleFromJSON(rawJson)
 
+	runtime.WindowSetTitle(tray.ctx, locale["appname"])
 	systray.SetTitle(locale["appname"])
 	systray.SetTooltip(locale["appname"])
 	t.openWindow.SetLocale(locale)

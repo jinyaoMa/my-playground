@@ -19,7 +19,7 @@ func Run() {
 	// Create application with options
 	// 使用选项创建应用
 	err := wails.Run(&options.App{
-		Title:              "",
+		Title:              "My Playground",
 		Width:              800,
 		Height:             600,
 		DisableResize:      false,
@@ -29,7 +29,7 @@ func Run() {
 		MinHeight:          600,
 		MaxWidth:           -1,
 		MaxHeight:          -1,
-		StartHidden:        true,
+		StartHidden:        false,
 		HideWindowOnClose:  true,
 		AlwaysOnTop:        false,
 		BackgroundColour:   &options.RGBA{R: 255, G: 255, B: 255, A: 0},
