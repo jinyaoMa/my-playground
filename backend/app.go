@@ -17,6 +17,10 @@ func (a *App) startup(ctx context.Context) {
 	// Perform your setup here
 	// 在这里执行初始化设置
 	a.ctx = ctx
+	config := LoadConfig(ctx)
+
+	server.Setup(&config.Server)
+	tray.Setup(&config.Tray)
 }
 
 // domReady is called after the front-end dom has been loaded
@@ -24,10 +28,6 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
-	config := LoadConfig(ctx)
-
-	server.Setup(&config.Server)
-	tray.Setup(&config.Tray)
 }
 
 // beforeClose is called when the application is about to quit,
