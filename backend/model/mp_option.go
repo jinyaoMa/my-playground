@@ -8,6 +8,12 @@ type MpOption struct {
 	Value string ``                   // Option value associated with name
 }
 
+func (mo *MpOption) Update(newValue string) *gorm.DB {
+	return db.Model(mo).Where(mo).Updates(MpOption{
+		Value: newValue,
+	})
+}
+
 type MpOptions []MpOption
 
 func (mos *MpOptions) Load() *gorm.DB {

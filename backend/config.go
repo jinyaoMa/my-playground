@@ -43,19 +43,19 @@ func LoadConfig(ctx context.Context) *Config {
 
 func saveConfig2Options(config *Config, options model.MpOptions) {
 	options = append(options, model.MpOption{
-		Name:  "Server.HttpPort",
+		Name:  server.CfgNameHttpPort,
 		Value: config.Server.HttpPort,
 	})
 	options = append(options, model.MpOption{
-		Name:  "Server.HttpsPort",
+		Name:  server.CfgNameHttpsPort,
 		Value: config.Server.HttpsPort,
 	})
 	options = append(options, model.MpOption{
-		Name:  "Server.CertsDirCache",
+		Name:  server.CfgNameCertsDirCache,
 		Value: config.Server.CertsDirCache,
 	})
 	options = append(options, model.MpOption{
-		Name:  "Tray.Language",
+		Name:  tray.CfgNameLanguage,
 		Value: config.Tray.Language,
 	})
 
@@ -68,13 +68,13 @@ func saveConfig2Options(config *Config, options model.MpOptions) {
 func fillOptions2Config(options model.MpOptions, config *Config) {
 	for _, option := range options {
 		switch option.Name {
-		case "Server.HttpPort":
+		case server.CfgNameHttpPort:
 			config.Server.HttpPort = option.Value
-		case "Server.HttpsPort":
+		case server.CfgNameHttpsPort:
 			config.Server.HttpsPort = option.Value
-		case "Server.CertsDirCache":
+		case server.CfgNameCertsDirCache:
 			config.Server.CertsDirCache = option.Value
-		case "Tray.Language":
+		case tray.CfgNameLanguage:
 			config.Tray.Language = option.Value
 		}
 	}

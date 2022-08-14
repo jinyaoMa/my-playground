@@ -8,6 +8,7 @@ package.json.md5
 build/bin
 *.db
 *.log
+*-res.syso
 
 backend/.assets
 backend/server/certs

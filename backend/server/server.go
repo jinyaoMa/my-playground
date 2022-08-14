@@ -26,6 +26,7 @@ var (
 )
 
 type Server struct {
+	isRunning    bool
 	errGroup     errgroup.Group
 	http         *http.Server // redirector
 	https        *http.Server // server (tls)
@@ -36,6 +37,12 @@ type Server struct {
 	httpsHandler http.Handler
 }
 
+const (
+	CfgNameHttpPort      = "Server.HttpPort"
+	CfgNameHttpsPort     = "Server.HttpsPort"
+	CfgNameCertsDirCache = "Server.CertsDirCache"
+)
+
 type Config struct {
 	HttpPort      string
 	HttpsPort     string
@@ -43,6 +50,8 @@ type Config struct {
 }
 
 func Setup(cfg *Config) {
+	StopServer()
+
 	config = cfg
 
 	manager := &autocert.Manager{
@@ -69,6 +78,10 @@ func Setup(cfg *Config) {
 }
 
 func StartServer() (ok bool) {
+	if server == nil || server.isRunning {
+		return false
+	}
+
 	server.http = &http.Server{
 		Addr:     server.httpPort,
 		Handler:  server.httpHandler,
@@ -90,10 +103,15 @@ func StartServer() (ok bool) {
 		return server.https.ListenAndServeTLS("", "")
 	})
 
+	server.isRunning = true
 	return true
 }
 
 func StopServer() (ok bool) {
+	if server == nil || !server.isRunning {
+		return false
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -104,6 +122,7 @@ func StopServer() (ok bool) {
 		log.Printf("Server (HTTP/S) shutdown error: %+v\n", err)
 	}
 
+	server.isRunning = false
 	return true
 }
 

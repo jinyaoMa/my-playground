@@ -3,6 +3,8 @@ package tray
 import (
 	"context"
 	"embed"
+	"log"
+	"my-playground/backend/model"
 	"my-playground/backend/server"
 	"my-playground/backend/tray/menus"
 	"my-playground/backend/utils"
@@ -42,6 +44,10 @@ type Tray struct {
 	quit       *menus.Quit
 }
 
+const (
+	CfgNameLanguage = "Tray.Language"
+)
+
 type Config struct {
 	WailsCtx context.Context
 	Language string
@@ -57,6 +63,10 @@ func Setup(cfg *Config) {
 }
 
 func ChangeLanguage(lang string) {
+	if tray == nil {
+		return
+	}
+
 	switch lang {
 	default:
 		tray.language.ClickChinese()
@@ -146,6 +156,14 @@ func (t *Tray) updateLocales(filename string) {
 	t.apiService.SetLocale(t.locale)
 	t.language.SetLocale(t.locale)
 	t.quit.SetLocale(t.locale)
+
+	option := model.MpOption{
+		Name: CfgNameLanguage,
+	}
+	result := option.Update(t.locale2Lang(filename))
+	if result.Error != nil {
+		log.Fatalln("failed to update language option")
+	}
 }
 
 func (t *Tray) locale2Lang(filename string) string {
