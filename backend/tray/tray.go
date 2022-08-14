@@ -59,7 +59,8 @@ func Setup(cfg *Config) {
 	tray = &Tray{
 		ctx: config.WailsCtx,
 	}
-	go systray.Run(tray.onReady, tray.onQuit)
+	systray.Register(tray.onReady, tray.onQuit)
+	go tray.customNativeLoop()
 }
 
 func ChangeLanguage(lang string) {
