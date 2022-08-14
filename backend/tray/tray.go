@@ -28,7 +28,10 @@ var iconApiStop []byte
 //go:embed locales/zh.json
 var locales embed.FS
 
-var tray *Tray
+var (
+	tray   *Tray
+	config *Config
+)
 
 type Tray struct {
 	ctx        context.Context // bind wails context
@@ -39,19 +42,25 @@ type Tray struct {
 	quit       *menus.Quit
 }
 
-func Setup(ctx context.Context) {
+type Config struct {
+	WailsCtx context.Context
+	Language string
+}
+
+func Setup(cfg *Config) {
+	config = cfg
+
 	tray = &Tray{
-		ctx: ctx,
+		ctx: config.WailsCtx,
 	}
-	server.Setup()
 	go systray.Run(tray.onReady, tray.onQuit)
 }
 
 func ChangeLanguage(lang string) {
-	switch {
+	switch lang {
 	default:
 		tray.language.ClickChinese()
-	case lang == "en":
+	case "en":
 		tray.language.ClickEnglish()
 	}
 }
@@ -115,8 +124,8 @@ func (t *Tray) onReady() {
 			},
 		})
 
-	t.language.ClickChinese()
-	t.apiService.ClickStart()
+	ChangeLanguage(config.Language)
+	// t.apiService.ClickStart()
 }
 
 func (t *Tray) onQuit() {

@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"my-playground/backend/server"
 	"my-playground/backend/tray"
 )
 
@@ -23,8 +24,10 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
+	config := LoadConfig(ctx)
 
-	tray.Setup(ctx)
+	server.Setup(&config.Server)
+	tray.Setup(&config.Tray)
 }
 
 // beforeClose is called when the application is about to quit,
