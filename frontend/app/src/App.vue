@@ -34,7 +34,7 @@
 
 <script>
 import { useI18n } from "vue-i18n";
-import { EventsOn, WindowMinimise, Hide } from "@runtime";
+import { EventsOn, WindowMinimise, WindowHide } from "@runtime";
 import { ChangeLanguage } from "@backend";
 
 export default {
@@ -60,7 +60,7 @@ export default {
       WindowMinimise();
     };
     const onclickQuit = () => {
-      Hide();
+      WindowHide();
     };
 
     return {

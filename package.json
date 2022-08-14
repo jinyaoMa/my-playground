@@ -2,7 +2,7 @@
   "name": "@jinyaoma/my-playground",
   "description": "A collection of services.",
   "scripts": {
-    "wails:dev": ".tools\\wails dev",
+    "wails:dev": ".tools\\wails dev -s true",
     "wails:build": ".tools\\wails build --platform windows/amd64 && npm run upx:compress",
     "docs:dev": "cd frontend && npx vitepress dev docs",
     "docs:build": "cd frontend && npx vitepress build docs",
@@ -10,7 +10,7 @@
     "update:cert": "mkdir backend/server/certs || openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout backend/server/certs/localhost.key -out backend/server/certs/localhost.crt -subj \"//SKIP=skip/C=CN/ST=GD/L=Github/O=App/OU=Certs/CN=localhost/emailAddress=jinyao.ma@outlook.com\"",
     "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
     "prepare:frontend": "cd frontend && npm install && npx lerna bootstrap && npx lerna --scope @jinyaoma/my-playground-app exec -- vite build --emptyOutDir",
-    "prepare:backend": "go mod tidy && go mod vendor && npm run update:swag && npm run update:cert",
+    "prepare:backend": "go mod tidy && npm run update:swag && npm run update:cert",
     "install:wails": "set \"GOBIN=%cd%\\.tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest",
     "install:upx": "curl -L https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip > upx.zip && unzip -p upx.zip '*/upx.exe' > .tools/upx.exe && rm upx.zip",
     "install:swag": "set \"GOBIN=%cd%\\.tools\" && go install github.com/swaggo/swag/cmd/swag@latest"

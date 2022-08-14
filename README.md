@@ -11,7 +11,7 @@ A collection of services.
 
 ## Environment, Tools and Dependencies
 
-> I am using Windows 10 Home 21H1 19043.1826.
+> I am using Windows 10 Home 21H1 19043.1826 with [VS Code + GCC](https://code.visualstudio.com/docs/cpp/config-mingw) .
 
 | Name            | Version               | Link                                                           |
 | :-------------- | :-------------------- | :------------------------------------------------------------- |
