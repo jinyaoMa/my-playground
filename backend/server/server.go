@@ -4,12 +4,12 @@ import (
 	"context"
 	"crypto/tls"
 	"embed"
-	"fmt"
 	"log"
 	"my-playground/backend/utils"
 	"net/http"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -20,21 +20,22 @@ import (
 //go:embed certs
 var certs embed.FS
 
-var (
-	server *Server
-	config *Config
-)
+var server *Server
+
+func init() {
+	server = &Server{}
+}
 
 type Server struct {
 	isRunning    bool
+	mtx          sync.Mutex
 	errGroup     errgroup.Group
 	http         *http.Server // redirector
 	https        *http.Server // server (tls)
-	httpPort     string
-	httpsPort    string
 	tlsConfig    *tls.Config
 	httpHandler  http.Handler
 	httpsHandler http.Handler
+	config       *Config
 }
 
 const (
@@ -49,52 +50,50 @@ type Config struct {
 	CertsDirCache string
 }
 
-func Setup(cfg *Config) {
-	StopServer()
+func SetConfig(cfg *Config) {
+	Stop() // stop server if running
 
-	config = cfg
+	server.config = cfg
 
 	manager := &autocert.Manager{
 		Prompt: autocert.AcceptTOS,
 	}
-	if config.CertsDirCache == "" {
+	if cfg.CertsDirCache == "" {
 		manager.Cache = nil
-	} else if utils.IsDirectoryExist(config.CertsDirCache) {
-		manager.Cache = autocert.DirCache(config.CertsDirCache)
+	} else if utils.IsDirectoryExist(cfg.CertsDirCache) {
+		manager.Cache = autocert.DirCache(cfg.CertsDirCache)
 	}
 	tlsConfig := manager.TLSConfig()
 	tlsConfig.GetCertificate = server.getSelfSignedOrLetsEncryptCert(manager)
 
 	server = &Server{
-		httpPort:  config.HttpPort,
-		httpsPort: config.HttpsPort,
 		tlsConfig: tlsConfig,
 		httpHandler: manager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			target := "https://" + strings.Replace(r.Host, config.HttpPort, config.HttpsPort, 1) + r.RequestURI
+			target := "https://" + strings.Replace(r.Host, cfg.HttpPort, cfg.HttpsPort, 1) + r.RequestURI
 			http.Redirect(w, r, target, http.StatusMovedPermanently)
 		})),
 		httpsHandler: setup(gin.Default()),
 	}
 }
 
-func StartServer() (ok bool) {
-	if server == nil || server.isRunning {
+func Start() (ok bool) {
+	server.mtx.Lock()
+	defer server.mtx.Unlock()
+	if server.isRunning { // already running, cannot start again
 		return false
 	}
 
 	server.http = &http.Server{
-		Addr:     server.httpPort,
+		Addr:     server.config.HttpPort,
 		Handler:  server.httpHandler,
 		ErrorLog: nil,
 	}
 	server.https = &http.Server{
-		Addr:      server.httpsPort,
+		Addr:      server.config.HttpsPort,
 		Handler:   server.httpsHandler,
 		TLSConfig: server.tlsConfig,
 		ErrorLog:  nil,
 	}
-	fmt.Printf("%s\n", server.httpPort)
-	fmt.Printf("%s\n", server.httpsPort)
 
 	server.errGroup.Go(func() error {
 		return server.http.ListenAndServe()
@@ -107,8 +106,10 @@ func StartServer() (ok bool) {
 	return true
 }
 
-func StopServer() (ok bool) {
-	if server == nil || !server.isRunning {
+func Stop() (ok bool) {
+	server.mtx.Lock()
+	defer server.mtx.Unlock()
+	if !server.isRunning { // already stop or not yet start
 		return false
 	}
 
@@ -120,6 +121,10 @@ func StopServer() (ok bool) {
 	}
 	if err := server.https.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
 		log.Printf("Server (HTTP/S) shutdown error: %+v\n", err)
+	}
+
+	if err := server.errGroup.Wait(); err != nil && err != http.ErrServerClosed {
+		log.Printf("Server running error: %+v\n", err)
 	}
 
 	server.isRunning = false

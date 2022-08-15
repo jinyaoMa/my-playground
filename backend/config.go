@@ -21,7 +21,7 @@ func LoadConfig(ctx context.Context) *Config {
 			CertsDirCache: "",
 		},
 		Tray: tray.Config{
-			WailsCtx: ctx,
+			Context:  ctx,
 			Language: "zh",
 		},
 	}
@@ -33,30 +33,30 @@ func LoadConfig(ctx context.Context) *Config {
 	}
 	if result.RowsAffected == 0 {
 		// options not yet generated and stored
-		saveConfig2Options(config, options)
+		config.saveOptions(options)
 	} else {
-		fillOptions2Config(options, config)
+		config.loadOptions(options)
 	}
 
 	return config
 }
 
-func saveConfig2Options(config *Config, options model.MpOptions) {
+func (c *Config) saveOptions(options model.MpOptions) {
 	options = append(options, model.MpOption{
 		Name:  server.CfgNameHttpPort,
-		Value: config.Server.HttpPort,
+		Value: c.Server.HttpPort,
 	})
 	options = append(options, model.MpOption{
 		Name:  server.CfgNameHttpsPort,
-		Value: config.Server.HttpsPort,
+		Value: c.Server.HttpsPort,
 	})
 	options = append(options, model.MpOption{
 		Name:  server.CfgNameCertsDirCache,
-		Value: config.Server.CertsDirCache,
+		Value: c.Server.CertsDirCache,
 	})
 	options = append(options, model.MpOption{
 		Name:  tray.CfgNameLanguage,
-		Value: config.Tray.Language,
+		Value: c.Tray.Language,
 	})
 
 	result := options.Save()
@@ -65,17 +65,17 @@ func saveConfig2Options(config *Config, options model.MpOptions) {
 	}
 }
 
-func fillOptions2Config(options model.MpOptions, config *Config) {
+func (c *Config) loadOptions(options model.MpOptions) {
 	for _, option := range options {
 		switch option.Name {
 		case server.CfgNameHttpPort:
-			config.Server.HttpPort = option.Value
+			c.Server.HttpPort = option.Value
 		case server.CfgNameHttpsPort:
-			config.Server.HttpsPort = option.Value
+			c.Server.HttpsPort = option.Value
 		case server.CfgNameCertsDirCache:
-			config.Server.CertsDirCache = option.Value
+			c.Server.CertsDirCache = option.Value
 		case tray.CfgNameLanguage:
-			config.Tray.Language = option.Value
+			c.Tray.Language = option.Value
 		}
 	}
 }

@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"log"
 	"my-playground/backend/server"
 	"my-playground/backend/tray"
 )
@@ -19,11 +20,11 @@ func (a *App) startup(ctx context.Context) {
 	// 在这里执行初始化设置
 	a.ctx = ctx
 	a.config = LoadConfig(ctx)
+	server.SetConfig(&a.config.Server)
 	tray.SetConfig(&a.config.Tray)
-	server.Setup(&a.config.Server)
 
-	startTrayLoop()
-	tray.ChangeLanguage(a.config.Tray.Language)
+	tray.Start()
+	log.Println("WAILS START UP")
 }
 
 // domReady is called after the front-end dom has been loaded
@@ -31,7 +32,7 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
-
+	log.Println("WAILS DOM READY")
 }
 
 // beforeClose is called when the application is about to quit,
@@ -41,6 +42,7 @@ func (a *App) domReady(ctx context.Context) {
 // beforeClose在单击窗口关闭按钮或调用runtime.Quit即将退出应用程序时被调用.
 // 返回 true 将导致应用程序继续，false 将继续正常关闭。
 func (a *App) beforeClose(ctx context.Context) (prevent bool) {
+	log.Println("WAILS BEFORE CLOSE")
 	return false
 }
 
@@ -49,21 +51,25 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 func (a *App) shutdown(ctx context.Context) {
 	// Perform your teardown here
 	// 在此处做一些资源释放的操作
-	endTrayLoop()
+	tray.Stop()
+	log.Println("WAILS SHUTDOWN")
 }
 
 func (a *App) suspend() {
 	// Add your action here
 	// 在这里添加你的操作
+	log.Println("WAILS SUSPEND")
 }
 
 func (a *App) resume() {
 	// Add your action here
 	// 在这里添加你的操作
+	log.Println("WAILS RESUME")
 }
 
 /* Public methods binded to wails frontend */
 
 func (a *App) ChangeLanguage(lang string) {
 	tray.ChangeLanguage(lang)
+	log.Println("WAILS/App ChangeLanguage")
 }

@@ -31,17 +31,22 @@ var iconApiStop []byte
 var locales embed.FS
 
 var (
-	tray   *Tray
-	config *Config
+	tray        *Tray
+	Start, Stop func() // start/stop tray
 )
 
+func init() {
+	tray = &Tray{}
+	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
+}
+
 type Tray struct {
-	ctx        context.Context // bind wails context
 	locale     map[string]string
 	openWindow *menus.OpenWindow
 	apiService *menus.ApiService
 	language   *menus.Language
 	quit       *menus.Quit
+	config     *Config
 }
 
 const (
@@ -49,25 +54,16 @@ const (
 )
 
 type Config struct {
-	WailsCtx context.Context
+	Context  context.Context // bind wails context
 	Language string
 }
 
-func Setup() (start, end func()) {
-	tray = &Tray{}
-	return systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
-}
-
 func SetConfig(cfg *Config) {
-	config = cfg
-	tray.ctx = config.WailsCtx
+	tray.config = cfg
+	ChangeLanguage(cfg.Language)
 }
 
 func ChangeLanguage(lang string) {
-	if tray == nil {
-		return
-	}
-
 	switch lang {
 	default:
 		tray.language.ClickChinese()
@@ -84,7 +80,7 @@ func (t *Tray) onReady() {
 		SetIcon(iconOpenWindow).
 		Watch(menus.OpenWindowListener{
 			OnOpenWindow: func() {
-				runtime.WindowShow(t.ctx)
+				runtime.WindowShow(t.config.Context)
 			},
 		})
 
@@ -96,10 +92,10 @@ func (t *Tray) onReady() {
 		SetIconStop(iconApiStart).
 		Watch(menus.ApiServiceListener{
 			OnStart: func() bool {
-				return server.StartServer()
+				return server.Start()
 			},
 			OnStop: func() bool {
-				return server.StopServer()
+				return server.Stop()
 			},
 		})
 
@@ -109,7 +105,7 @@ func (t *Tray) onReady() {
 		NewLanguage().
 		Watch(menus.LanguageListener{
 			OnLanguageChanged: func(filename string) bool {
-				runtime.EventsEmit(t.ctx, "onLanguageChanged", t.locale2Lang(filename))
+				runtime.EventsEmit(t.config.Context, "onLanguageChanged", t.locale2Lang(filename))
 				t.updateLocales(filename)
 				return true
 			},
@@ -121,7 +117,7 @@ func (t *Tray) onReady() {
 		NewQuit().
 		Watch(menus.QuitListener{
 			OnQuit: func() {
-				dialog, _ := runtime.MessageDialog(t.ctx, runtime.MessageDialogOptions{
+				dialog, _ := runtime.MessageDialog(t.config.Context, runtime.MessageDialogOptions{
 					Type:          runtime.QuestionDialog,
 					Title:         t.locale["quitDialog.title"],
 					Message:       t.locale["quitDialog.message"],
@@ -130,14 +126,14 @@ func (t *Tray) onReady() {
 					CancelButton:  t.locale["quitDialog.cancelButton"],
 				})
 				if dialog == "Yes" { // when default button => "Yes" is clicked
-					runtime.Quit(t.ctx)
+					runtime.Quit(t.config.Context)
 				}
 			},
 		})
 }
 
 func (t *Tray) onQuit() {
-	server.StopServer()
+	server.Stop()
 
 	// end menus properly
 	t.openWindow.StopWatch()
@@ -150,7 +146,7 @@ func (t *Tray) updateLocales(filename string) {
 	rawJson, _ := locales.ReadFile(filename)
 	t.locale = utils.GetLocaleFromJSON(rawJson)
 
-	runtime.WindowSetTitle(t.ctx, t.locale["appname"])
+	runtime.WindowSetTitle(t.config.Context, t.locale["appname"])
 	systray.SetTitle(t.locale["appname"])
 	systray.SetTooltip(t.locale["appname"])
 	t.openWindow.SetLocale(t.locale)
