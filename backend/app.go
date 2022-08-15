@@ -20,8 +20,8 @@ func (a *App) startup(ctx context.Context) {
 	// 在这里执行初始化设置
 	a.ctx = ctx
 	a.config = LoadConfig(ctx)
-	server.SetConfig(&a.config.Server)
-	tray.SetConfig(&a.config.Tray)
+	server.SetConfig(a.config.Server)
+	tray.SetConfig(a.config.Tray)
 
 	tray.Start()
 	log.Println("WAILS START UP")
@@ -71,5 +71,5 @@ func (a *App) resume() {
 
 func (a *App) ChangeLanguage(lang string) {
 	tray.ChangeLanguage(lang)
-	log.Println("WAILS/App ChangeLanguage")
+	log.Printf("WAILS/App ChangeLanguage(%s) \n", lang)
 }

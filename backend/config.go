@@ -9,18 +9,18 @@ import (
 )
 
 type Config struct {
-	Server server.Config
-	Tray   tray.Config
+	Server *server.Config
+	Tray   *tray.Config
 }
 
 func LoadConfig(ctx context.Context) *Config {
 	config := &Config{
-		Server: server.Config{
+		Server: &server.Config{
 			HttpPort:      ":10080",
 			HttpsPort:     ":10433",
 			CertsDirCache: "",
 		},
-		Tray: tray.Config{
+		Tray: &tray.Config{
 			Context:  ctx,
 			Language: "zh",
 		},

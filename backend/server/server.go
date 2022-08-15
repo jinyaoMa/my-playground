@@ -22,22 +22,6 @@ var certs embed.FS
 
 var server *Server
 
-func init() {
-	server = &Server{}
-}
-
-type Server struct {
-	isRunning    bool
-	mtx          sync.Mutex
-	errGroup     errgroup.Group
-	http         *http.Server // redirector
-	https        *http.Server // server (tls)
-	tlsConfig    *tls.Config
-	httpHandler  http.Handler
-	httpsHandler http.Handler
-	config       *Config
-}
-
 const (
 	CfgNameHttpPort      = "Server.HttpPort"
 	CfgNameHttpsPort     = "Server.HttpsPort"
@@ -50,29 +34,52 @@ type Config struct {
 	CertsDirCache string
 }
 
+type Server struct {
+	isRunning    bool
+	config       *Config
+	mtx          sync.Mutex
+	errGroup     errgroup.Group
+	tlsConfig    *tls.Config
+	httpHandler  http.Handler
+	httpsHandler http.Handler
+	http         *http.Server // redirector
+	https        *http.Server // server (tls)
+}
+
+func init() {
+	server = &Server{}
+}
+
 func SetConfig(cfg *Config) {
-	Stop() // stop server if running
+	needRestart := Stop() // stop server if running
 
-	server.config = cfg
+	server.mtx.Lock()
+	{
+		server.config = cfg
 
-	manager := &autocert.Manager{
-		Prompt: autocert.AcceptTOS,
-	}
-	if cfg.CertsDirCache == "" {
-		manager.Cache = nil
-	} else if utils.IsDirectoryExist(cfg.CertsDirCache) {
-		manager.Cache = autocert.DirCache(cfg.CertsDirCache)
-	}
-	tlsConfig := manager.TLSConfig()
-	tlsConfig.GetCertificate = server.getSelfSignedOrLetsEncryptCert(manager)
+		manager := &autocert.Manager{
+			Prompt: autocert.AcceptTOS,
+		}
+		if cfg.CertsDirCache == "" {
+			manager.Cache = nil
+		} else if utils.IsDirectoryExist(cfg.CertsDirCache) {
+			manager.Cache = autocert.DirCache(cfg.CertsDirCache)
+		}
 
-	server = &Server{
-		tlsConfig: tlsConfig,
-		httpHandler: manager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		server.tlsConfig = manager.TLSConfig()
+		server.tlsConfig.GetCertificate = server.getSelfSignedOrLetsEncryptCert(manager)
+
+		server.httpHandler = manager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			target := "https://" + strings.Replace(r.Host, cfg.HttpPort, cfg.HttpsPort, 1) + r.RequestURI
 			http.Redirect(w, r, target, http.StatusMovedPermanently)
-		})),
-		httpsHandler: setup(gin.Default()),
+		}))
+
+		server.httpsHandler = setup(gin.Default())
+	}
+	server.mtx.Unlock()
+
+	if needRestart { // restart server if it's stopped to set config
+		Start()
 	}
 }
 

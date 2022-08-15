@@ -35,20 +35,6 @@ var (
 	Start, Stop func() // start/stop tray
 )
 
-func init() {
-	tray = &Tray{}
-	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
-}
-
-type Tray struct {
-	locale     map[string]string
-	openWindow *menus.OpenWindow
-	apiService *menus.ApiService
-	language   *menus.Language
-	quit       *menus.Quit
-	config     *Config
-}
-
 const (
 	CfgNameLanguage = "Tray.Language"
 )
@@ -56,6 +42,20 @@ const (
 type Config struct {
 	Context  context.Context // bind wails context
 	Language string
+}
+
+type Tray struct {
+	config     *Config
+	locale     map[string]string
+	openWindow *menus.OpenWindow
+	apiService *menus.ApiService
+	language   *menus.Language
+	quit       *menus.Quit
+}
+
+func init() {
+	tray = &Tray{}
+	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
 }
 
 func SetConfig(cfg *Config) {
@@ -135,11 +135,12 @@ func (t *Tray) onReady() {
 func (t *Tray) onQuit() {
 	server.Stop()
 
-	// end menus properly
-	t.openWindow.StopWatch()
-	t.apiService.StopWatch()
-	t.language.StopWatch()
-	t.quit.StopWatch()
+	{ // end menus properly
+		t.openWindow.StopWatch()
+		t.apiService.StopWatch()
+		t.language.StopWatch()
+		t.quit.StopWatch()
+	}
 }
 
 func (t *Tray) updateLocales(filename string) {

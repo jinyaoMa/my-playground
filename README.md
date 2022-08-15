@@ -4,14 +4,14 @@ A collection of services.
 
 ## Ports Used in Development
 
-* `10000` for `/backend/panel/`
-* `10001` for `/frontend/panel/`
-* `10002` for `/frontend/docs/`
-* `10003` for `/backend/server/`
+* `10000` for Wails backend, edit `wails.json` to configure
+* `10001` for Wails frontend, edit `frontend/app/vite.config.js` to configure
+* `10002` for documentation, edit `frontend/docs/.vitepress/config.js` to configure
+* `10080` and `10443` for in-process web server, edit `/backend/config.go` to configure
 
 ## Environment, Tools and Dependencies
 
-> I am using Windows 10 Home 21H1 19043.1826 with [VS Code + GCC](https://code.visualstudio.com/docs/cpp/config-mingw) .
+> I am using Windows 10 Home 21H1 19043.1826 with [VS Code + GCC](https://code.visualstudio.com/docs/cpp/config-mingw).
 
 | Name              | Version               | Link                                                           |
 | :---------------- | :-------------------- | :------------------------------------------------------------- |
@@ -25,7 +25,6 @@ A collection of services.
 | Vite              | 2.9+                  | https://vitejs.dev/                                            |
 | VitePress         | 1.0.0-alpha.4+        | https://vitepress.vuejs.org/                                   |
 | Vue               | 3.2+                  | https://vuejs.org/                                             |
-| ~~Systray~~       | ~~1.2.1+~~            | ~~https://github.com/getlantern/systray~~                      |
 | Systray (fyne.io) | 1.10.1+               | https://github.com/fyne-io/systray                             |
 | Gorm              | 1.23.8+               | https://gorm.io/                                               |
 | SQLite Driver     | 1.3.6+                | https://gorm.io/                                               |
