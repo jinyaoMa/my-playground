@@ -1,7 +1,7 @@
 package menus
 
 import (
-	"github.com/getlantern/systray"
+	"fyne.io/systray"
 )
 
 type QuitListener struct {

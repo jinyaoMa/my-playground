@@ -10,7 +10,7 @@ import (
 	"my-playground/backend/utils"
 	"strings"
 
-	"github.com/getlantern/systray"
+	"fyne.io/systray"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
@@ -53,14 +53,14 @@ type Config struct {
 	Language string
 }
 
-func Setup(cfg *Config) {
-	config = cfg
+func Setup() (start, end func()) {
+	tray = &Tray{}
+	return systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
+}
 
-	tray = &Tray{
-		ctx: config.WailsCtx,
-	}
-	systray.Register(tray.onReady, tray.onQuit)
-	go tray.customNativeLoop()
+func SetConfig(cfg *Config) {
+	config = cfg
+	tray.ctx = config.WailsCtx
 }
 
 func ChangeLanguage(lang string) {
@@ -130,20 +130,20 @@ func (t *Tray) onReady() {
 					CancelButton:  t.locale["quitDialog.cancelButton"],
 				})
 				if dialog == "Yes" { // when default button => "Yes" is clicked
-					systray.Quit()
+					runtime.Quit(t.ctx)
 				}
 			},
 		})
-
-	ChangeLanguage(config.Language)
-	// t.apiService.ClickStart()
 }
 
 func (t *Tray) onQuit() {
-	t.openWindow.StopWatch()
-	t.quit.StopWatch()
 	server.StopServer()
-	runtime.Quit(t.ctx)
+
+	// end menus properly
+	t.openWindow.StopWatch()
+	t.apiService.StopWatch()
+	t.language.StopWatch()
+	t.quit.StopWatch()
 }
 
 func (t *Tray) updateLocales(filename string) {

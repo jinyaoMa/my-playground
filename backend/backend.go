@@ -3,6 +3,7 @@ package backend
 import (
 	"embed"
 	"log"
+	"my-playground/backend/tray"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/logger"
@@ -12,6 +13,12 @@ import (
 
 //go:embed .assets
 var assets embed.FS
+
+var startTrayLoop, endTrayLoop func()
+
+func init() {
+	startTrayLoop, endTrayLoop = tray.Setup()
+}
 
 func Run() {
 	app := &App{}

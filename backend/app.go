@@ -19,6 +19,11 @@ func (a *App) startup(ctx context.Context) {
 	// 在这里执行初始化设置
 	a.ctx = ctx
 	a.config = LoadConfig(ctx)
+	tray.SetConfig(&a.config.Tray)
+	server.Setup(&a.config.Server)
+
+	startTrayLoop()
+	tray.ChangeLanguage(a.config.Tray.Language)
 }
 
 // domReady is called after the front-end dom has been loaded
@@ -27,8 +32,6 @@ func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
 
-	server.Setup(&a.config.Server)
-	tray.Setup(&a.config.Tray)
 }
 
 // beforeClose is called when the application is about to quit,
@@ -46,7 +49,7 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 func (a *App) shutdown(ctx context.Context) {
 	// Perform your teardown here
 	// 在此处做一些资源释放的操作
-
+	endTrayLoop()
 }
 
 func (a *App) suspend() {
