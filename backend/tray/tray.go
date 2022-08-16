@@ -3,6 +3,7 @@ package tray
 import (
 	"context"
 	"embed"
+	"fmt"
 	"my-playground/backend/model"
 	"my-playground/backend/server"
 	"my-playground/backend/tray/menus"
@@ -44,7 +45,6 @@ var (
 func init() {
 	tray = &Tray{}
 	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
-	utils.Logger(PkgName).Println("TRAY INIT")
 }
 
 type Config struct {
@@ -105,6 +105,12 @@ func (t *Tray) onReady() {
 			OnStop: func() bool {
 				return server.My().Stop()
 			},
+			OnOpenSwagger: func() {
+				runtime.BrowserOpenURL(
+					t.config.Context,
+					fmt.Sprintf("https://localhost%s/swagger/index.html", server.My().GetHttpsPort()),
+				)
+			},
 		})
 
 	systray.AddSeparator()
@@ -141,8 +147,6 @@ func (t *Tray) onReady() {
 				}
 			},
 		})
-
-	utils.Logger(PkgName).Println("TRAY ON READY")
 }
 
 func (t *Tray) onQuit() {
@@ -156,7 +160,6 @@ func (t *Tray) onQuit() {
 	}
 
 	runtime.Quit(t.config.Context)
-	utils.Logger(PkgName).Println("TRAY ON QUIT")
 }
 
 func (t *Tray) updateLocales(filename string) {

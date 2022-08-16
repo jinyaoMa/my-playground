@@ -7,6 +7,7 @@
   "english": "English",
   "apiService.start": "Enable API service",
   "apiService.stop": "Disable API service",
+  "apiService.swagger": "Open Swagger UI",
   "quitDialog.title": "My Playground",
   "quitDialog.message": "Are you sure to quit?",
   "quitDialog.defaultButtun": "Quit",

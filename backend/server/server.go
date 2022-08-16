@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"embed"
-	"log"
 	"my-playground/backend/utils"
 	"net/http"
 	"path/filepath"
@@ -34,7 +33,6 @@ var (
 
 func init() {
 	server = &Server{}
-	utils.Logger(PkgName).Println("SERVER INIT")
 }
 
 type Config struct {
@@ -120,7 +118,6 @@ func (s *Server) Start() (ok bool) {
 	})
 
 	s.isRunning = true
-	utils.Logger(PkgName).Println("SERVER START")
 	return true
 }
 
@@ -135,19 +132,22 @@ func (s *Server) Stop() (ok bool) {
 	defer cancel()
 
 	if err := s.http.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
-		log.Printf("Server (HTTP) shutdown error: %+v\n", err)
+		utils.Logger(PkgName).Printf("server (http) shutdown error: %+v\n", err)
 	}
 	if err := s.https.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
-		log.Printf("Server (HTTP/S) shutdown error: %+v\n", err)
+		utils.Logger(PkgName).Printf("server (http/s) shutdown error: %+v\n", err)
 	}
 
 	if err := s.errGroup.Wait(); err != nil && err != http.ErrServerClosed {
-		log.Printf("Server running error: %+v\n", err)
+		utils.Logger(PkgName).Printf("server running error: %+v\n", err)
 	}
 
 	s.isRunning = false
-	utils.Logger(PkgName).Println("SERVER STOP")
 	return true
+}
+
+func (s *Server) GetHttpsPort() string {
+	return s.config.HttpsPort
 }
 
 func (s *Server) getSelfSignedOrLetsEncryptCert(certManager *autocert.Manager) func(hello *tls.ClientHelloInfo) (*tls.Certificate, error) {
@@ -165,10 +165,10 @@ func (s *Server) getSelfSignedOrLetsEncryptCert(certManager *autocert.Manager) f
 			certificate, err = tls.X509KeyPair(crt, key)
 		}
 		if err != nil {
-			log.Printf("%s\nFalling back to Letsencrypt\n", err)
+			utils.Logger(PkgName).Printf("%s\nFalling back to Letsencrypt\n", err)
 			return certManager.GetCertificate(hello)
 		}
-		log.Println("Loaded selfsigned certificate.")
+		utils.Logger(PkgName).Println("Loaded selfsigned certificate")
 		return &certificate, err
 	}
 }

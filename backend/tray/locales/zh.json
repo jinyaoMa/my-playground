@@ -7,6 +7,7 @@
   "english": "English",
   "apiService.start": "开启 API 服务",
   "apiService.stop": "关闭 API 服务",
+  "apiService.swagger": "打开 API 文档",
   "quitDialog.title": "我的游乐场",
   "quitDialog.message": "确认退出 我的游乐场 吗？",
   "quitDialog.defaultButtun": "退出",

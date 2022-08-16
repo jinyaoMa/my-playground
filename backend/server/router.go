@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	swaggerdocs "my-playground/backend/server/swagger"
-	"my-playground/backend/utils"
 
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -29,6 +28,5 @@ func SetupHandler(handler *gin.Engine) *gin.Engine {
 		),
 	)
 
-	utils.Logger(PkgName).Println("SERVER SETUP")
 	return handler
 }

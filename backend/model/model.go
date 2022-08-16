@@ -28,6 +28,4 @@ func init() {
 	db.AutoMigrate(
 		&MpOption{},
 	)
-
-	utils.Logger(PkgName).Println("DATABASE INIT")
 }
