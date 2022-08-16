@@ -6,8 +6,6 @@ package.json.md5
 
 .tools
 build/bin
-*.db
-*.log
 *-res.syso
 
 backend/.assets

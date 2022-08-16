@@ -2,10 +2,10 @@ package backend
 
 import (
 	"context"
-	"log"
 	"my-playground/backend/model"
 	"my-playground/backend/server"
 	"my-playground/backend/tray"
+	"my-playground/backend/utils"
 )
 
 type Config struct {
@@ -13,7 +13,7 @@ type Config struct {
 	Tray   *tray.Config
 }
 
-func LoadConfig(ctx context.Context) *Config {
+func MyConfig(ctx context.Context) *Config {
 	config := &Config{
 		Server: &server.Config{
 			HttpPort:      ":10080",
@@ -29,7 +29,7 @@ func LoadConfig(ctx context.Context) *Config {
 	var options model.MpOptions
 	result := options.Load()
 	if result.Error != nil {
-		log.Fatalln("fail to load options")
+		utils.Logger(PkgName).Fatalf("fail to load options: %+v\n", result.Error)
 	}
 	if result.RowsAffected == 0 {
 		// options not yet generated and stored
@@ -61,7 +61,7 @@ func (c *Config) saveOptions(options model.MpOptions) {
 
 	result := options.Save()
 	if result.Error != nil {
-		log.Fatalln("fail to save options")
+		utils.Logger(PkgName).Fatalf("fail to save options: %+v\n", result.Error)
 	}
 }
 

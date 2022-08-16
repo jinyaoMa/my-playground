@@ -20,13 +20,19 @@ import (
 //go:embed certs
 var certs embed.FS
 
-var server *Server
-
 const (
 	CfgNameHttpPort      = "Server.HttpPort"
 	CfgNameHttpsPort     = "Server.HttpsPort"
 	CfgNameCertsDirCache = "Server.CertsDirCache"
 )
+
+var (
+	server *Server
+)
+
+func init() {
+	server = &Server{}
+}
 
 type Config struct {
 	HttpPort      string
@@ -46,16 +52,16 @@ type Server struct {
 	https        *http.Server // server (tls)
 }
 
-func init() {
-	server = &Server{}
+func My() *Server {
+	return server
 }
 
-func SetConfig(cfg *Config) {
-	needRestart := Stop() // stop server if running
+func (s *Server) SetConfig(cfg *Config) *Server {
+	needRestart := s.Stop() // stop server if running
 
-	server.mtx.Lock()
+	s.mtx.Lock()
 	{
-		server.config = cfg
+		s.config = cfg
 
 		manager := &autocert.Manager{
 			Prompt: autocert.AcceptTOS,
@@ -66,75 +72,76 @@ func SetConfig(cfg *Config) {
 			manager.Cache = autocert.DirCache(cfg.CertsDirCache)
 		}
 
-		server.tlsConfig = manager.TLSConfig()
-		server.tlsConfig.GetCertificate = server.getSelfSignedOrLetsEncryptCert(manager)
+		s.tlsConfig = manager.TLSConfig()
+		s.tlsConfig.GetCertificate = s.getSelfSignedOrLetsEncryptCert(manager)
 
-		server.httpHandler = manager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		s.httpHandler = manager.HTTPHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			target := "https://" + strings.Replace(r.Host, cfg.HttpPort, cfg.HttpsPort, 1) + r.RequestURI
 			http.Redirect(w, r, target, http.StatusMovedPermanently)
 		}))
 
-		server.httpsHandler = setup(gin.Default())
+		s.httpsHandler = SetupHandler(gin.Default())
 	}
-	server.mtx.Unlock()
+	s.mtx.Unlock()
 
 	if needRestart { // restart server if it's stopped to set config
-		Start()
+		s.Start()
 	}
+	return s
 }
 
-func Start() (ok bool) {
-	server.mtx.Lock()
-	defer server.mtx.Unlock()
-	if server.isRunning { // already running, cannot start again
+func (s *Server) Start() (ok bool) {
+	s.mtx.Lock()
+	defer s.mtx.Unlock()
+	if s.isRunning { // already running, cannot start again
 		return false
 	}
 
-	server.http = &http.Server{
-		Addr:     server.config.HttpPort,
-		Handler:  server.httpHandler,
+	s.http = &http.Server{
+		Addr:     s.config.HttpPort,
+		Handler:  s.httpHandler,
 		ErrorLog: nil,
 	}
-	server.https = &http.Server{
-		Addr:      server.config.HttpsPort,
-		Handler:   server.httpsHandler,
-		TLSConfig: server.tlsConfig,
+	s.https = &http.Server{
+		Addr:      s.config.HttpsPort,
+		Handler:   s.httpsHandler,
+		TLSConfig: s.tlsConfig,
 		ErrorLog:  nil,
 	}
 
-	server.errGroup.Go(func() error {
-		return server.http.ListenAndServe()
+	s.errGroup.Go(func() error {
+		return s.http.ListenAndServe()
 	})
-	server.errGroup.Go(func() error {
-		return server.https.ListenAndServeTLS("", "")
+	s.errGroup.Go(func() error {
+		return s.https.ListenAndServeTLS("", "")
 	})
 
-	server.isRunning = true
+	s.isRunning = true
 	return true
 }
 
-func Stop() (ok bool) {
-	server.mtx.Lock()
-	defer server.mtx.Unlock()
-	if !server.isRunning { // already stop or not yet start
+func (s *Server) Stop() (ok bool) {
+	s.mtx.Lock()
+	defer s.mtx.Unlock()
+	if !s.isRunning { // already stop or not yet start
 		return false
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	if err := server.http.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+	if err := s.http.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
 		log.Printf("Server (HTTP) shutdown error: %+v\n", err)
 	}
-	if err := server.https.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
+	if err := s.https.Shutdown(ctx); err != nil && err != http.ErrServerClosed {
 		log.Printf("Server (HTTP/S) shutdown error: %+v\n", err)
 	}
 
-	if err := server.errGroup.Wait(); err != nil && err != http.ErrServerClosed {
+	if err := s.errGroup.Wait(); err != nil && err != http.ErrServerClosed {
 		log.Printf("Server running error: %+v\n", err)
 	}
 
-	server.isRunning = false
+	s.isRunning = false
 	return true
 }
 

@@ -2,16 +2,30 @@ package utils
 
 import (
 	"encoding/json"
+	"log"
 	"os"
 	"path/filepath"
 )
 
-func GetExecutablePath() (path string, err error) {
-	path, err = os.Executable()
-	if err == nil {
-		path = filepath.Dir(path)
+const (
+	PkgName = "utils"
+)
+
+var (
+	executablePath string
+)
+
+func init() {
+	var err error
+	executablePath, err = os.Executable()
+	if err != nil {
+		log.Fatalf("[%s] fail to get executable path: %+v\n", PkgName, err)
 	}
-	return
+	executablePath = filepath.Dir(executablePath)
+}
+
+func GetExecutablePath(elem ...string) string {
+	return filepath.Join(append([]string{executablePath}, elem...)...)
 }
 
 func GetLocaleFromJSON(rawJson []byte) map[string]string {

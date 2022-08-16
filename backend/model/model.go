@@ -3,7 +3,6 @@ package model
 import (
 	"log"
 	"my-playground/backend/utils"
-	"path/filepath"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -12,13 +11,9 @@ import (
 var db *gorm.DB
 
 func init() {
-	path, err := utils.GetExecutablePath()
-	if err != nil {
-		log.Fatalln("failed to get executable path")
-	}
-
+	var err error
 	db, err = gorm.Open(
-		sqlite.Open(filepath.Join(path, "my-playground.db")),
+		sqlite.Open(utils.GetExecutablePath("my-playground.db")),
 		&gorm.Config{},
 	)
 	if err != nil {

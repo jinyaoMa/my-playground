@@ -32,3 +32,63 @@ A collection of services.
 | Swaggo            | 1.8.4+                | https://github.com/swaggo/swag                                 |
 | Gin Swagger       | 1.5.2+                | https://github.com/swaggo/gin-swagger                          |
 | Air               | 1.40.4+               | https://github.com/cosmtrek/air                                |
+
+## Backend Code Script Order Norms
+
+``` go
+//go:embed or other variables with special comments
+var PubFs embed.FS // public
+//go:embed or other variables with special comments
+var PriFs embed.FS // private
+
+const (
+  // Constant variable (must be public)
+  // Variable name starts with 3-letter prefix
+  // Capital first letter of each word
+  CstIntValue = iota
+  CstIntValue1
+  // ...
+)
+
+var (
+  // Public variable
+  // Capital first letter of each word
+  PubSimpleFunc func()
+
+  // Private variable
+  // Capital first letter of each word except the first one
+  priIntValue int
+)
+
+func init() {}
+func main() {}
+
+// Util/Middleware/Handler functions (must be public)
+func UtilFunction() {}
+
+// Interface starts with Capital 'I'
+// Capital first letter of each word
+type ISimpleInterface interface {}
+
+// Struct
+// Capital first letter of each word
+type SimpleStruct struct {}
+
+// Constructor function
+func Constructor() {}
+
+// Public struct functions
+// SimpleStruct => ss
+func (ss *SimpleStruct) PublicFunction() {}
+
+// Private struct functions
+func (ss *SimpleStruct) privateFunction() {}
+
+// Other structs...
+type AnotherStruct struct {}
+func Constructor() {}
+// AnotherStruct => as
+func (as *AnotherStruct) PublicFunction() {}
+func (as *AnotherStruct) privateFunction() {}
+// ...
+```

@@ -2,7 +2,7 @@ package backend
 
 import (
 	"embed"
-	"log"
+	"my-playground/backend/utils"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/logger"
@@ -13,8 +13,12 @@ import (
 //go:embed .assets
 var assets embed.FS
 
-func Run() {
-	app := &App{}
+const (
+	PkgName = "backend"
+)
+
+func RunApp() (app *App) {
+	app = &App{}
 
 	// Create application with options
 	// 使用选项创建应用
@@ -60,6 +64,7 @@ func Run() {
 	})
 
 	if err != nil {
-		log.Fatalln(err)
+		utils.Logger(PkgName).Fatalf("fail to run wails: %+v\n", err)
 	}
+	return
 }

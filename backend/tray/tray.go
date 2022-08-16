@@ -30,14 +30,20 @@ var iconApiStop []byte
 //go:embed locales/zh.json
 var locales embed.FS
 
-var (
-	tray        *Tray
-	Start, Stop func() // start/stop tray
-)
-
 const (
 	CfgNameLanguage = "Tray.Language"
 )
+
+var (
+	Start, Stop func() // start/stop tray
+
+	tray *Tray
+)
+
+func init() {
+	tray = &Tray{}
+	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
+}
 
 type Config struct {
 	Context  context.Context // bind wails context
@@ -53,23 +59,23 @@ type Tray struct {
 	quit       *menus.Quit
 }
 
-func init() {
-	tray = &Tray{}
-	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
+func My() *Tray {
+	return tray
 }
 
-func SetConfig(cfg *Config) {
-	tray.config = cfg
-	ChangeLanguage(cfg.Language)
+func (t *Tray) SetConfig(cfg *Config) *Tray {
+	t.config = cfg
+	return t.ChangeLanguage(cfg.Language)
 }
 
-func ChangeLanguage(lang string) {
+func (t *Tray) ChangeLanguage(lang string) *Tray {
 	switch lang {
 	default:
-		tray.language.ClickChinese()
+		t.language.ClickChinese()
 	case "en":
-		tray.language.ClickEnglish()
+		t.language.ClickEnglish()
 	}
+	return t
 }
 
 func (t *Tray) onReady() {
@@ -92,10 +98,10 @@ func (t *Tray) onReady() {
 		SetIconStop(iconApiStart).
 		Watch(menus.ApiServiceListener{
 			OnStart: func() bool {
-				return server.Start()
+				return server.My().Start()
 			},
 			OnStop: func() bool {
-				return server.Stop()
+				return server.My().Stop()
 			},
 		})
 
@@ -133,7 +139,7 @@ func (t *Tray) onReady() {
 }
 
 func (t *Tray) onQuit() {
-	server.Stop()
+	server.My().Stop()
 
 	{ // end menus properly
 		t.openWindow.StopWatch()
