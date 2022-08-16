@@ -96,8 +96,8 @@ func (t *Tray) onReady() {
 
 	t.apiService = menus.
 		NewApiService().
-		SetIconStart(iconApiStop).
-		SetIconStop(iconApiStart).
+		SetIconStart(iconApiStart).
+		SetIconStop(iconApiStop).
 		Watch(menus.ApiServiceListener{
 			OnStart: func() bool {
 				return server.My().Start()
