@@ -92,3 +92,12 @@ func (as *AnotherStruct) PublicFunction() {}
 func (as *AnotherStruct) privateFunction() {}
 // ...
 ```
+
+``` go
+// Log Norms
+// Printf/Println: Capital first letter of each word OR capitalize all characters
+Printf("Wails/App ChangeLanguage(%s)\n", "zh") // remember to add newline '\n' at the end
+Println("WAILS SHUTDOWN")
+// Fatalf: all characters lowercase, end with ': %+v\n' and error
+Fatalf("fail to do something: %+v\n", err)
+```

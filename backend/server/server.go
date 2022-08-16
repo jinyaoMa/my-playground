@@ -21,6 +21,8 @@ import (
 var certs embed.FS
 
 const (
+	PkgName = "server"
+
 	CfgNameHttpPort      = "Server.HttpPort"
 	CfgNameHttpsPort     = "Server.HttpsPort"
 	CfgNameCertsDirCache = "Server.CertsDirCache"
@@ -32,6 +34,7 @@ var (
 
 func init() {
 	server = &Server{}
+	utils.Logger(PkgName).Println("SERVER INIT")
 }
 
 type Config struct {
@@ -117,6 +120,7 @@ func (s *Server) Start() (ok bool) {
 	})
 
 	s.isRunning = true
+	utils.Logger(PkgName).Println("SERVER START")
 	return true
 }
 
@@ -142,6 +146,7 @@ func (s *Server) Stop() (ok bool) {
 	}
 
 	s.isRunning = false
+	utils.Logger(PkgName).Println("SERVER STOP")
 	return true
 }
 

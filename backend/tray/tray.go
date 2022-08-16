@@ -3,7 +3,6 @@ package tray
 import (
 	"context"
 	"embed"
-	"log"
 	"my-playground/backend/model"
 	"my-playground/backend/server"
 	"my-playground/backend/tray/menus"
@@ -31,6 +30,8 @@ var iconApiStop []byte
 var locales embed.FS
 
 const (
+	PkgName = "tray"
+
 	CfgNameLanguage = "Tray.Language"
 )
 
@@ -43,6 +44,7 @@ var (
 func init() {
 	tray = &Tray{}
 	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
+	utils.Logger(PkgName).Println("TRAY INIT")
 }
 
 type Config struct {
@@ -123,7 +125,7 @@ func (t *Tray) onReady() {
 		NewQuit().
 		Watch(menus.QuitListener{
 			OnQuit: func() {
-				dialog, _ := runtime.MessageDialog(t.config.Context, runtime.MessageDialogOptions{
+				dialog, err := runtime.MessageDialog(t.config.Context, runtime.MessageDialogOptions{
 					Type:          runtime.QuestionDialog,
 					Title:         t.locale["quitDialog.title"],
 					Message:       t.locale["quitDialog.message"],
@@ -131,11 +133,16 @@ func (t *Tray) onReady() {
 					DefaultButton: t.locale["quitDialog.defaultButtun"],
 					CancelButton:  t.locale["quitDialog.cancelButton"],
 				})
+				if err != nil {
+					utils.Logger(PkgName).Fatalf("fail to open quit dialog: %+v\n", err)
+				}
 				if dialog == "Yes" { // when default button => "Yes" is clicked
 					runtime.Quit(t.config.Context)
 				}
 			},
 		})
+
+	utils.Logger(PkgName).Println("TRAY ON READY")
 }
 
 func (t *Tray) onQuit() {
@@ -147,6 +154,7 @@ func (t *Tray) onQuit() {
 		t.language.StopWatch()
 		t.quit.StopWatch()
 	}
+	utils.Logger(PkgName).Println("TRAY ON QUIT")
 }
 
 func (t *Tray) updateLocales(filename string) {
@@ -166,7 +174,7 @@ func (t *Tray) updateLocales(filename string) {
 	}
 	result := option.Update(t.locale2Lang(filename))
 	if result.Error != nil {
-		log.Fatalln("failed to update language option")
+		utils.Logger(PkgName).Fatalf("failed to update language option: %+v\n", result.Error)
 	}
 }
 

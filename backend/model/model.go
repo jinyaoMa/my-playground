@@ -1,14 +1,19 @@
 package model
 
 import (
-	"log"
 	"my-playground/backend/utils"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+const (
+	PkgName = "model"
+)
+
+var (
+	db *gorm.DB
+)
 
 func init() {
 	var err error
@@ -17,8 +22,12 @@ func init() {
 		&gorm.Config{},
 	)
 	if err != nil {
-		log.Fatalln("failed to connect database")
+		utils.Logger(PkgName).Fatalf("failed to connect database: %+v\n", err)
 	}
 
-	db.AutoMigrate(&MpOption{})
+	db.AutoMigrate(
+		&MpOption{},
+	)
+
+	utils.Logger(PkgName).Println("DATABASE INIT")
 }
