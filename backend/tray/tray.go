@@ -137,7 +137,7 @@ func (t *Tray) onReady() {
 					utils.Logger(PkgName).Fatalf("fail to open quit dialog: %+v\n", err)
 				}
 				if dialog == "Yes" { // when default button => "Yes" is clicked
-					runtime.Quit(t.config.Context)
+					Stop()
 				}
 			},
 		})
@@ -154,6 +154,8 @@ func (t *Tray) onQuit() {
 		t.language.StopWatch()
 		t.quit.StopWatch()
 	}
+
+	runtime.Quit(t.config.Context)
 	utils.Logger(PkgName).Println("TRAY ON QUIT")
 }
 

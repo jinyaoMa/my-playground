@@ -18,18 +18,24 @@ func Logger(prefix string) *log.Logger {
 	label := "[" + prefix + "] "
 	flag := log.Ldate | log.Ltime | log.Lshortfile
 
-	if os.Getenv("WAILS_DEV") != "1" && logFile == nil {
-		// if in production mode and log file isn't opened yet
-		var err error
-		if logFile, err = os.OpenFile(
-			GetExecutablePath("my-playground.log"),
-			os.O_CREATE|os.O_WRONLY|os.O_APPEND,
-			0666,
-		); err == nil {
-			// open log file and cache logger
+	if os.Getenv("WAILS_DEV") != "1" {
+		// if in production mode
+		if logFile == nil {
+			// open log file if it isn't opened yet
+			logFile, _ = os.OpenFile(
+				GetExecutablePath("my-playground.log"),
+				os.O_CREATE|os.O_WRONLY|os.O_APPEND,
+				0666,
+			)
+		}
+
+		if logFile != nil {
+			// log file has been opened
 			loggers[prefix] = log.New(logFile, label, flag)
 			return loggers[prefix]
 		}
+
+		// ...pass to standard logger if cannot open log file
 	}
 
 	// in development mode, cache and return standard logger
