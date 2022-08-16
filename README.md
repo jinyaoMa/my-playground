@@ -95,12 +95,11 @@ func (as *AnotherStruct) privateFunction() {}
 
 ``` go
 // Log Norms
-// Test log
+// Fatalf: all characters lowercase, end with ': %+v\n' and error
+Fatalf("fail to do something: %+v\n", err)
+// Other prints can be like... (for testing)
 Printf("Wails/App ChangeLanguage(%s)\n", "zh") // remember to add newline '\n' at the end
-// Print notice
 Println("Loaded selfsigned certificate") // first letter capital
 Printf("%s\nFalling back to Letsencrypt\n", err) // err at the top, remember to add 2 '\n'
 Println("WAILS SHUTDOWN") // All letters capital
-// Fatalf: all characters lowercase, end with ': %+v\n' and error
-Fatalf("fail to do something: %+v\n", err)
 ```

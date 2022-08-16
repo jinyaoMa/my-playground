@@ -165,10 +165,8 @@ func (s *Server) getSelfSignedOrLetsEncryptCert(certManager *autocert.Manager) f
 			certificate, err = tls.X509KeyPair(crt, key)
 		}
 		if err != nil {
-			utils.Logger(PkgName).Printf("%s\nFalling back to Letsencrypt\n", err)
 			return certManager.GetCertificate(hello)
 		}
-		utils.Logger(PkgName).Println("Loaded selfsigned certificate")
 		return &certificate, err
 	}
 }

@@ -174,10 +174,11 @@ func (t *Tray) updateLocales(filename string) {
 	t.language.SetLocale(t.locale)
 	t.quit.SetLocale(t.locale)
 
+	t.config.Language = t.locale2Lang(filename)
 	option := model.MpOption{
 		Name: CfgNameLanguage,
 	}
-	result := option.Update(t.locale2Lang(filename))
+	result := option.Update(t.config.Language)
 	if result.Error != nil {
 		utils.Logger(PkgName).Fatalf("failed to update language option: %+v\n", result.Error)
 	}

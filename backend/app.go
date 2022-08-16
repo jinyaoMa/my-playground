@@ -17,7 +17,6 @@ type App struct {
 
 func (a *App) ChangeLanguage(lang string) {
 	tray.My().ChangeLanguage(lang)
-	utils.Logger(PkgName).Printf("WAILS/App ChangeLanguage(%s) \n", lang)
 }
 
 /* END - Public methods binded to wails frontend */
