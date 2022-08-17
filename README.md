@@ -36,7 +36,7 @@ Currently, my playground has 2 frontend apps, so 2 commands to put as shown belo
 | Name              | Version               | Link                                                           |
 | :---------------- | :-------------------- | :------------------------------------------------------------- |
 | Git               | 2.37+                 | https://git-scm.com/                                           |
-| GO                | 1.18+                 | https://go.dev/dl/                                             |
+| GO                | 1.19+                 | https://go.dev/dl/                                             |
 | Node (with NPM)   | 16.16+ (NPM v8.15.1+) | https://nodejs.org/                                            |
 | WebView2          | 103.0.1264.62+        | https://developer.microsoft.com/en-us/microsoft-edge/webview2/ |
 | UPX               | 3.96+                 | https://upx.github.io/                                         |
