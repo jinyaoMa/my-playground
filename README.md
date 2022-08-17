@@ -29,6 +29,17 @@ Currently, my playground has 2 frontend apps, so 2 commands to put as shown belo
 * `npm run app:build`
 * `npm run docs:build`
 
+## Lerna Commands
+
+``` shell
+# install dependencies for all scopes
+lerna bootstrap
+# add dependency "a" to scope "@jinyaoma/my-playground-b"
+lerna add a --scope=@jinyaoma/my-playground-b
+# run command "npm run test" for scope "@jinyaoma/my-playground-c"
+lerna --scope @jinyaoma/my-playground-c exec -- npm run test
+```
+
 ## Environment, Tools and Dependencies
 
 > I am using Windows 10 Home 21H1 19043.1826 with [VS Code + GCC](https://code.visualstudio.com/docs/cpp/config-mingw).
@@ -45,6 +56,7 @@ Currently, my playground has 2 frontend apps, so 2 commands to put as shown belo
 | Vite              | 2.9+                  | https://vitejs.dev/                                            |
 | VitePress         | 1.0.0-alpha.4+        | https://vitepress.vuejs.org/                                   |
 | Vue               | 3.2+                  | https://vuejs.org/                                             |
+| Sass              | 1.54.0+               | https://sass-lang.com/                                         |
 | Systray (fyne.io) | 1.10.1+               | https://github.com/fyne-io/systray                             |
 | Gorm              | 1.23.8+               | https://gorm.io/                                               |
 | SQLite Driver     | 1.3.6+                | https://gorm.io/                                               |
@@ -52,6 +64,7 @@ Currently, my playground has 2 frontend apps, so 2 commands to put as shown belo
 | Swaggo            | 1.8.4+                | https://github.com/swaggo/swag                                 |
 | Gin Swagger       | 1.5.2+                | https://github.com/swaggo/gin-swagger                          |
 | Air               | 1.40.4+               | https://github.com/cosmtrek/air                                |
+| SVG To Font       | 3.17.8+               | https://github.com/jaywcjlove/svgtofont                        |
 
 ## Backend Code Script Order Norms
 

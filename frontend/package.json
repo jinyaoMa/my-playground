@@ -3,6 +3,7 @@
     "utils",
     "components",
     "ui-kit",
+    "icons",
     "app"
   ],
   "scripts": {
@@ -10,7 +11,18 @@
     "app:build": "lerna --scope @jinyaoma/my-playground-app exec -- vite build --emptyOutDir",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
+    "icons:build": "svgtofont --sources ./icons/svg --output ./icons/fonts",
     "bootstrap": "lerna bootstrap"
+  },
+  "svgtofont": {
+    "outSVGReact": false,
+    "outSVGPath": false,
+    "emptyDist": true,
+    "fontName": "mp-icon",
+    "css": {
+      "filename": "mp-icon",
+      "include": "\\.css$"
+    }
   },
   "devDependencies": {
     "lerna": "^5.3.0",

@@ -1,0 +1,8 @@
+{
+  "name": "@jinyaoma/my-playground-icons",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "svgtofont": "^3.17.8"
+  }
+}
