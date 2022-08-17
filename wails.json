@@ -3,7 +3,7 @@
   "outputfilename": "my-playground",
   "assetdir": "backend/.assets",
   "frontend:install": "npm install && npx lerna bootstrap",
-  "frontend:build": "npx lerna --scope @jinyaoma/my-playground-app exec -- vite build --emptyOutDir",
+  "frontend:build": "npx lerna --scope @jinyaoma/my-playground-app exec -- vite build --emptyOutDir && npx vitepress build docs",
   "frontend:dev:watcher": "npx lerna --scope @jinyaoma/my-playground-app exec -- vite",
   "frontend:dev:serverUrl": "auto",
   "wailsjsdir": "frontend/app",

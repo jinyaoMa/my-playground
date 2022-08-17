@@ -18,6 +18,7 @@
         </div>
       </div>
       <div class="bar">
+        <div class="bar-btn" @click="onclickDocs">DOCS</div>
         <div class="bar-btn" @click="onclickMinimise">
           {{ t("topbar.minimise") }}
         </div>
@@ -56,6 +57,10 @@ export default {
       locale.value = lang;
     })
 
+    const onclickDocs = () => {
+      window.location.href = "/docs/index.html"
+    }
+
     const onclickMinimise = () => {
       WindowMinimise();
     };
@@ -68,6 +73,7 @@ export default {
       languages,
       locale,
       onclickLanguageHandle,
+      onclickDocs,
       onclickMinimise,
       onclickQuit,
     };
