@@ -27,11 +27,10 @@ func (a *App) startup(ctx context.Context) {
 	// Perform your setup here
 	// 在这里执行初始化设置
 	a.ctx = ctx
-	a.config = MyConfig(ctx)
-	server.My().SetConfig(a.config.Server)
-	tray.My().SetConfig(a.config.Tray)
+	a.config = LoadConfig(ctx)
 
-	tray.Start()
+	server.My().SetConfig(a.config.Server)
+
 	utils.Logger(PkgName).Println("WAILS START UP")
 }
 
@@ -40,6 +39,10 @@ func (a *App) startup(ctx context.Context) {
 func (a *App) domReady(ctx context.Context) {
 	// Add your action here
 	// 在这里添加你的操作
+	tray.My().
+		SetConfig(a.config.Tray).
+		Start()
+
 	utils.Logger(PkgName).Println("WAILS DOM READY")
 }
 

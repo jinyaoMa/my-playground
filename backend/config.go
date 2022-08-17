@@ -13,7 +13,7 @@ type Config struct {
 	Tray   *tray.Config
 }
 
-func MyConfig(ctx context.Context) *Config {
+func LoadConfig(ctx context.Context) *Config {
 	config := &Config{
 		Server: &server.Config{
 			HttpPort:      ":10080",

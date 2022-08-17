@@ -37,14 +37,12 @@ const (
 )
 
 var (
-	Start, Stop func() // start/stop tray
-
 	tray *Tray
 )
 
 func init() {
 	tray = &Tray{}
-	Start, Stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
+	tray.start, tray.stop = systray.RunWithExternalLoop(tray.onReady, tray.onQuit)
 }
 
 type Config struct {
@@ -53,12 +51,13 @@ type Config struct {
 }
 
 type Tray struct {
-	config     *Config
-	locale     map[string]string
-	openWindow *menus.OpenWindow
-	apiService *menus.ApiService
-	language   *menus.Language
-	quit       *menus.Quit
+	config      *Config
+	start, stop func() // start/stop tray
+	locale      map[string]string
+	openWindow  *menus.OpenWindow
+	apiService  *menus.ApiService
+	language    *menus.Language
+	quit        *menus.Quit
 }
 
 func My() *Tray {
@@ -77,6 +76,16 @@ func (t *Tray) ChangeLanguage(lang string) *Tray {
 	case "en":
 		t.language.ClickEnglish()
 	}
+	return t
+}
+
+func (t *Tray) Start() *Tray {
+	t.start()
+	return t
+}
+
+func (t *Tray) Stop() *Tray {
+	t.stop()
 	return t
 }
 
@@ -143,7 +152,7 @@ func (t *Tray) onReady() {
 					utils.Logger(PkgName).Fatalf("fail to open quit dialog: %+v\n", err)
 				}
 				if dialog == "Yes" { // when default button => "Yes" is clicked
-					Stop()
+					t.Stop()
 				}
 			},
 		})
