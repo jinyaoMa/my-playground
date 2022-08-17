@@ -2,7 +2,8 @@
  * @type {import('vitepress').UserConfig}
  */
 const config = {
-  base: "/docs/",
+  // set it to subdirectory in production inserting into /backend/.assets
+  base: process.env.NODE_ENV === "production" ? "/docs/" : "/",
   outDir: "../../backend/.assets/docs",
   vite: {
     server: {

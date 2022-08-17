@@ -4,10 +4,30 @@ A collection of services.
 
 ## Ports Used in Development
 
-* `10000` for Wails backend, edit `wails.json` to configure
-* `10001` for Wails frontend, edit `frontend/app/vite.config.js` to configure
-* `10002` for documentation, edit `frontend/docs/.vitepress/config.js` to configure
+* `10000` for Wails backend, edit `/wails.json` to configure
+* `10001` for Wails frontend, edit `/frontend/app/vite.config.js` to configure
+* `10002` for documentation, edit `/frontend/docs/.vitepress/config.js` to configure
 * `10080` and `10443` for in-process web server, edit `/backend/config.go` to configure
+
+## Package.json
+
+`package.json` files to take care of are located in `/package.json` and `/frontend/package.json`
+
+## Switch Frontend Watcher in Development
+
+Edit `/wails.json`, change the value of `frontend:dev:watcher` to one of the following:
+
+* `npm run app:dev` for `/frontend/app`
+* `npm run docs:dev` for `/frontend/docs`
+
+## Production Build
+
+Make sure to edit `/wails.json`, put **all frontend apps' build commands** into the value of `frontend:build`
+
+Currently, my playground has 2 frontend apps, so 2 commands to put as shown below:
+
+* `npm run app:build`
+* `npm run docs:build`
 
 ## Environment, Tools and Dependencies
 

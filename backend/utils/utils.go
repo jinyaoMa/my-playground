@@ -8,16 +8,24 @@ import (
 )
 
 var (
+	isDev          bool
 	executablePath string
 )
 
 func init() {
 	var err error
+
+	isDev = os.Getenv("WAILS_DEV") == "1"
+
 	executablePath, err = os.Executable()
 	if err != nil {
 		log.Fatalf("fail to get executable path: %+v\n", err)
 	}
 	executablePath = filepath.Dir(executablePath)
+}
+
+func IsDev() bool {
+	return isDev
 }
 
 func GetExecutablePath(elem ...string) string {

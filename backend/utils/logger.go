@@ -18,7 +18,7 @@ func Logger(prefix string) *log.Logger {
 	label := "[" + prefix + "] "
 	flag := log.Ldate | log.Ltime | log.Lshortfile
 
-	if os.Getenv("WAILS_DEV") != "1" {
+	if !isDev {
 		// if in production mode
 		if logFile == nil {
 			// open log file if it isn't opened yet

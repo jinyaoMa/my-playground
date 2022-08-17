@@ -12,9 +12,7 @@ backend/.assets
 backend/server/certs
 backend/server/swagger
 
-frontend/app/wailsjs
-
-**/.vitepress/dist
+frontend/wailsjs
 
 .DS_Store
 # dist

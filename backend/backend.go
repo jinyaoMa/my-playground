@@ -20,6 +20,13 @@ const (
 func RunApp() (app *App) {
 	app = &App{}
 
+	var wailsLogger logger.Logger
+	if utils.IsDev() {
+		wailsLogger = logger.NewDefaultLogger()
+	} else {
+		wailsLogger = logger.NewFileLogger(utils.GetExecutablePath("wails.log"))
+	}
+
 	// Create application with options
 	// 使用选项创建应用
 	err := wails.Run(&options.App{
@@ -40,7 +47,7 @@ func RunApp() (app *App) {
 		Assets:             assets,
 		AssetsHandler:      nil,
 		Menu:               nil,
-		Logger:             nil,
+		Logger:             wailsLogger,
 		LogLevel:           logger.DEBUG,
 		LogLevelProduction: logger.ERROR,
 		OnStartup:          app.startup,
