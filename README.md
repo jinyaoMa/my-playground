@@ -44,7 +44,7 @@ lerna --scope @jinyaoma/my-playground-c exec -- npm run test
 
 > I am using Windows 10 Home 21H1 19043.1826 with [VS Code v1.70.2 + GCC](https://code.visualstudio.com/docs/cpp/config-mingw).
 
-> Setup VS Code by installing recommended extensions, to do this, enter in `@recommended` while searching for extensions. Also, open the project with a workspace file `/.vscode/my-playground.code-workspace` to get the setting as mine.
+> Setup VS Code by installing recommended extensions, to do this, enter in `@recommended` while searching for extensions.
 
 | Name              | Version               | Link                                                             |
 | :---------------- | :-------------------- | :--------------------------------------------------------------- |

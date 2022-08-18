@@ -1,1 +1,1 @@
-import './fonts/mp-icon.css'
+import "./fonts/mp-icon.css";

@@ -3,7 +3,6 @@
     "EditorConfig.EditorConfig",
     "golang.go",
     "Vue.volar",
-    "DavidAnson.vscode-markdownlint",
-    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ]
 }

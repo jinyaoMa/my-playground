@@ -1,1 +1,1 @@
-export * from './open-link'
+export * from "./open-link";
