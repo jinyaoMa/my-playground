@@ -7,7 +7,7 @@
     "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
     "update:swag": ".tools\\swag init -g backend/server/router.go -o backend/server/swagger",
     "update:cert": "mkdir backend/server/certs || openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout backend/server/certs/localhost.key -out backend/server/certs/localhost.crt -subj \"//SKIP=skip/C=CN/ST=GD/L=Github/O=App/OU=Certs/CN=localhost/emailAddress=jinyao.ma@outlook.com\"",
-    "prepare:frontend": "cd frontend && npm install && npm run bootstrap && npm run icons:build && npm run app:build",
+    "prepare:frontend": "npm i && cd frontend && npm i && npm run bootstrap && npm run icons:build && npm run app:build",
     "prepare:backend": "go mod tidy && go mod vendor && npm run update:swag && npm run update:cert",
     "install:wails": "set \"GOBIN=%cd%\\.tools\" && go install github.com/wailsapp/wails/v2/cmd/wails@latest",
     "install:upx": "curl -L https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip > upx.zip && unzip -p upx.zip '*/upx.exe' > .tools/upx.exe && rm upx.zip",
@@ -22,5 +22,15 @@
   "bugs": {
     "url": "https://github.com/jinyaoMa/my-playground/issues"
   },
-  "homepage": "https://github.com/jinyaoMa/my-playground#readme"
+  "homepage": "https://github.com/jinyaoMa/my-playground#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "eslint": "^8.22.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "typescript": "^4.7.4"
+  }
 }

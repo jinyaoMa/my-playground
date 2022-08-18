@@ -4,10 +4,10 @@ A collection of services.
 
 ## Ports Used in Development
 
-* `10000` for Wails backend, edit `/wails.json` to configure
-* `10001` for Wails frontend, edit `/frontend/app/vite.config.js` to configure
-* `10002` for documentation, edit `/frontend/docs/.vitepress/config.js` to configure
-* `10080` and `10443` for in-process web server, edit `/backend/config.go` to configure
+- `10000` for Wails backend, edit `/wails.json` to configure
+- `10001` for Wails frontend, edit `/frontend/app/vite.config.js` to configure
+- `10002` for documentation, edit `/frontend/docs/.vitepress/config.js` to configure
+- `10080` and `10443` for in-process web server, edit `/backend/config.go` to configure
 
 ## Package.json
 
@@ -17,8 +17,8 @@ A collection of services.
 
 Edit `/wails.json`, change the value of `frontend:dev:watcher` to one of the following:
 
-* `npm run app:dev` for `/frontend/app`
-* `npm run docs:dev` for `/frontend/docs`
+- `npm run app:dev` for `/frontend/app`
+- `npm run docs:dev` for `/frontend/docs`
 
 ## Production Build
 
@@ -26,12 +26,12 @@ Make sure to edit `/wails.json`, put **all frontend apps' build commands** into 
 
 Currently, my playground has 2 frontend apps, so 2 commands to put as shown below:
 
-* `npm run app:build`
-* `npm run docs:build`
+- `npm run app:build`
+- `npm run docs:build`
 
 ## Lerna Commands
 
-``` shell
+```shell
 # install dependencies for all scopes
 lerna bootstrap
 # add dependency "a" to scope "@jinyaoma/my-playground-b"
@@ -42,33 +42,35 @@ lerna --scope @jinyaoma/my-playground-c exec -- npm run test
 
 ## Environment, Tools and Dependencies
 
-> I am using Windows 10 Home 21H1 19043.1826 with [VS Code + GCC](https://code.visualstudio.com/docs/cpp/config-mingw).
+> I am using Windows 10 Home 21H1 19043.1826 with [VS Code v1.70.2 + GCC](https://code.visualstudio.com/docs/cpp/config-mingw).
 
-| Name              | Version               | Link                                                           |
-| :---------------- | :-------------------- | :------------------------------------------------------------- |
-| Git               | 2.37+                 | https://git-scm.com/                                           |
-| GO                | 1.19+                 | https://go.dev/dl/                                             |
-| Node (with NPM)   | 16.16+ (NPM v8.15.1+) | https://nodejs.org/                                            |
-| WebView2          | 103.0.1264.62+        | https://developer.microsoft.com/en-us/microsoft-edge/webview2/ |
-| UPX               | 3.96+                 | https://upx.github.io/                                         |
-| Wails             | v2.0.0-beta.40+       | https://wails.io/                                              |
-| Lerna             | 5.3+                  | https://lerna.js.org/                                          |
-| Vite              | 2.9+                  | https://vitejs.dev/                                            |
-| VitePress         | 1.0.0-alpha.4+        | https://vitepress.vuejs.org/                                   |
-| Vue               | 3.2+                  | https://vuejs.org/                                             |
-| Sass              | 1.54.0+               | https://sass-lang.com/                                         |
-| Systray (fyne.io) | 1.10.1+               | https://github.com/fyne-io/systray                             |
-| Gorm              | 1.23.8+               | https://gorm.io/                                               |
-| SQLite Driver     | 1.3.6+                | https://gorm.io/                                               |
-| Gin               | 1.8.1+                | https://gin-gonic.com/                                         |
-| Swaggo            | 1.8.4+                | https://github.com/swaggo/swag                                 |
-| Gin Swagger       | 1.5.2+                | https://github.com/swaggo/gin-swagger                          |
-| Air               | 1.40.4+               | https://github.com/cosmtrek/air                                |
-| SVG To Font       | 3.17.8+               | https://github.com/jaywcjlove/svgtofont                        |
+> Setup VS Code by installing recommended extensions, to do this, enter in `@recommended` while searching for extensions. Also, open the project with a workspace file `/.vscode/my-playground.code-workspace` to get the setting as mine.
+
+| Name              | Version               | Link                                                             |
+| :---------------- | :-------------------- | :--------------------------------------------------------------- |
+| Git               | 2.37+                 | <https://git-scm.com/>                                           |
+| GO                | 1.19+                 | <https://go.dev/dl/>                                             |
+| Node (with NPM)   | 16.16+ (NPM v8.15.1+) | <https://nodejs.org/>                                            |
+| WebView2          | 103.0.1264.62+        | <https://developer.microsoft.com/en-us/microsoft-edge/webview2/> |
+| UPX               | 3.96+                 | <https://upx.github.io/>                                         |
+| Wails             | v2.0.0-beta.40+       | <https://wails.io/>                                              |
+| Lerna             | 5.3+                  | <https://lerna.js.org/>                                          |
+| Vite              | 2.9+                  | <https://vitejs.dev/>                                            |
+| VitePress         | 1.0.0-alpha.4+        | <https://vitepress.vuejs.org/>                                   |
+| Vue               | 3.2+                  | <https://vuejs.org/>                                             |
+| Sass              | 1.54.0+               | <https://sass-lang.com/>                                         |
+| Systray (fyne.io) | 1.10.1+               | <https://github.com/fyne-io/systray>                             |
+| Gorm              | 1.23.8+               | <https://gorm.io/>                                               |
+| SQLite Driver     | 1.3.6+                | <https://gorm.io/>                                               |
+| Gin               | 1.8.1+                | <https://gin-gonic.com/>                                         |
+| Swaggo            | 1.8.4+                | <https://github.com/swaggo/swag>                                 |
+| Gin Swagger       | 1.5.2+                | <https://github.com/swaggo/gin-swagger>                          |
+| Air               | 1.40.4+               | <https://github.com/cosmtrek/air>                                |
+| SVG To Font       | 3.17.8+               | <https://github.com/jaywcjlove/svgtofont>                        |
 
 ## Backend Code Script Order Norms
 
-``` go
+```go
 //go:embed or other variables with special comments
 var PubFs embed.FS // public
 //go:embed or other variables with special comments
@@ -126,7 +128,7 @@ func (as *AnotherStruct) privateFunction() {}
 // ...
 ```
 
-``` go
+```go
 // Log Norms
 // Fatalf: all characters lowercase, end with ': %+v\n' and error
 Fatalf("fail to do something: %+v\n", err)

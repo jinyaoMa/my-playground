@@ -9,9 +9,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title my-playground (backend/server)
-// @version 0.0.1
-// @description "My Playground API"
+// @title My Playground (backend/server/router.go)
+// @version 1.0.0
+// @description "My Playground API Service"
 //
 // @securityDefinitions.apikey BearerToken
 // @in header

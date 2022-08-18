@@ -4,7 +4,8 @@
     "components",
     "ui-kit",
     "icons",
-    "app"
+    "app",
+    "docs"
   ],
   "scripts": {
     "app:dev": "lerna --scope @jinyaoma/my-playground-app exec -- vite",
