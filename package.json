@@ -2,7 +2,7 @@
   "name": "@jinyaoma/my-playground",
   "description": "A collection of services.",
   "scripts": {
-    "wails:dev": "set \"WAILS_DEV=1\" && .tools\\wails dev -s true -noreload",
+    "wails:dev": "set \"MY_PLAYGROUND_DEV=1\" && .tools\\wails dev -s true -noreload",
     "wails:build": ".tools\\wails build --platform windows/amd64",
     "upx:compress": ".tools\\upx -9 build/bin/my-playground.exe",
     "update:swag": ".tools\\swag init -g backend/server/router.go -o backend/server/swagger",

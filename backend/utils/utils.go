@@ -15,7 +15,7 @@ var (
 func init() {
 	var err error
 
-	isDev = os.Getenv("WAILS_DEV") == "1"
+	isDev = os.Getenv("MY_PLAYGROUND_DEV") == "1"
 
 	executablePath, err = os.Executable()
 	if err != nil {
