@@ -81,9 +81,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import url("./assets/css/reset.css");
-@import url("./assets/css/font.css");
+<style lang="less">
+@import "./assets/css/reset.css";
+@import "./assets/css/font.css";
 
 html {
   width: 100%;

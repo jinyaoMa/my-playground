@@ -1,8 +1,8 @@
 {
   "workspaces": [
+    "wailsjs/runtime",
     "utils",
     "components",
-    "ui-kit",
     "icons",
     "app",
     "docs"

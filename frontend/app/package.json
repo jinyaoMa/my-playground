@@ -1,8 +1,8 @@
 {
   "name": "@jinyaoma/my-playground-app",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "dependencies": {
-    "@jinyaoma/my-playground-components": "0.0.1",
+    "@jinyaoma/my-playground-components": "^1.0.0",
     "vue": "^3.2.37",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.12"
@@ -10,7 +10,7 @@
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^5.0.1",
     "@vitejs/plugin-vue": "^2.3.1",
-    "sass": "^1.49.9",
+    "less": "^4.1.3",
     "vite": "^2.9.2",
     "vite-plugin-html": "^3.2.0"
   }

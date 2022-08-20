@@ -12,7 +12,6 @@ backend/.assets
 backend/server/certs
 backend/server/swagger
 
-frontend/wailsjs
 frontend/icons/fonts
 
 .DS_Store

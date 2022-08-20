@@ -1,8 +1,7 @@
-import { withInstall } from "@jinyaoma/my-playground-utils";
+import OpenLink from "./open-link.vue";
 
-import OpenLink from "./src/open-link.vue";
+OpenLink.install = (app) => {
+  app.component(OpenLink.name, OpenLink);
+};
 
-export const MpOpenLink = withInstall(OpenLink);
-export default MpOpenLink;
-
-export * from "./src/open-link.vue";
+export default OpenLink;

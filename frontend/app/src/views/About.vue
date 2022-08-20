@@ -47,7 +47,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="less">
 .about {
   .title {
     margin: 30px auto 10px;

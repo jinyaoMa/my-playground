@@ -1,8 +1,0 @@
-{
-  "name": "@jinyaoma/my-playground-ui-kit",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "@jinyaoma/my-playground-components": ">0.0.0"
-  }
-}
