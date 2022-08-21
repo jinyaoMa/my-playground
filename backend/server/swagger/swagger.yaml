@@ -1,0 +1,12 @@
+info:
+  contact: {}
+  description: '"My Playground API Service"'
+  title: My Playground (backend/server/router.go)
+  version: 1.0.0
+paths: {}
+securityDefinitions:
+  BearerToken:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

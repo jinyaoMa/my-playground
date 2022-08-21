@@ -27,9 +27,9 @@ export default defineConfig({
 
   ignoreDeadLinks: false,
 
-  // set it to subdirectory in production inserting into /backend/.assets
+  // set it to subdirectory in production inserting into /backend/.frontend
   base: process.env.NODE_ENV === "production" ? "/docs/" : "/",
-  outDir: "../../backend/.assets/docs",
+  outDir: "../../backend/.frontend/docs",
   vite: {
     server: {
       port: 10002,

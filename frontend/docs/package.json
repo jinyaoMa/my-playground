@@ -1,4 +1,11 @@
 {
   "name": "@jinyaoma/my-playground-docs",
-  "version": "1.0.0"
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build"
+  },
+  "dependencies": {
+    "vitepress": "^1.0.0-alpha.9"
+  }
 }

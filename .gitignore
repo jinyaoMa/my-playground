@@ -8,11 +8,7 @@ package.json.md5
 build/bin
 *-res.syso
 
-backend/.assets
-backend/server/certs
-backend/server/swagger
-
-frontend/icons/fonts
+backend/.frontend
 
 .DS_Store
 # dist

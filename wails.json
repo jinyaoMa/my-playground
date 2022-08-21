@@ -1,8 +1,8 @@
 {
   "name": "My Playground",
   "outputfilename": "my-playground",
-  "assetdir": "backend/.assets",
-  "frontend:install": "npm install && npm run bootstrap",
+  "assetdir": "backend/.frontend",
+  "frontend:install": "npm install",
   "frontend:build": "npm run app:build && npm run docs:build",
   "frontend:dev:watcher": "npm run app:dev",
   "frontend:dev:serverUrl": "auto",

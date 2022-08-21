@@ -15,24 +15,25 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import HelloWorld from "@/components/HelloWorld.vue";
 
-export default {
+export default defineComponent({
   name: "Home",
   components: {
     HelloWorld,
   },
   setup() {
-    const { t } = useI18n();
+    const { t } = useI18n({ useScope: "global" });
     return {
       t,
     };
   },
-};
+});
 </script>
-<style lang="less">
+<style lang="scss">
 .home {
   .logo {
     display: block;

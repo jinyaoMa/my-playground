@@ -1,34 +1,27 @@
 {
-  "workspaces": [
-    "wailsjs/runtime",
-    "utils",
-    "components",
-    "icons",
-    "app",
-    "docs"
-  ],
+  "name": "frontend",
+  "private": true,
+  "version": "0.1.0",
+  "description": "My Playground's Frontend",
   "scripts": {
-    "app:dev": "lerna --scope @jinyaoma/my-playground-app exec -- vite",
-    "app:build": "lerna --scope @jinyaoma/my-playground-app exec -- vite build --emptyOutDir",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "icons:build": "svgtofont --sources ./icons/svg --output ./icons/fonts",
-    "bootstrap": "lerna bootstrap"
+    "app:dev": "npm run dev -w @jinyaoma/my-playground-app",
+    "app:build": "npm run build -w @jinyaoma/my-playground-app",
+    "components:build": "npm run build -w @jinyaoma/my-playground-components",
+    "docs:dev": "npm run dev -w @jinyaoma/my-playground-docs",
+    "docs:build": "npm run build -w @jinyaoma/my-playground-docs",
+    "icons:build": "npm run build -w @jinyaoma/my-playground-icons"
   },
-  "svgtofont": {
-    "outSVGReact": false,
-    "outSVGPath": false,
-    "emptyDist": true,
-    "fontName": "mp-icon",
-    "css": {
-      "filename": "mp-icon",
-      "include": "\\.css$"
-    }
-  },
-  "devDependencies": {
-    "lerna": "^5.3.0",
-    "lerna-update-wizard": "^1.1.2",
-    "vitepress": "^1.0.0-alpha.5",
-    "vue": "^3.2.37"
+  "author": "jinyaoMa",
+  "license": "MIT",
+  "workspaces": [
+    "utils",
+    "icons",
+    "docs",
+    "components",
+    "app"
+  ],
+  "engines": {
+    "node": ">=15.0.0",
+    "npm": ">=7.0.0"
   }
 }

@@ -10,8 +10,8 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
-//go:embed .assets
-var assets embed.FS
+//go:embed .frontend
+var frontend embed.FS
 
 const (
 	PkgName = "backend"
@@ -44,7 +44,7 @@ func RunApp() (app *App) {
 		HideWindowOnClose:  true,
 		AlwaysOnTop:        false,
 		BackgroundColour:   &options.RGBA{R: 255, G: 255, B: 255, A: 0},
-		Assets:             assets,
+		Assets:             frontend,
 		AssetsHandler:      nil,
 		Menu:               nil,
 		Logger:             wailsLogger,

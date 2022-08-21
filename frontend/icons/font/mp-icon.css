@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "mp-icon";
+  src: url('mp-icon.eot?t=1661098240161'); /* IE9*/
+  src: url('mp-icon.eot?t=1661098240161#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url("mp-icon.woff2?t=1661098240161") format("woff2"),
+  url("mp-icon.woff?t=1661098240161") format("woff"),
+  url('mp-icon.ttf?t=1661098240161') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('mp-icon.svg?t=1661098240161#mp-icon') format('svg'); /* iOS 4.1- */
+}
+
+[class^="mp-icon-"], [class*=" mp-icon-"] {
+  font-family: 'mp-icon' !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.mp-icon-jinyao-ma:before { content: "\ea01"; }

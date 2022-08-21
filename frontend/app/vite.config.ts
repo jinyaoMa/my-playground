@@ -31,13 +31,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-      "@runtime": path.resolve(__dirname, "../wailsjs/runtime/runtime.js"),
-      "@backend": path.resolve(__dirname, "../wailsjs/go/backend/App.js"),
       "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-bundler.js",
     },
   },
   build: {
-    outDir: "../../backend/.assets",
+    outDir: "../../backend/.frontend",
     rollupOptions: {
       output: {
         entryFileNames: "assets/[name].js",

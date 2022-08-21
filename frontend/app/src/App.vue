@@ -33,10 +33,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { useI18n } from "vue-i18n";
-import { EventsOn, WindowMinimise, WindowHide } from "@runtime";
-import { ChangeLanguage } from "@backend";
+import { EventsOn, WindowMinimise, WindowHide } from "../../wailsjs/runtime/runtime";
+import { ChangeLanguage } from "../../wailsjs/go/backend/App";
 
 export default {
   setup() {
@@ -48,11 +48,11 @@ export default {
 
     // Click to switch language
     // 点击切换语言
-    const onclickLanguageHandle = (lang) => {
+    const onclickLanguageHandle = (lang: string) => {
       lang !== locale.value ? ChangeLanguage(lang) : false;
     };
 
-    EventsOn("onLanguageChanged", (lang) => {
+    EventsOn("onLanguageChanged", (lang: string) => {
       console.log(lang)
       locale.value = lang;
     })
@@ -81,9 +81,9 @@ export default {
 };
 </script>
 
-<style lang="less">
-@import "./assets/css/reset.css";
-@import "./assets/css/font.css";
+<style lang="scss">
+@import url("./assets/css/reset.css");
+@import url("./assets/css/font.css");
 
 html {
   width: 100%;

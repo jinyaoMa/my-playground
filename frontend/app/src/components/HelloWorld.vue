@@ -2,7 +2,7 @@
   <div class="hello-world" v-text="msg"></div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "HelloWorld",
   props: {
