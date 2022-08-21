@@ -2,6 +2,8 @@
 
 A collection of services.
 
+Use template of wails+vue+ts by misitebao
+
 ## Ports Used in Development
 
 - `10000` for Wails backend, edit `/wails.json` to configure
@@ -58,7 +60,6 @@ lerna --scope @jinyaoma/my-playground-c exec -- npm run test
 | Vite              | 2.9+                  | <https://vitejs.dev/>                                            |
 | VitePress         | 1.0.0-alpha.4+        | <https://vitepress.vuejs.org/>                                   |
 | Vue               | 3.2+                  | <https://vuejs.org/>                                             |
-| Sass              | 1.54.0+               | <https://sass-lang.com/>                                         |
 | Systray (fyne.io) | 1.10.1+               | <https://github.com/fyne-io/systray>                             |
 | Gorm              | 1.23.8+               | <https://gorm.io/>                                               |
 | SQLite Driver     | 1.3.6+                | <https://gorm.io/>                                               |
