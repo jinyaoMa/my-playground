@@ -7,7 +7,7 @@ import vueSetupExtend from "vite-plugin-vue-setup-extend";
 export default defineConfig({
   plugins: [vue(), vueSetupExtend()],
   build: {
-    outDir: "./lib",
+    outDir: "./.dist",
     lib: {
       entry: "index.ts",
       name: "components",

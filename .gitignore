@@ -10,6 +10,8 @@ build/bin
 
 backend/.frontend
 
+frontend/**/.dist
+
 .DS_Store
 # dist
 dist-ssr
