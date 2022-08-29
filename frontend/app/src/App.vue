@@ -1,15 +1,53 @@
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+import { EventsOn, WindowMinimise, WindowHide } from "../../wailsjs/runtime/runtime";
+import { ChangeLanguage } from "../../wailsjs/go/backend/App";
+import MpTabbar from "../../components/MpTabbar/MpTabbar.vue";
+import MpTabbarItem from "../../components/MpTabbar/MpTabbarItem.vue";
+
+const { t, availableLocales, locale } = useI18n();
+
+// List of supported languages
+// 支持的语言列表
+const languages = availableLocales;
+
+// Click to switch language
+// 点击切换语言
+const onclickLanguageHandle = (lang: string) => {
+  lang !== locale.value ? ChangeLanguage(lang) : false;
+};
+
+EventsOn("onLanguageChanged", (lang: string) => {
+  console.log(lang)
+  locale.value = lang;
+})
+
+const onclickDocs = () => {
+  window.location.href = "/docs/index.html"
+}
+
+const onclickMinimise = () => {
+  WindowMinimise();
+};
+const onclickQuit = () => {
+  WindowHide();
+};
+</script>
+
 <template>
   <!-- Header -->
-  <!-- 头部 -->
+  <mp-tabbar data-wails-drag>
+    <mp-tabbar-item active>Home</mp-tabbar-item>
+    <mp-tabbar-item>Another</mp-tabbar-item>
+    <mp-tabbar-item>Others</mp-tabbar-item>
+  </mp-tabbar>
   <div class="header" data-wails-drag>
     <!-- navigation -->
-    <!-- 导航 -->
     <div class="nav" data-wails-no-drag>
-      <router-link to="/">{{ t("nav.home") }}</router-link>
+      <router-link to="/"><i class="mp-icon-jinyao-ma"></i>{{ t("nav.home") }}</router-link>
       <router-link to="/about">{{ t("nav.about") }}</router-link>
     </div>
     <!-- Menu -->
-    <!-- 菜单 -->
     <div class="menu" data-wails-no-drag>
       <div class="language">
         <div v-for="item in languages" :key="item" :class="{ active: item === locale }"
@@ -27,64 +65,12 @@
     </div>
   </div>
   <!-- Page -->
-  <!-- 页面 -->
   <div class="view">
     <router-view />
   </div>
 </template>
 
-<script lang="ts">
-import { useI18n } from "vue-i18n";
-import { EventsOn, WindowMinimise, WindowHide } from "../../wailsjs/runtime/runtime";
-import { ChangeLanguage } from "../../wailsjs/go/backend/App";
-
-export default {
-  setup() {
-    const { t, availableLocales, locale } = useI18n();
-
-    // List of supported languages
-    // 支持的语言列表
-    const languages = availableLocales;
-
-    // Click to switch language
-    // 点击切换语言
-    const onclickLanguageHandle = (lang: string) => {
-      lang !== locale.value ? ChangeLanguage(lang) : false;
-    };
-
-    EventsOn("onLanguageChanged", (lang: string) => {
-      console.log(lang)
-      locale.value = lang;
-    })
-
-    const onclickDocs = () => {
-      window.location.href = "/docs/index.html"
-    }
-
-    const onclickMinimise = () => {
-      WindowMinimise();
-    };
-    const onclickQuit = () => {
-      WindowHide();
-    };
-
-    return {
-      t,
-      languages,
-      locale,
-      onclickLanguageHandle,
-      onclickDocs,
-      onclickMinimise,
-      onclickQuit,
-    };
-  },
-};
-</script>
-
 <style lang="scss">
-@import url("./assets/css/reset.css");
-@import url("./assets/css/font.css");
-
 html {
   width: 100%;
   height: 100%;
@@ -95,7 +81,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "JetBrainsMono";
   background-color: transparent;
 }
 
@@ -104,7 +89,6 @@ body {
   // width: 900px;
   // height: 520px;
   height: 100%;
-  background-color: rgba(219, 188, 239, 0.9);
   overflow: hidden;
 }
 
@@ -213,11 +197,6 @@ body {
 }
 
 .view {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
+  background-color: rgba(219, 188, 239, 0.9);
 }
 </style>

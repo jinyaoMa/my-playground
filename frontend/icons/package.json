@@ -1,21 +1,11 @@
 {
   "name": "@jinyaoma/my-playground-icons",
   "version": "0.1.0",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
-    "build": "svgtofont --sources ./svg --output ./font"
+    "build": "node build.js"
   },
   "dependencies": {
     "svgtofont": "^3.17.8"
-  },
-  "svgtofont": {
-    "outSVGReact": false,
-    "outSVGPath": false,
-    "emptyDist": true,
-    "fontName": "mp-icon",
-    "css": {
-      "filename": "mp-icon",
-      "include": "\\.css$"
-    }
   }
 }

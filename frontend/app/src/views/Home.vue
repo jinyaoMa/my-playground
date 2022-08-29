@@ -6,11 +6,11 @@
     <!-- Bottom button -->
     <!-- 底部按钮 -->
     <div class="link">
-      <MpOpenLink href="https://wails.io/docs/gettingstarted/installation" class="btn start">{{
+      <mp-open-link href="https://wails.io/docs/gettingstarted/installation" class="btn start">{{
           t("homepage.getting-started")
-      }}</MpOpenLink>
-      <MpOpenLink href="https://github.com/misitebao/wails-template-vue" class="btn star">{{ t("homepage.star-me") }}
-      </MpOpenLink>
+      }}</mp-open-link>
+      <mp-open-link href="https://github.com/misitebao/wails-template-vue" class="btn star">{{ t("homepage.star-me") }}
+      </mp-open-link>
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default defineComponent({
     display: block;
     width: 620px;
     height: 280px;
-    margin: 10px auto 10px;
+    margin: 0 auto 10px;
   }
 
   .link {

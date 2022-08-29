@@ -1,5 +1,6 @@
 {
   "name": "@jinyaoma/my-playground-utils",
   "version": "0.1.0",
-  "main": "index.ts"
+  "main": "index.js",
+  "types": "index.d.ts"
 }

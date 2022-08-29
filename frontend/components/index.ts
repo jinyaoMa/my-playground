@@ -1,11 +1,10 @@
 import { App } from "vue";
-import OpenLink from "./open-link";
-import Tabbar from "./tabbar";
+import "@jinyaoma/my-playground-icons/dist/mp-icon.css";
+import "./theme/style.scss";
+import MpOpenLink from "./MpOpenLink";
+import MpTabbar from "./MpTabbar";
 
-const components = [OpenLink, Tabbar];
-
-export const MpOpenLink = OpenLink;
-export const MpTabbar = Tabbar;
+const components = [MpOpenLink, MpTabbar];
 
 export default {
   install(app: App) {
