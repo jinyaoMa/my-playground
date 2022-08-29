@@ -37,9 +37,15 @@ const onclickQuit = () => {
 <template>
   <!-- Header -->
   <mp-tabbar data-wails-drag>
+    <template #prepend>
+      <div class="tabbar-prepend">
+        <img class="tabbar-icon" src="/favicon.ico" />
+      </div>
+    </template>
     <mp-tabbar-item active>Home</mp-tabbar-item>
     <mp-tabbar-item>Another</mp-tabbar-item>
     <mp-tabbar-item>Others</mp-tabbar-item>
+    <template #append></template>
   </mp-tabbar>
   <div class="header" data-wails-drag>
     <!-- navigation -->
@@ -81,16 +87,37 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: transparent;
+  background-color: #ffffff;
 }
 
 #app {
   position: relative;
-  // width: 900px;
-  // height: 520px;
   height: 100%;
   overflow: hidden;
 }
+
+.tabbar-prepend {
+  border-right: 2px solid var(--mp-color-bg-2);
+  margin-right: 0.25em;
+}
+
+.tabbar-icon {
+  width: 2em;
+  height: 2em;
+  margin: 0.75em;
+  display: block;
+  position: relative;
+  pointer-events: none;
+
+  &:after {
+    content: "|";
+    position: absolute;
+    top: 0;
+    right: -0.5em;
+  }
+}
+
+//===============================================================
 
 .header {
   display: flex;

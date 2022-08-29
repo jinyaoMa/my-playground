@@ -22,9 +22,11 @@ const props = defineProps({
 .mp-tabbar {
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: var(--mp-font-size-s);
   line-height: var(--mp-line-height-none);
   background-color: var(--mp-color-bg-1);
+  user-select: none;
 
   &_tabs {
     flex-grow: 1;
