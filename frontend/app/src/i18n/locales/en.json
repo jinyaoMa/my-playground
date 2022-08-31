@@ -1,7 +1,7 @@
 {
   "nav": {
-    "home": "Home",
-    "about": "About"
+    "Home": "Home",
+    "About": "About"
   },
   "languages": {
     "en": "English",

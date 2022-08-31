@@ -2,6 +2,8 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { routes } from "./router";
+import externalApps from "../externalApps";
 import {
   EventsOn,
   WindowMinimise,
@@ -27,32 +29,37 @@ EventsOn("onLanguageChanged", (lang: string) => {
   locale.value = lang;
 });
 
-const testTabs = ref([
-  {
-    key: "home",
-    title: "Home",
-    link: "/",
-    native: true,
-    closeable: false,
-  },
-  {
-    key: "about",
-    title: "About",
-    link: "/about",
-    native: true,
-    closeable: true,
-  },
-  {
-    key: "docs",
-    title: "Docs",
-    link: "/docs/index.html",
-    native: false,
-    closeable: true,
-  },
-]);
-
 const router = useRouter();
-const openTabKeys = ref(["home", "about", "docs"]);
+const testTabs = ref([
+  ...routes.map((r) => {
+    return {
+      key: r.name?.toString() || "",
+      title: computed(() =>
+        t(`nav.${r.name?.toString()}`, { default: r.name })
+      ),
+      link: r.path,
+      native: true,
+      closeable: r.name != "Home",
+    };
+  }),
+  ...externalApps.map((ea) => {
+    return {
+      ...ea,
+      title: computed(() => ea.title[locale.value]),
+      native: false,
+      closeable: true,
+    };
+  }),
+]);
+const openTabKeys = ref([
+  ...routes.map((r) => {
+    return r.name?.toString() || "";
+  }),
+  ...externalApps.map((ea) => {
+    return ea.key;
+  }),
+]);
+console.log(testTabs.value);
 const openTabs = computed(() => {
   return testTabs.value.filter((tab) => {
     return openTabKeys.value.includes(tab.key);
