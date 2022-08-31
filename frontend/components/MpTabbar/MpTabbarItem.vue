@@ -54,6 +54,7 @@ const emit = defineEmits<{
   &.active {
     background-color: var(--mp-color-bg);
     box-shadow: var(--mp-shadow);
+    transform: translateY(-0.5px);
 
     &.closeable {
       padding-right: 2.5em;
