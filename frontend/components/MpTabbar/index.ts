@@ -3,9 +3,8 @@ import MpTabbar from "./MpTabbar.vue";
 import MpTabbarItem from "./MpTabbarItem.vue";
 
 MpTabbar.install = (app: App) => {
-  app.component(MpTabbar.__name, MpTabbar);
+  app.component(`${MpTabbar.__name}`, MpTabbar);
+  app.component(`${MpTabbarItem.__name}`, MpTabbarItem);
 };
-
-MpTabbar.MpTabbarItem = MpTabbarItem;
 
 export default MpTabbar;

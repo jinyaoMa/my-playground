@@ -9,8 +9,6 @@ import {
   WindowHide,
 } from "../../wailsjs/runtime/runtime";
 import { ChangeLanguage } from "../../wailsjs/go/backend/App";
-import MpTabbar from "../../components/MpTabbar/MpTabbar.vue";
-import MpTabbarItem from "../../components/MpTabbar/MpTabbarItem.vue";
 
 const { t, availableLocales, locale } = useI18n();
 
@@ -167,6 +165,10 @@ const onclickQuit = () => {
 </template>
 
 <style lang="scss">
+* {
+  transition: all 0.2s;
+}
+
 html {
   width: 100%;
   height: 100%;

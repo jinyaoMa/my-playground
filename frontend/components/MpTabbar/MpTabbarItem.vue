@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// MpTabbarItem
 const props = defineProps<{
   active?: boolean;
   closeable?: boolean;
