@@ -1,12 +1,11 @@
 <script setup lang="ts">
 const props = defineProps<{
-  prop: string;
   active?: boolean;
   closeable?: boolean;
 }>();
 
 const emit = defineEmits<{
-  (event: "close-tab", prop: string): void;
+  (event: "close-tab"): void;
 }>();
 </script>
 
@@ -22,7 +21,7 @@ const emit = defineEmits<{
     <div
       v-if="props.closeable"
       class="mp-tabbar-item_close"
-      @click="emit('close-tab', props.prop)"
+      @click="emit('close-tab')"
     >
       <i class="mp-icon-window-close"></i>
     </div>

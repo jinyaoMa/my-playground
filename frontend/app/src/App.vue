@@ -102,7 +102,7 @@ const onclickQuit = () => {
 
 <template>
   <!-- Header -->
-  <mp-tabbar data-wails-drag>
+  <mp-tabbar data-wails-drag @dblclick="onclickToggleMaximize">
     <template #prepend>
       <div class="tabbar-prepend">
         <img class="tabbar-icon" src="./assets/icon.png" />
@@ -110,12 +110,11 @@ const onclickQuit = () => {
     </template>
     <mp-tabbar-item
       v-for="(tab, i) in openTabs"
-      :prop="tab.key"
       :active="i == activeTabIndex"
       :closeable="tab.closeable"
       data-wails-no-drag
       @click="onClickTab(i)"
-      @close-tab="onCloseTab"
+      @close-tab="onCloseTab(tab.key)"
     >
       {{ tab.title }}
     </mp-tabbar-item>
