@@ -1,8 +1,4 @@
-<script setup lang="ts">
-const props = defineProps({
-  test: String
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="mp-tabbar">
@@ -26,12 +22,16 @@ const props = defineProps({
   font-size: var(--mp-font-size-s);
   line-height: var(--mp-line-height-none);
   background-color: var(--mp-color-bg-1);
+  color: var(--mp-color-text);
   user-select: none;
+  padding: 0.75em;
 
   &_tabs {
     flex-grow: 1;
     display: flex;
     flex-direction: row;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 }
 </style>

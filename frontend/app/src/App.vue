@@ -1,6 +1,13 @@
 <script setup lang="ts">
+import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { EventsOn, WindowMinimise, WindowHide } from "../../wailsjs/runtime/runtime";
+import { useRouter } from "vue-router";
+import {
+  EventsOn,
+  WindowMinimise,
+  WindowToggleMaximise,
+  WindowHide,
+} from "../../wailsjs/runtime/runtime";
 import { ChangeLanguage } from "../../wailsjs/go/backend/App";
 import MpTabbar from "../../components/MpTabbar/MpTabbar.vue";
 import MpTabbarItem from "../../components/MpTabbar/MpTabbarItem.vue";
@@ -18,16 +25,75 @@ const onclickLanguageHandle = (lang: string) => {
 };
 
 EventsOn("onLanguageChanged", (lang: string) => {
-  console.log(lang)
+  console.log(lang);
   locale.value = lang;
-})
+});
 
-const onclickDocs = () => {
-  window.location.href = "/docs/index.html"
-}
+const testTabs = ref([
+  {
+    key: "home",
+    title: "Home",
+    link: "/",
+    native: true,
+    closeable: false,
+  },
+  {
+    key: "about",
+    title: "About",
+    link: "/about",
+    native: true,
+    closeable: true,
+  },
+  {
+    key: "docs",
+    title: "Docs",
+    link: "/docs/index.html",
+    native: false,
+    closeable: true,
+  },
+]);
 
-const onclickMinimise = () => {
+const router = useRouter();
+const openTabKeys = ref(["home", "about", "docs"]);
+const openTabs = computed(() => {
+  return testTabs.value.filter((tab) => {
+    return openTabKeys.value.includes(tab.key);
+  });
+});
+const activeTabIndex = ref(0);
+const xviewSrc = ref("");
+const onClickTab = (index: number) => {
+  if (activeTabIndex.value != index) {
+    activeTabIndex.value = index;
+  }
+  if (activeTabIndex.value >= openTabKeys.value.length) {
+    activeTabIndex.value = openTabKeys.value.length - 1;
+  } else if (activeTabIndex.value < 0) {
+    activeTabIndex.value = 0;
+  }
+  const tab = openTabs.value[activeTabIndex.value];
+  if (tab.native) {
+    router.replace(tab.link);
+  } else {
+    xviewSrc.value = tab.link;
+  }
+};
+const onCloseTab = (prop: string) => {
+  const target = openTabKeys.value.indexOf(prop);
+  openTabKeys.value.splice(target, 1);
+};
+
+const isWindowMaximized = ref(false);
+window.addEventListener("resize", (ev: UIEvent) => {
+  if (ev.target instanceof Window) {
+    isWindowMaximized.value = ev.target.innerWidth >= screen.availWidth;
+  }
+});
+const onclickMinimize = () => {
   WindowMinimise();
+};
+const onclickToggleMaximize = () => {
+  WindowToggleMaximise();
 };
 const onclickQuit = () => {
   WindowHide();
@@ -39,41 +105,66 @@ const onclickQuit = () => {
   <mp-tabbar data-wails-drag>
     <template #prepend>
       <div class="tabbar-prepend">
-        <img class="tabbar-icon" src="/favicon.ico" />
+        <img class="tabbar-icon" src="./assets/icon.png" />
       </div>
     </template>
-    <mp-tabbar-item active>Home</mp-tabbar-item>
-    <mp-tabbar-item>Another</mp-tabbar-item>
-    <mp-tabbar-item>Others</mp-tabbar-item>
-    <template #append></template>
+    <mp-tabbar-item
+      v-for="(tab, i) in openTabs"
+      :prop="tab.key"
+      :active="i == activeTabIndex"
+      :closeable="tab.closeable"
+      data-wails-no-drag
+      @click="onClickTab(i)"
+      @close-tab="onCloseTab"
+    >
+      {{ tab.title }}
+    </mp-tabbar-item>
+    <template #append>
+      <div class="tabbar-append" data-wails-no-drag>
+        <div class="tabbar-btn" @click="onclickMinimize">
+          <i class="mp-icon-window-minimize"></i>
+        </div>
+        <div class="tabbar-btn" @click="onclickToggleMaximize">
+          <i v-if="isWindowMaximized" class="mp-icon-window-restore"></i>
+          <i v-else class="mp-icon-window-maximize"></i>
+        </div>
+        <div class="tabbar-btn danger" @click="onclickQuit">
+          <i class="mp-icon-window-close"></i>
+        </div>
+      </div>
+    </template>
   </mp-tabbar>
-  <div class="header" data-wails-drag>
-    <!-- navigation -->
-    <div class="nav" data-wails-no-drag>
-      <router-link to="/"><i class="mp-icon-jinyao-ma"></i>{{ t("nav.home") }}</router-link>
-      <router-link to="/about">{{ t("nav.about") }}</router-link>
-    </div>
-    <!-- Menu -->
-    <div class="menu" data-wails-no-drag>
-      <div class="language">
-        <div v-for="item in languages" :key="item" :class="{ active: item === locale }"
-          @click="onclickLanguageHandle(item)" class="lang-item">
-          {{ t("languages." + item) }}
-        </div>
-      </div>
-      <div class="bar">
-        <div class="bar-btn" @click="onclickDocs">DOCS</div>
-        <div class="bar-btn" @click="onclickMinimise">
-          {{ t("topbar.minimise") }}
-        </div>
-        <div class="bar-btn" @click="onclickQuit">{{ t("topbar.quit") }}</div>
-      </div>
-    </div>
-  </div>
   <!-- Page -->
-  <div class="view">
-    <router-view />
+  <div v-if="openTabs[activeTabIndex].native" class="view">
+    <router-view></router-view>
   </div>
+  <iframe v-else class="xview" :src="xviewSrc"></iframe>
+  <!--
+    <div class="header" data-wails-drag>
+      <div class="nav" data-wails-no-drag>
+        <router-link to="/"
+          ><i class="mp-icon-jinyao-ma"></i>{{ t("nav.home") }}</router-link
+        >
+        <router-link to="/about">{{ t("nav.about") }}</router-link>
+      </div>
+      <div class="menu" data-wails-no-drag>
+        <div class="language">
+          <div
+            v-for="item in languages"
+            :key="item"
+            :class="{ active: item === locale }"
+            @click="onclickLanguageHandle(item)"
+            class="lang-item"
+          >
+            {{ t("languages." + item) }}
+          </div>
+        </div>
+        <div class="bar">
+          <div class="bar-btn" @click="onclickDocs">DOCS</div>
+        </div>
+      </div>
+    </div>
+  -->
 </template>
 
 <style lang="scss">
@@ -94,26 +185,63 @@ body {
   position: relative;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.view,
+.xview {
+  flex-grow: 1;
+  overflow: auto;
+  scroll-behavior: smooth;
+  border: none;
+  border-top: 2px solid var(--mp-color-bg-2);
 }
 
 .tabbar-prepend {
-  border-right: 2px solid var(--mp-color-bg-2);
-  margin-right: 0.25em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 2.5em;
 }
 
 .tabbar-icon {
   width: 2em;
   height: 2em;
-  margin: 0.75em;
   display: block;
-  position: relative;
   pointer-events: none;
+}
 
-  &:after {
-    content: "|";
-    position: absolute;
-    top: 0;
-    right: -0.5em;
+.tabbar-append {
+  display: flex;
+  flex-direction: row;
+  min-width: 7.5em;
+}
+
+.tabbar-btn {
+  width: 2.5em;
+  height: 2.5em;
+  color: var(--mp-color-text-1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--mp-border-radius);
+
+  &:hover {
+    color: var(--mp-color-text);
+    background-color: var(--mp-color-bg-2);
+  }
+
+  &.danger i {
+    font-size: 1.3em;
+  }
+
+  &.danger:hover {
+    color: var(--mp-color-danger);
+  }
+
+  i {
+    font-size: 1em;
   }
 }
 
@@ -221,9 +349,5 @@ body {
       }
     }
   }
-}
-
-.view {
-  background-color: rgba(219, 188, 239, 0.9);
 }
 </style>

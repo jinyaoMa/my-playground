@@ -59,12 +59,11 @@ func RunApp() (app *App) {
 		Windows: &windows.Options{
 			WebviewIsTransparent:              true,
 			WindowIsTranslucent:               true,
-			DisableWindowIcon:                 false,
+			DisableWindowIcon:                 true,
 			DisableFramelessWindowDecorations: false,
 			WebviewUserDataPath:               "",
 			WebviewBrowserPath:                "",
 			Theme:                             windows.SystemDefault,
-			TranslucencyType:                  windows.Auto,
 			OnSuspend:                         app.suspend,
 			OnResume:                          app.resume,
 		},

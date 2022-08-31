@@ -18,4 +18,10 @@
 }
 
 .mp-icon-jinyao-ma:before { content: "\ea01"; }
+.mp-icon-window-close:before { content: "\ea02"; }
+.mp-icon-window-fullscreen:before { content: "\ea03"; }
+.mp-icon-window-maximize:before { content: "\ea04"; }
+.mp-icon-window-minimize:before { content: "\ea05"; }
+.mp-icon-window-restore:before { content: "\ea06"; }
+.mp-icon-window-unfullscreen:before { content: "\ea07"; }
 
