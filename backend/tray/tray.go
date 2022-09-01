@@ -14,16 +14,16 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
-//go:embed icons/tray.icon.ico
+//go:embed icons/icon.ico
 var icon []byte
 
-//go:embed icons/open-window.icon.ico
+//go:embed icons/open-window.ico
 var iconOpenWindow []byte
 
-//go:embed icons/api-start.icon.ico
+//go:embed icons/api-start.ico
 var iconApiStart []byte
 
-//go:embed icons/api-stop.icon.ico
+//go:embed icons/api-stop.ico
 var iconApiStop []byte
 
 //go:embed locales/en.json
@@ -57,6 +57,7 @@ type Tray struct {
 	openWindow  *menus.OpenWindow
 	apiService  *menus.ApiService
 	language    *menus.Language
+	nightShift  *menus.NightShift
 	quit        *menus.Quit
 }
 
@@ -136,6 +137,22 @@ func (t *Tray) onReady() {
 
 	systray.AddSeparator()
 
+	t.nightShift = menus.
+		NewNightShift().
+		Watch(menus.NightShiftListener{
+			OnNightShift: func(isNightShift bool) bool {
+				if isNightShift {
+					runtime.WindowSetDarkTheme(t.config.Context)
+				} else {
+					runtime.WindowSetLightTheme(t.config.Context)
+				}
+				runtime.EventsEmit(t.config.Context, "onNightShift", isNightShift)
+				return true
+			},
+		})
+
+	systray.AddSeparator()
+
 	t.quit = menus.
 		NewQuit().
 		Watch(menus.QuitListener{
@@ -165,6 +182,7 @@ func (t *Tray) onQuit() {
 		t.openWindow.StopWatch()
 		t.apiService.StopWatch()
 		t.language.StopWatch()
+		t.nightShift.StopWatch()
 		t.quit.StopWatch()
 	}
 
@@ -181,6 +199,7 @@ func (t *Tray) updateLocales(filename string) {
 	t.openWindow.SetLocale(t.locale)
 	t.apiService.SetLocale(t.locale)
 	t.language.SetLocale(t.locale)
+	t.nightShift.SetLocale(t.locale)
 	t.quit.SetLocale(t.locale)
 
 	t.config.Language = t.locale2Lang(filename)

@@ -15,4 +15,5 @@ const eas: ExternalApps = [
   },
 ];
 
-export default process.env.NODE_ENV != "production" ? eas : [];
+// export default process.env.NODE_ENV != "production" ? eas : [];
+export default process.env.NODE_ENV === "production" ? eas : [];

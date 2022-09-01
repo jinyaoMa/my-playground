@@ -29,6 +29,10 @@ EventsOn("onLanguageChanged", (lang: string) => {
   locale.value = lang;
 });
 
+EventsOn("onNightShift", (isNightShift: boolean) => {
+  console.log(`isNightShift`, isNightShift);
+});
+
 const router = useRouter();
 const testTabs = ref([
   ...routes.map((r) => {
@@ -210,14 +214,18 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   min-width: 2.5em;
+  min-height: 2.5em;
 }
 
 .tabbar-icon {
-  width: 2em;
-  height: 2em;
+  width: 20px;
+  height: 20px;
   display: block;
   pointer-events: none;
+  border: 2px solid var(--mp-color-bg-3);
+  border-radius: var(--mp-border-radius);
 }
 
 .tabbar-append {
