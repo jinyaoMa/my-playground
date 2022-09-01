@@ -10,7 +10,7 @@ import {
   WindowToggleMaximise,
   WindowHide,
 } from "../../wailsjs/runtime/runtime";
-import { ChangeLanguage } from "../../wailsjs/go/backend/App";
+import { ChangeLanguage, ChangeTheme } from "../../wailsjs/go/backend/App";
 
 const { t, availableLocales, locale } = useI18n();
 
@@ -25,12 +25,22 @@ const onclickLanguageHandle = (lang: string) => {
 };
 
 EventsOn("onLanguageChanged", (lang: string) => {
-  console.log(lang);
+  console.log("onLanguageChanged", lang);
   locale.value = lang;
 });
 
-EventsOn("onNightShift", (isNightShift: boolean) => {
-  console.log(`isNightShift`, isNightShift);
+// Click to switch theme
+// 点击切换主题
+const cTheme = ref("light");
+const onclickThemeHandle = (theme: string) => {
+  theme !== cTheme.value ? ChangeTheme(theme) : false;
+};
+
+EventsOn("OnThemeChanged", (theme: string) => {
+  console.log("OnThemeChanged", theme);
+  document.querySelector(":root")?.classList.remove(cTheme.value);
+  document.querySelector(":root")?.classList.add(theme);
+  cTheme.value = theme;
 });
 
 const router = useRouter();
@@ -143,7 +153,9 @@ const onclickQuit = () => {
   </mp-tabbar>
   <!-- Page -->
   <div v-if="openTabs[activeTabIndex].native" class="view">
-    <router-view :apps="panelApps"></router-view>
+    <router-view
+      :apps="panelApps.filter((pa) => pa.key != 'Home')"
+    ></router-view>
   </div>
   <iframe v-else class="xview" :src="xviewSrc"></iframe>
   <!--
@@ -189,7 +201,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
 }
 
 #app {
@@ -198,6 +209,8 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  color: var(--mp-color-text);
+  background-color: var(--mp-color-bg);
 }
 
 .view,

@@ -18,8 +18,8 @@
   // colors
   --mp-color-white: #ffffff;
   --mp-color-black: #000000;
-  --mp-color-text: #333333;
-  --mp-color-text-1: #666666;
+  --mp-color-text: #111111;
+  --mp-color-text-1: #333333;
   --mp-color-bg: #ffffff;
   --mp-color-bg-1: #f1f2f3;
   --mp-color-bg-2: #e1e2e3;
@@ -31,4 +31,23 @@
 
   // shadows
   --mp-shadow: 0 0 1px #919293, 0 1px 2px #c1c2c3;
+
+  &.dark {
+    // colors
+    --mp-color-white: #000000;
+    --mp-color-black: #ffffff;
+    --mp-color-text: #eeeeee;
+    --mp-color-text-1: #cccccc;
+    --mp-color-bg: #000000;
+    --mp-color-bg-1: #111111;
+    --mp-color-bg-2: #222222;
+    --mp-color-bg-3: #333333;
+    --mp-color-success: #67c23a;
+    --mp-color-warning: #e6a23c;
+    --mp-color-danger: #f56c6c;
+    --mp-color-info: #909399;
+
+    // shadows
+    --mp-shadow: 0 0 1px #616263, 0 0 2px #919293;
+  }
 }

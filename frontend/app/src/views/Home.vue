@@ -25,5 +25,6 @@ const props = defineProps<{
 <style lang="scss">
 .home {
   position: relative;
+  padding: 40px;
 }
 </style>

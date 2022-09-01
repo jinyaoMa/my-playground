@@ -8,6 +8,10 @@ import (
 	"my-playground/backend/utils"
 )
 
+const (
+	CfgTotalNumberOfOptions = 5
+)
+
 type Config struct {
 	Server *server.Config
 	Tray   *tray.Config
@@ -23,6 +27,7 @@ func LoadConfig(ctx context.Context) *Config {
 		Tray: &tray.Config{
 			Context:  ctx,
 			Language: "zh",
+			Theme:    "light",
 		},
 	}
 
@@ -34,11 +39,51 @@ func LoadConfig(ctx context.Context) *Config {
 	if result.RowsAffected == 0 {
 		// options not yet generated and stored
 		config.saveOptions(options)
+	} else if result.RowsAffected < CfgTotalNumberOfOptions {
+		config.loadOptions(options)
+		config.updateOptions(options)
 	} else {
 		config.loadOptions(options)
 	}
 
 	return config
+}
+
+func (c *Config) updateOptions(options model.MpOptions) {
+	optionPairs := [][]string{
+		{server.CfgNameHttpPort, c.Server.HttpPort},
+		{server.CfgNameHttpsPort, c.Server.HttpsPort},
+		{server.CfgNameCertsDirCache, c.Server.CertsDirCache},
+		{tray.CfgNameLanguage, c.Tray.Language},
+		{tray.CfgNameTheme, c.Tray.Theme},
+	}
+
+	var newOptions model.MpOptions
+	for _, pair := range optionPairs {
+		optionNotExist := true
+		for _, option := range options {
+			// update exist options
+			if option.Name == pair[0] {
+				option.Value = pair[1]
+				optionNotExist = false
+				break
+			}
+		}
+		if optionNotExist {
+			// initialize new options
+			newOptions = append(newOptions, model.MpOption{
+				Name:  pair[0],
+				Value: pair[1],
+			})
+		}
+	}
+
+	options = append(options, newOptions...)
+
+	result := options.Save()
+	if result.Error != nil {
+		utils.Logger(PkgName).Fatalf("fail to update options: %+v\n", result.Error)
+	}
 }
 
 func (c *Config) saveOptions(options model.MpOptions) {
@@ -58,6 +103,10 @@ func (c *Config) saveOptions(options model.MpOptions) {
 		Name:  tray.CfgNameLanguage,
 		Value: c.Tray.Language,
 	})
+	options = append(options, model.MpOption{
+		Name:  tray.CfgNameTheme,
+		Value: c.Tray.Theme,
+	})
 
 	result := options.Save()
 	if result.Error != nil {
@@ -76,6 +125,8 @@ func (c *Config) loadOptions(options model.MpOptions) {
 			c.Server.CertsDirCache = option.Value
 		case tray.CfgNameLanguage:
 			c.Tray.Language = option.Value
+		case tray.CfgNameTheme:
+			c.Tray.Theme = option.Value
 		}
 	}
 }

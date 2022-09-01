@@ -5,3 +5,7 @@
 export function ChangeLanguage(arg1) {
   return window['go']['backend']['App']['ChangeLanguage'](arg1);
 }
+
+export function ChangeTheme(arg1) {
+  return window['go']['backend']['App']['ChangeTheme'](arg1);
+}

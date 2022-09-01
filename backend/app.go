@@ -19,6 +19,10 @@ func (a *App) ChangeLanguage(lang string) {
 	tray.My().ChangeLanguage(lang)
 }
 
+func (a *App) ChangeTheme(theme string) {
+	tray.My().ChangeTheme(theme)
+}
+
 /* END - Public methods binded to wails frontend */
 
 // startup is called at application startup
