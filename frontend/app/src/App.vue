@@ -34,12 +34,12 @@ EventsOn("onNightShift", (isNightShift: boolean) => {
 });
 
 const router = useRouter();
-const testTabs = ref([
+const panelApps = ref([
   ...routes.map((r) => {
     return {
       key: r.name?.toString() || "",
       title: computed(() =>
-        t(`nav.${r.name?.toString()}`, { default: r.name })
+        t(`panel.${r.name?.toString()}`, { default: r.name })
       ),
       link: r.path,
       native: true,
@@ -63,10 +63,9 @@ const openTabKeys = ref([
     return ea.key;
   }),
 ]);
-console.log(testTabs.value);
 const openTabs = computed(() => {
-  return testTabs.value.filter((tab) => {
-    return openTabKeys.value.includes(tab.key);
+  return panelApps.value.filter((pa) => {
+    return openTabKeys.value.includes(pa.key);
   });
 });
 const activeTabIndex = ref(0);
@@ -144,7 +143,7 @@ const onclickQuit = () => {
   </mp-tabbar>
   <!-- Page -->
   <div v-if="openTabs[activeTabIndex].native" class="view">
-    <router-view></router-view>
+    <router-view :apps="panelApps"></router-view>
   </div>
   <iframe v-else class="xview" :src="xviewSrc"></iframe>
   <!--

@@ -1,6 +1,6 @@
 {
-  "nav": {
-    "Home": "Home",
+  "panel": {
+    "Home": "My Playground",
     "About": "About"
   },
   "languages": {
