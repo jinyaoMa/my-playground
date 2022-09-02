@@ -11,6 +11,7 @@ import {
   WindowHide,
 } from "../../wailsjs/runtime/runtime";
 import { ChangeLanguage, ChangeTheme } from "../../wailsjs/go/backend/App";
+import XView from "@/components/XView.vue";
 
 const { t, availableLocales, locale } = useI18n();
 
@@ -157,7 +158,7 @@ const onclickQuit = () => {
       :apps="panelApps.filter((pa) => pa.key != 'Home')"
     ></router-view>
   </div>
-  <iframe v-else class="xview" :src="xviewSrc"></iframe>
+  <XView v-else :src="xviewSrc" :theme="cTheme"></XView>
   <!--
     <div class="header" data-wails-drag>
       <div class="nav" data-wails-no-drag>
@@ -213,8 +214,7 @@ body {
   background-color: var(--mp-color-bg);
 }
 
-.view,
-.xview {
+.view {
   flex-grow: 1;
   overflow: auto;
   scroll-behavior: smooth;
