@@ -6,6 +6,6 @@
     "build": "vitepress build"
   },
   "dependencies": {
-    "vitepress": "^1.0.0-alpha.9"
+    "vitepress": "^1.0.0-alpha.13"
   }
 }

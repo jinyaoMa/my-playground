@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { routes } from "./router";
@@ -45,7 +45,16 @@ EventsOn("OnThemeChanged", (theme: string) => {
 });
 
 const router = useRouter();
-const panelApps = ref([
+const panelApps = ref<
+  {
+    key: string;
+    title: ComputedRef<string>;
+    link: string;
+    native: boolean;
+    closeable: boolean;
+    vitepress: boolean;
+  }[]
+>([
   ...routes.map((r) => {
     return {
       key: r.name?.toString() || "",
@@ -55,6 +64,7 @@ const panelApps = ref([
       link: r.path,
       native: true,
       closeable: r.name != "Home",
+      vitepress: false,
     };
   }),
   ...externalApps.map((ea) => {
@@ -63,6 +73,7 @@ const panelApps = ref([
       title: computed(() => ea.title[locale.value]),
       native: false,
       closeable: true,
+      vitepress: ea.vitepress || false,
     };
   }),
 ]);
@@ -81,6 +92,7 @@ const openTabs = computed(() => {
 });
 const activeTabIndex = ref(0);
 const xviewSrc = ref("");
+const xviewVitepress = ref(false);
 const onClickTab = (index: number) => {
   if (activeTabIndex.value != index) {
     activeTabIndex.value = index;
@@ -95,6 +107,7 @@ const onClickTab = (index: number) => {
     router.replace(tab.link);
   } else {
     xviewSrc.value = tab.link;
+    xviewVitepress.value = tab.vitepress;
   }
 };
 const onCloseTab = (prop: string) => {
@@ -140,14 +153,14 @@ const onclickQuit = () => {
     <template #append>
       <div class="tabbar-append" data-wails-no-drag>
         <div class="tabbar-btn" @click="onclickMinimize">
-          <i class="mp-icon-window-minimize"></i>
+          <mp-icon name="window-minimize"></mp-icon>
         </div>
         <div class="tabbar-btn" @click="onclickToggleMaximize">
-          <i v-if="isWindowMaximized" class="mp-icon-window-restore"></i>
-          <i v-else class="mp-icon-window-maximize"></i>
+          <mp-icon v-if="isWindowMaximized" name="window-restore"></mp-icon>
+          <mp-icon v-else name="window-maximize"></mp-icon>
         </div>
         <div class="tabbar-btn danger" @click="onclickQuit">
-          <i class="mp-icon-window-close"></i>
+          <mp-icon name="window-close"></mp-icon>
         </div>
       </div>
     </template>
@@ -158,7 +171,12 @@ const onclickQuit = () => {
       :apps="panelApps.filter((pa) => pa.key != 'Home')"
     ></router-view>
   </div>
-  <XView v-else :src="xviewSrc" :theme="cTheme"></XView>
+  <XView
+    v-else
+    :src="xviewSrc"
+    :theme="cTheme"
+    :vitepress="xviewVitepress"
+  ></XView>
   <!--
     <div class="header" data-wails-drag>
       <div class="nav" data-wails-no-drag>

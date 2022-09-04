@@ -2,6 +2,7 @@ type ExternalApps = {
   key: string;
   title: Record<string, string>;
   link: string;
+  vitepress?: boolean;
 }[];
 
 const eas: ExternalApps = [
@@ -12,9 +13,11 @@ const eas: ExternalApps = [
       en: "Docs",
     },
     link: "/docs/index.html",
+    vitepress: true,
   },
 ];
 
 // @ts-ignore
 // export default process.env.NODE_ENV != "production" ? eas : [];
-export default process.env.NODE_ENV === "production" ? eas : [];
+// export default process.env.NODE_ENV === "production" ? eas : [];
+export default eas;
