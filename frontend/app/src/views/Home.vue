@@ -46,7 +46,7 @@ const emit = defineEmits(["tileItemClick"]);
   }
 
   &-icon {
-    font-size: 3em;
+    font-size: calc(7em - 20px);
     line-height: 1;
   }
 

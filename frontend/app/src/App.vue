@@ -81,12 +81,15 @@ const panelApps = ref<
   }),
 ]);
 const openTabKeys = ref([
+  routes[0].name?.toString() || "Home",
+  /*
   ...routes.map((r) => {
     return r.name?.toString() || "";
   }),
   ...externalApps.map((ea) => {
     return ea.key;
   }),
+*/
 ]);
 const openTabs = computed(() => {
   return openTabKeys.value.map((k) => {
@@ -147,7 +150,6 @@ const onclickQuit = () => {
 };
 
 const onTileItemClick = (key: string) => {
-  console.log(key);
   if (!openTabKeys.value.includes(key)) {
     openTabKeys.value.push(key);
   }
