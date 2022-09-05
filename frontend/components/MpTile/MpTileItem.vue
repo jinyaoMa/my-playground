@@ -20,7 +20,7 @@ const props = defineProps<{
 <style lang="scss">
 .mp-tile-item {
   height: fit-content;
-  width: 25%;
+  width: 50%;
   max-width: 8em;
   box-sizing: border-box;
   display: flex;

@@ -11,6 +11,8 @@ const props = defineProps<{
     closeable: boolean;
   }[];
 }>();
+
+const emit = defineEmits(["tileItemClick"]);
 </script>
 
 <template>
@@ -20,7 +22,7 @@ const props = defineProps<{
       class="tile-item"
       :key="a.key"
       :gap="10"
-      @click=""
+      @click="emit('tileItemClick', a.key)"
     >
       <img v-if="a.icon.includes('.')" class="tile-item-img" :src="a.icon" />
       <div v-else class="tile-item-icon">

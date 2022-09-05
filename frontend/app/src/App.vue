@@ -89,8 +89,8 @@ const openTabKeys = ref([
   }),
 ]);
 const openTabs = computed(() => {
-  return panelApps.value.filter((pa) => {
-    return openTabKeys.value.includes(pa.key);
+  return openTabKeys.value.map((k) => {
+    return panelApps.value.find((pa) => pa.key == k) || panelApps.value[0];
   });
 });
 const activeTabIndex = ref(0);
@@ -127,6 +127,7 @@ const onClickTab = (index: number) => {
 const onCloseTab = (prop: string) => {
   const target = openTabKeys.value.indexOf(prop);
   openTabKeys.value.splice(target, 1);
+  activeTabIndex.value -= 1;
 };
 
 const isWindowMaximized = ref(false);
@@ -143,6 +144,14 @@ const onclickToggleMaximize = () => {
 };
 const onclickQuit = () => {
   WindowHide();
+};
+
+const onTileItemClick = (key: string) => {
+  console.log(key);
+  if (!openTabKeys.value.includes(key)) {
+    openTabKeys.value.push(key);
+  }
+  activeTabIndex.value = openTabKeys.value.indexOf(key);
 };
 </script>
 
@@ -189,6 +198,7 @@ const onclickQuit = () => {
   <div v-if="currentTab.native" class="view">
     <router-view
       :apps="panelApps.filter((pa) => pa.key != 'Home')"
+      @tile-item-click="onTileItemClick"
     ></router-view>
   </div>
   <XView
