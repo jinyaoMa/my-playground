@@ -8,6 +8,7 @@ const props = defineProps<{
     key: string;
     title: ComputedRef<string>;
     link: string;
+    icon: string;
     native: boolean;
     closeable: boolean;
   }[];
@@ -15,16 +16,16 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="home">
-    <div v-for="a in props.apps" :key="a.key">
+  <mp-tile class="home" :gap="40">
+    <mp-tile-item v-for="a in props.apps" :key="a.key">
+      <img :src="a.icon" />
       {{ a.title }}
-    </div>
-  </div>
+    </mp-tile-item>
+  </mp-tile>
 </template>
 
 <style lang="scss">
 .home {
   position: relative;
-  padding: 40px;
 }
 </style>

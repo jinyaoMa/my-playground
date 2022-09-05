@@ -9,6 +9,7 @@ const props = defineProps<{
 
 const xview = ref();
 let curTheme = "";
+let canUpdate = false;
 const setTheme = () => {
   curTheme = props.theme;
   xview.value.contentDocument
@@ -37,6 +38,7 @@ onMounted(() => {
       }
     }
     setTheme();
+    canUpdate = true;
   });
 });
 onBeforeUnmount(() => {
@@ -53,10 +55,12 @@ onBeforeUnmount(() => {
   }
 });
 onUpdated(() => {
-  if (curTheme != props.theme) {
-    xview.value.contentDocument
-      .querySelector(":root")
-      ?.classList.remove(curTheme);
+  if (canUpdate && curTheme != props.theme) {
+    if (curTheme != "") {
+      xview.value.contentDocument
+        .querySelector(":root")
+        ?.classList.remove(curTheme);
+    }
     setTheme();
   }
 });
