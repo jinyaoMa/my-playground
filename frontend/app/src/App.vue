@@ -104,6 +104,16 @@ const xviewSrc = computed({
   },
 });
 const xviewVitepress = ref(false);
+const currentTab = computed(() => {
+  const tab = openTabs.value[activeTabIndex.value];
+  if (tab.native) {
+    router.replace(tab.link);
+  } else {
+    xviewSrc.value = tab.link;
+    xviewVitepress.value = tab.vitepress;
+  }
+  return tab;
+});
 const onClickTab = (index: number) => {
   if (activeTabIndex.value != index) {
     activeTabIndex.value = index;
@@ -112,13 +122,6 @@ const onClickTab = (index: number) => {
     activeTabIndex.value = openTabKeys.value.length - 1;
   } else if (activeTabIndex.value < 0) {
     activeTabIndex.value = 0;
-  }
-  const tab = openTabs.value[activeTabIndex.value];
-  if (tab.native) {
-    router.replace(tab.link);
-  } else {
-    xviewSrc.value = tab.link;
-    xviewVitepress.value = tab.vitepress;
   }
 };
 const onCloseTab = (prop: string) => {
@@ -160,12 +163,11 @@ const onclickQuit = () => {
       @close-tab="onCloseTab(tab.key)"
     >
       <img
-        class="tabbar-item-icon"
-        :class="{
-          dark: cTheme == 'dark',
-        }"
+        v-if="tab.icon.includes('.')"
+        class="tabbar-item-img"
         :src="tab.icon"
       />
+      <mp-icon v-else :name="tab.icon" fw></mp-icon>
       <div>{{ tab.title }}</div>
     </mp-tabbar-item>
     <template #append>
@@ -184,7 +186,7 @@ const onclickQuit = () => {
     </template>
   </mp-tabbar>
   <!-- Page -->
-  <div v-if="openTabs[activeTabIndex].native" class="view">
+  <div v-if="currentTab.native" class="view">
     <router-view
       :apps="panelApps.filter((pa) => pa.key != 'Home')"
     ></router-view>
@@ -309,16 +311,11 @@ body {
   }
 }
 
-.tabbar-item-icon {
+.tabbar-item-img {
   display: inline-block;
   height: 1.3em;
   width: 1.3em;
   object-fit: contain;
-  margin-right: 0.5em;
-
-  &.dark {
-    filter: invert(0.8);
-  }
 }
 
 //===============================================================

@@ -37,6 +37,7 @@ const emit = defineEmits<{
   line-height: 2.8;
   padding: 0 0.75em;
   margin-left: 0.75em;
+  gap: 0.5em;
   max-width: 50%;
   min-width: calc(2.5em);
   width: fit-content;
@@ -71,7 +72,7 @@ const emit = defineEmits<{
     pointer-events: none;
     width: 0;
     height: 100%;
-    margin-left: 0.75em;
+    margin-left: 0.25em;
     display: flex;
     justify-content: center;
     align-items: center;

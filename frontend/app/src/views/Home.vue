@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { ComputedRef } from "vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n({ useScope: "global" });
 
 const props = defineProps<{
   apps: {
@@ -17,9 +15,18 @@ const props = defineProps<{
 
 <template>
   <mp-tile class="home" :gap="40">
-    <mp-tile-item v-for="a in props.apps" :key="a.key">
-      <img :src="a.icon" />
-      {{ a.title }}
+    <mp-tile-item
+      v-for="a in props.apps"
+      class="tile-item"
+      :key="a.key"
+      :gap="10"
+      @click=""
+    >
+      <img v-if="a.icon.includes('.')" class="tile-item-img" :src="a.icon" />
+      <div v-else class="tile-item-icon">
+        <mp-icon :name="a.icon"></mp-icon>
+      </div>
+      <div class="tile-item-title">{{ a.title }}</div>
     </mp-tile-item>
   </mp-tile>
 </template>
@@ -27,5 +34,22 @@ const props = defineProps<{
 <style lang="scss">
 .home {
   position: relative;
+}
+
+.tile-item {
+  &-img {
+    display: block;
+    object-fit: contain;
+    height: 3em;
+  }
+
+  &-icon {
+    font-size: 3em;
+    line-height: 1;
+  }
+
+  &-title {
+    line-height: 1.3;
+  }
 }
 </style>

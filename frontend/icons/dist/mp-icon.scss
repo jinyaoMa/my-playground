@@ -14,21 +14,32 @@
   vertical-align: bottom;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  &.fix-width {
+    width: 1.3em;
+    text-align: center;
+  }
 }
 
-.mp-icon-jinyao-ma:before { content: "\ea01"; }
-.mp-icon-window-close:before { content: "\ea02"; }
-.mp-icon-window-fullscreen:before { content: "\ea03"; }
-.mp-icon-window-maximize:before { content: "\ea04"; }
-.mp-icon-window-minimize:before { content: "\ea05"; }
-.mp-icon-window-restore:before { content: "\ea06"; }
-.mp-icon-window-unfullscreen:before { content: "\ea07"; }
+.mp-icon-docs:before { content: "\ea01"; }
+.mp-icon-home:before { content: "\ea02"; }
+.mp-icon-jinyao-ma:before { content: "\ea03"; }
+.mp-icon-settings:before { content: "\ea04"; }
+.mp-icon-window-close:before { content: "\ea05"; }
+.mp-icon-window-fullscreen:before { content: "\ea06"; }
+.mp-icon-window-maximize:before { content: "\ea07"; }
+.mp-icon-window-minimize:before { content: "\ea08"; }
+.mp-icon-window-restore:before { content: "\ea09"; }
+.mp-icon-window-unfullscreen:before { content: "\ea0a"; }
 
-$mp-icon-jinyao-ma: "\ea01";
-$mp-icon-window-close: "\ea02";
-$mp-icon-window-fullscreen: "\ea03";
-$mp-icon-window-maximize: "\ea04";
-$mp-icon-window-minimize: "\ea05";
-$mp-icon-window-restore: "\ea06";
-$mp-icon-window-unfullscreen: "\ea07";
+$mp-icon-docs: "\ea01";
+$mp-icon-home: "\ea02";
+$mp-icon-jinyao-ma: "\ea03";
+$mp-icon-settings: "\ea04";
+$mp-icon-window-close: "\ea05";
+$mp-icon-window-fullscreen: "\ea06";
+$mp-icon-window-maximize: "\ea07";
+$mp-icon-window-minimize: "\ea08";
+$mp-icon-window-restore: "\ea09";
+$mp-icon-window-unfullscreen: "\ea0a";
 
