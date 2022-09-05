@@ -2,6 +2,7 @@ type ExternalApps = {
   key: string;
   title: Record<string, string>;
   link: string;
+  icon: string;
   vitepress?: boolean;
 }[];
 
@@ -13,6 +14,7 @@ const eas: ExternalApps = [
       en: "Docs",
     },
     link: "/docs/index.html",
+    icon: "/docs/favicon.ico",
     vitepress: true,
   },
 ];

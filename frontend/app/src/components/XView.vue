@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUpdated, onBeforeUnmount } from "vue";
+
 const props = defineProps<{
   src: string;
   theme: string;

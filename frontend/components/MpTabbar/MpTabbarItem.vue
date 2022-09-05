@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MpIcon from "../MpIcon";
+
 // MpTabbarItem
 const props = defineProps<{
   active?: boolean;
@@ -24,7 +26,7 @@ const emit = defineEmits<{
       class="mp-tabbar-item_close"
       @click="emit('close-tab')"
     >
-      <i class="mp-icon-window-close"></i>
+      <MpIcon name="window-close"></MpIcon>
     </div>
   </div>
 </template>
@@ -32,7 +34,7 @@ const emit = defineEmits<{
 <style lang="scss">
 .mp-tabbar-item {
   box-sizing: border-box;
-  line-height: 2.5;
+  line-height: 2.8;
   padding: 0 0.75em;
   margin-left: 0.75em;
   max-width: 50%;
@@ -42,6 +44,13 @@ const emit = defineEmits<{
   text-overflow: ellipsis;
   position: relative;
   border-radius: var(--mp-border-radius);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &.closeable {
+    padding-right: 0;
+  }
 
   &:last-child {
     margin-right: 0.75em;
@@ -55,30 +64,27 @@ const emit = defineEmits<{
     background-color: var(--mp-color-bg);
     box-shadow: var(--mp-shadow);
     transform: translateY(-0.5px);
-
-    &.closeable {
-      padding-right: 2.5em;
-    }
   }
 
   &_close {
     opacity: 0;
     pointer-events: none;
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    width: 1.5em;
-    line-height: 1.5em;
-    text-align: center;
+    width: 0;
+    height: 100%;
+    margin-left: 0.75em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    border-radius: var(--mp-border-radius-s);
+    border-left: 2px dashed var(--mp-color-bg-3);
 
     &:hover {
-      background-color: var(--mp-color-bg-2);
+      color: var(--mp-color-danger);
     }
   }
 
   &.active &_close {
+    width: 2.5em;
     opacity: 1;
     pointer-events: all;
   }

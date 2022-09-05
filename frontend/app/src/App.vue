@@ -50,6 +50,7 @@ const panelApps = ref<
     key: string;
     title: ComputedRef<string>;
     link: string;
+    icon: string;
     native: boolean;
     closeable: boolean;
     vitepress: boolean;
@@ -62,6 +63,7 @@ const panelApps = ref<
         t(`panel.${r.name?.toString()}`, { default: r.name })
       ),
       link: r.path,
+      icon: r.meta?.icon as string,
       native: true,
       closeable: r.name != "Home",
       vitepress: false,
@@ -71,6 +73,7 @@ const panelApps = ref<
     return {
       ...ea,
       title: computed(() => ea.title[locale.value]),
+      icon: ea.icon,
       native: false,
       closeable: true,
       vitepress: ea.vitepress || false,
@@ -148,7 +151,8 @@ const onclickQuit = () => {
       @click="onClickTab(i)"
       @close-tab="onCloseTab(tab.key)"
     >
-      {{ tab.title }}
+      <img class="tabbar-item-icon" :src="tab.icon" />
+      <div>{{ tab.title }}</div>
     </mp-tabbar-item>
     <template #append>
       <div class="tabbar-append" data-wails-no-drag>
@@ -289,6 +293,14 @@ body {
   i {
     font-size: 1em;
   }
+}
+
+.tabbar-item-icon {
+  display: inline-block;
+  height: 1.3em;
+  width: 1.3em;
+  object-fit: contain;
+  margin-right: 0.5em;
 }
 
 //===============================================================
