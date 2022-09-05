@@ -94,7 +94,15 @@ const openTabs = computed(() => {
   });
 });
 const activeTabIndex = ref(0);
-const xviewSrc = ref("");
+const _xviewSrc = ref("");
+const xviewSrc = computed({
+  get(): string {
+    return _xviewSrc.value.replace("{lang}", locale.value);
+  },
+  set(v: string) {
+    _xviewSrc.value = v;
+  },
+});
 const xviewVitepress = ref(false);
 const onClickTab = (index: number) => {
   if (activeTabIndex.value != index) {
@@ -151,7 +159,13 @@ const onclickQuit = () => {
       @click="onClickTab(i)"
       @close-tab="onCloseTab(tab.key)"
     >
-      <img class="tabbar-item-icon" :src="tab.icon" />
+      <img
+        class="tabbar-item-icon"
+        :class="{
+          dark: cTheme == 'dark',
+        }"
+        :src="tab.icon"
+      />
       <div>{{ tab.title }}</div>
     </mp-tabbar-item>
     <template #append>
@@ -301,6 +315,10 @@ body {
   width: 1.3em;
   object-fit: contain;
   margin-right: 0.5em;
+
+  &.dark {
+    filter: invert(0.8);
+  }
 }
 
 //===============================================================

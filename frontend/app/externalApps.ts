@@ -1,3 +1,5 @@
+import svgDocs from "./src/assets/images/docs.svg";
+
 type ExternalApps = {
   key: string;
   title: Record<string, string>;
@@ -13,8 +15,8 @@ const eas: ExternalApps = [
       zh: "文档",
       en: "Docs",
     },
-    link: "/docs/index.html",
-    icon: "/docs/favicon.ico",
+    link: "/docs/{lang}/index.html",
+    icon: svgDocs,
     vitepress: true,
   },
 ];
